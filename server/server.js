@@ -4,12 +4,10 @@ const mongoose = require('mongoose');
 require('express-async-errors');
 const cookieSession = require('cookie-session');
 const productsRouter = require('./products/products.router');
-//const fs = require('fs');
 
 const app = express();
 const port = 3001;
 
-const { body, validationResult } = require('express-validator');
 
 app.use(express.json());
 app.use(cookieSession({
@@ -35,14 +33,3 @@ async function run() {
     app.listen(port, () => console.log(`Server is running on port http://localhost:${port}`));
 }
 run();
-
-//Helper functions to read/write from/to JSON
-function readProducts() {
-    let rawdata = fs.readFileSync('products.json');
-    return JSON.parse(rawdata);
-}
-
-function writeProducts(products) {
-    let data = JSON.stringify(products);
-    fs.writeFileSync('products.json', data);
-}
