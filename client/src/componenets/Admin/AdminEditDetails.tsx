@@ -2,7 +2,7 @@ import { Form, Input, Button, Col, Row, message } from "antd";
 import { Component, CSSProperties } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import ErrorPage from "../ErrorPage";
-import { Product } from './AdminList';
+import { Product } from "../StartPage/ProductCardGrid";
 
 const layout = {
   labelCol: {
@@ -50,27 +50,19 @@ class AdminEditDetails extends Component<Props, State> {
 
   onFinish = async (values: any) => {
     this.setState({ buttonSaveLoading: true });
-    await putProduct(values.product, (this.props.match.params as any).id);
-    this.props.history.push('/');
+    await putProduct(values.product, (this.props.match.params as any)._id);
+    this.props.history.push('/admin-list');
     this.setState({ buttonSaveLoading: false });
   }
 
   async componentDidMount() {
-    const product = await getProduct(Number((this.props.match.params as any).id));
+    const product = await getProduct((this.props.match.params as any)._id);
     this.setState({ product: product });
-}
+  }
 
 componentWillUnmount() {
   this.setState({ product: undefined });
 }
-
-
-  handleDelete = async (id: number) => {
-    this.setState({ buttonDeleteLoading: true });
-    await deleteProduct(id);
-    this.props.history.push('/');
-    this.setState({ buttonDeleteLoading: false });
-  }
 
   render() {
     const { product } = this.state;
@@ -134,15 +126,6 @@ componentWillUnmount() {
                   >
                     Save
                   </Button>
-
-                  <Button 
-                    type="primary" 
-                    danger 
-                    onClick={() => {this.handleDelete(Number((this.props.match.params as any).id)); successDelete();}} 
-                    loading={this.state.buttonDeleteLoading}
-                  >
-                    Delete
-                  </Button>
                 </div>
               </Form.Item>
             </Form>
@@ -169,29 +152,21 @@ const columnStyle: CSSProperties = {
 export default withRouter(AdminEditDetails);
 
 
-const getProduct = async (id: number) => {
+const getProduct = async (_id: string) => {
   try {
-      let response = await fetch('http://localhost:3001/products/' + id);
+    let response = await fetch('/api/products/' + _id);
+    if (response.ok) {
       const data = await response.json();
       return data;
+    }
   } catch (error) {
       console.error(error);
   }
 }
 
-const deleteProduct = async (id: number) => {
+const putProduct = async (product: Product, _id: string) => {
   try {
-      await fetch('http://localhost:3001/products/' + id, {
-        method: 'DELETE',
-      });
-  } catch (error) {
-      console.error(error);
-  }
-}
-
-const putProduct = async (product: Product, id: number) => {
-  try {
-      await fetch('http://localhost:3001/products/' + id, {
+      await fetch('/api/products/' + _id, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

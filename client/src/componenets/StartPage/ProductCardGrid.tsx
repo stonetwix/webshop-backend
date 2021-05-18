@@ -1,7 +1,6 @@
 import { Component, ContextType, CSSProperties } from 'react';
 import { Card, Col, List, Row, message } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
-import { Product } from '../ProductItemsList';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
 
@@ -9,13 +8,33 @@ const { Meta } = Card;
 const success = () => {
     message.success('The product was added to the cart', 5);
 };
-class ProductCardGrid extends Component {
+
+export interface Product {
+    _id: string
+    title: string
+    description: string
+    price: number
+    imageUrl: string
+}
+
+interface State {
+    products?: Product[],
+}
+class ProductCardGrid extends Component<State> {
     context!: ContextType<typeof CartContext>
     static contextType = CartContext;
+
+    state: State = {
+        products: [],
+    }
+
+    async componentDidMount() {
+        const products = await getProducts();
+        this.setState({ products: products });
+      }
         
     render() {
         const { addProductToCart } = this.context;
-        const products: Product[] = JSON.parse(localStorage.getItem("products") as string) || [];
         return(    
             <Row style={cardContainer}>
                 <Col span={24} style={columnStyle}>
@@ -29,10 +48,10 @@ class ProductCardGrid extends Component {
                             xl: 4,
                             xxl: 4,
                         }}
-                        dataSource={products}
+                        dataSource={this.state.products}
                         renderItem={item => (
                             <List.Item>
-                                <Link to={'/product/' + item.id}>
+                                <Link to={'/product/' + item._id}>
                                     <Card
                                         hoverable
                                         cover={<img src={item.imageUrl} alt='product' />}
@@ -72,3 +91,15 @@ const columnStyle: CSSProperties = {
     alignItems: 'center',
     marginTop: '3rem',
 }
+
+const getProducts = async () => {
+    try {
+        let response = await fetch('/api/products');
+        if (response.ok) {
+          const data = await response.json();
+          return data;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+  }

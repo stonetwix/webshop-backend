@@ -1,8 +1,8 @@
 import { Avatar, Col, List, Row, InputNumber } from 'antd';
 import { Component, ContextType, CSSProperties } from 'react';
-import { Product } from '../ProductItemsList';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
+import { Product } from '../StartPage/ProductCardGrid';
 
 export interface CartItem {
     product: Product;
@@ -12,9 +12,9 @@ class CartItemsList extends Component {
     context!: ContextType<typeof CartContext>
     static contextType = CartContext;
       
-    handleDelete = (id: number) => {
+    handleDelete = (_id: string) => {
         const { deleteProductFromCart } = this.context;
-        deleteProductFromCart(id as number);
+        deleteProductFromCart(_id);
     }
 
     onChangeQuantity(quantity: number, product: Product) {
@@ -36,10 +36,10 @@ class CartItemsList extends Component {
                                     <List.Item
                                         actions={[<button key="delete-item" 
                                         style={deleteStyle}
-                                        onClick={() => this.handleDelete(item.product.id)}>delete</button>]}>
+                                        onClick={() => this.handleDelete(item.product._id)}>delete</button>]}>
                                         <List.Item.Meta                    
                                             avatar={<Avatar src={item.product.imageUrl} />}
-                                            title={<Link to={'/product/' + item.product.id}>{item.product.title}</Link>}
+                                            title={<Link to={'/product/' + item.product._id}>{item.product.title}</Link>}
                                             description={[<span style={descriptionStyle}>{item.product.description.substring(0, 35) + '...'}</span>,
                                             <InputNumber min={1} max={10} defaultValue={item.quantity} onChange={(value) => this.onChangeQuantity(value, item.product)} style={numberInputStyle} />,
                                             item.product.price * item.quantity + ' kr']}

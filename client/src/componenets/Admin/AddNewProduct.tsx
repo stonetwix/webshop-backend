@@ -1,7 +1,7 @@
 import { Component, CSSProperties } from "react";
 import { Form, Input, InputNumber, Button, Col, Row, message } from "antd";
-import { Product } from './AdminList';
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Product } from "../StartPage/ProductCardGrid";
 
 const layout = {
   labelCol: {
@@ -42,8 +42,8 @@ class AddNewProduct extends Component<Props, State> {
   
   onFinish = async (values: any) => {
     this.setState({ buttonSaveLoading: true });
-    await postProduct(values.product);
-    this.props.history.push('/');
+    await addProduct(values.product);
+    this.props.history.push('/admin-list');
     this.setState({ buttonSaveLoading: false });
   };
 
@@ -124,9 +124,9 @@ const columnStyle: CSSProperties = {
 
 export default withRouter(AddNewProduct); 
 
-const postProduct = async (product: Product) => {
+const addProduct = async (product: Product) => {
   try {
-      await fetch('http://localhost:3001/products', {
+      await fetch('/api/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -6,7 +6,8 @@ import { PaymentKlarna } from '../componenets/Cart/PayKlarna';
 import { PaymentSwish } from '../componenets/Cart/PaySwish';
 import { DeliveryMethod, deliveryMethods } from '../componenets/deliveryMethods';
 import { IReceipt } from '../componenets/OrderSuccess/Reciept';
-import { Product } from '../componenets/ProductItemsList';
+import { Product } from '../componenets/StartPage/ProductCardGrid';
+//import { Product } from '../componenets/ProductItemsList';
 
 const emptyUser: UserInfo = {
     name: '',
@@ -45,7 +46,7 @@ interface State {
 interface ContextValue extends State {
     addProductToCart: (product: Product, quantity: number | undefined) => void;
     setDeliveryMethod: (method: DeliveryMethod) => void;
-    deleteProductFromCart: (id: number) => void;
+    deleteProductFromCart: (id: string) => void;
     getTotalPrice: () => void;
     getTotalPriceProducts: () => void;
     getBadgeQuantity: () => number;
@@ -90,16 +91,16 @@ class CartProvider extends Component<{}, State> {
 
     addProductToCart = (product: Product, quantity: number | undefined) => {
         let cartItems = this.state.cart;
-        const existingCartItem = cartItems.filter((item: CartItem) => item.product.id === product.id);
+        const existingCartItem = cartItems.filter((item: CartItem) => item.product._id === product._id);
         if (existingCartItem.length === 0) {
             const cartItem = {product: product, quantity: 1};
             cartItems.push(cartItem);
         } else if (quantity) {
             const cartItem = {product: product, quantity: quantity};
-            cartItems = cartItems.map((item: CartItem) => item.product.id === product.id ? cartItem : item);
+            cartItems = cartItems.map((item: CartItem) => item.product._id === product._id ? cartItem : item);
         } else {
             const cartItem = {product: product, quantity: existingCartItem[0].quantity + 1};
-            cartItems = cartItems.map((item: CartItem) => item.product.id === product.id ? cartItem : item);
+            cartItems = cartItems.map((item: CartItem) => item.product._id === product._id ? cartItem : item);
         }
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
         this.setState({ cart: cartItems });
@@ -110,9 +111,9 @@ class CartProvider extends Component<{}, State> {
         this.setState({ deliveryMethod: method });
     } 
 
-    deleteProductFromCart = (id: number) => {
+    deleteProductFromCart = (_id: string) => {
         let cartItems = this.state.cart;
-        const newCartItemsList = cartItems.filter((item: CartItem) => item.product.id !== id);
+        const newCartItemsList = cartItems.filter((item: CartItem) => item.product._id !== _id);
         localStorage.setItem('cartItems', JSON.stringify(newCartItemsList));
         this.setState({ cart: newCartItemsList });
     }
