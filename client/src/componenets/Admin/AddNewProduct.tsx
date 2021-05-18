@@ -42,7 +42,7 @@ class AddNewProduct extends Component<Props, State> {
   
   onFinish = async (values: any) => {
     this.setState({ buttonSaveLoading: true });
-    await postProduct(values.product);
+    await addProduct(values.product);
     this.props.history.push('/');
     this.setState({ buttonSaveLoading: false });
   };
@@ -124,9 +124,9 @@ const columnStyle: CSSProperties = {
 
 export default withRouter(AddNewProduct); 
 
-const postProduct = async (product: Product) => {
+const addProduct = async (product: Product) => {
   try {
-      await fetch('http://localhost:3001/products', {
+      await fetch('/api/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

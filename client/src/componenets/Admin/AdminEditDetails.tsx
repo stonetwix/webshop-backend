@@ -56,7 +56,7 @@ class AdminEditDetails extends Component<Props, State> {
   }
 
   async componentDidMount() {
-    const product = await getProduct(Number((this.props.match.params as any).id));
+    const product = await getProduct((this.props.match.params as any)._id);
     this.setState({ product: product });
 }
 
@@ -65,9 +65,9 @@ componentWillUnmount() {
 }
 
 
-  handleDelete = async (id: number) => {
+  handleDelete = async (_id: string) => {
     this.setState({ buttonDeleteLoading: true });
-    await deleteProduct(id);
+    await deleteProduct(_id);
     this.props.history.push('/');
     this.setState({ buttonDeleteLoading: false });
   }
@@ -138,7 +138,7 @@ componentWillUnmount() {
                   <Button 
                     type="primary" 
                     danger 
-                    onClick={() => {this.handleDelete(Number((this.props.match.params as any).id)); successDelete();}} 
+                    onClick={() => {this.handleDelete((this.props.match.params as any)._id); successDelete();}} 
                     loading={this.state.buttonDeleteLoading}
                   >
                     Delete
@@ -169,9 +169,9 @@ const columnStyle: CSSProperties = {
 export default withRouter(AdminEditDetails);
 
 
-const getProduct = async (id: number) => {
+const getProduct = async (_id: string) => {
   try {
-      let response = await fetch('http://localhost:3001/products/' + id);
+      let response = await fetch('/api/products/' + _id);
       const data = await response.json();
       return data;
   } catch (error) {
@@ -179,9 +179,9 @@ const getProduct = async (id: number) => {
   }
 }
 
-const deleteProduct = async (id: number) => {
+const deleteProduct = async (_id: string) => {
   try {
-      await fetch('http://localhost:3001/products/' + id, {
+      await fetch('/api/products/' + _id, {
         method: 'DELETE',
       });
   } catch (error) {
@@ -189,9 +189,9 @@ const deleteProduct = async (id: number) => {
   }
 }
 
-const putProduct = async (product: Product, id: number) => {
+const putProduct = async (product: Product, _id: string) => {
   try {
-      await fetch('http://localhost:3001/products/' + id, {
+      await fetch('/api/products/' + _id, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
