@@ -43,7 +43,7 @@ class AddNewProduct extends Component<Props, State> {
   onFinish = async (values: any) => {
     this.setState({ buttonSaveLoading: true });
     await addProduct(values.product);
-    this.props.history.push('/');
+    this.props.history.push('/admin-list');
     this.setState({ buttonSaveLoading: false });
   };
 
