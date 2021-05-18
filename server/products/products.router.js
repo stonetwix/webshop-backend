@@ -10,7 +10,7 @@ productsRouter.get('/api/products', async (req, res) => {
 
 productsRouter.get('/api/products/:id', async (req, res) => {
     try {
-        const product = await ProductModel.find(req.params.id);
+        const product = await ProductModel.findById(req.params.id);
         res.status(200).json(product);   
     } catch (error) {
         res.status(404).json({ error: 'Product not available' });   
@@ -52,7 +52,7 @@ productsRouter.put('/api/products/:id',
 
 productsRouter.delete('/api/products/:id', async (req, res) => {
     try {
-        await PostModel.findById(req.params.id).deleteOne();
+        await ProductModel.findById(req.params.id).deleteOne();
         res.status(204).json({});
     } catch (error) {
         res.status(404).json({ error: 'Product not available' });

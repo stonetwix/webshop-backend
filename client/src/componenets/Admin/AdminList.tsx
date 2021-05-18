@@ -1,19 +1,16 @@
-import { PlusOutlined } from "@ant-design/icons";
-import { Avatar, Button, Col, List, Row, } from "antd";
+import { PlusCircleOutlined, FormOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Avatar, Button, Col, List, Row, message } from "antd";
 import { Component, CSSProperties } from "react";
 import { Link } from "react-router-dom";
-
-export interface Product {
-    id: number
-    title: string
-    description: string
-    price: number
-    imageUrl: string
-}
+import { Product } from "../StartPage/ProductCardGrid";
 
 interface State {
     products?: Product[]; 
 }
+
+const successDelete = () => {
+    message.success('The product has been deleted', 3);
+};
 class AdminList extends Component < {}, State>{
 
     state: State = {
@@ -21,6 +18,13 @@ class AdminList extends Component < {}, State>{
     }
 
     async componentDidMount() {
+        const products = await getProducts();
+        this.setState({ products: products });
+    }
+
+
+    handleDelete = async (_id: string) => {
+        await deleteProduct(_id);
         const products = await getProducts();
         this.setState({ products: products });
     }
@@ -33,36 +37,41 @@ class AdminList extends Component < {}, State>{
                         alignItems:'center', marginTop: '2rem', marginBottom: '3rem' }}>
                         <h1 style={{fontWeight: 'bold'}}>ADMIN</h1>                  
                         <Link to ={'/add-product'}> 
-                            <Button type="primary" icon={<PlusOutlined />}>
+                            <Button type="primary" icon={<PlusCircleOutlined />}>
                                 Add product
                             </Button>
                         </Link> 
                     </div>    
 
-                    <List grid={{
-                        gutter: 12,
-                        xs: 1,
-                        sm: 1,
-                        md: 1,
-                        lg: 1,
-                        xl: 1,
-                        xxl: 1,
-                        }}
+                    <List
+                        itemLayout="horizontal"
                         dataSource={this.state.products}
                         renderItem={item => (
-                            <List.Item>
-                                <Link to={'/product/' + item.id}>     
-                                <List.Item.Meta                    
-                                    avatar={<Avatar size={64} src={item.imageUrl} />} 
-                                    title={item.title}
-                                    description={[item.description.split('.')[0],  
-                                    ]}
-                                />  
-                                </Link>
-                                <Link to={'/edit-product/' + item.id}>
-                                    <p style={editStyle}>edit</p>
-                                </Link>
-                            </List.Item>
+                        <List.Item actions={[
+                            <Link to={'/edit-product/' + item._id}>  
+                                <Button 
+                                key="edit-product" 
+                                style={editStyle}
+                                icon={<FormOutlined />}
+                                >
+                                    edit
+                                </Button>
+                            </Link>, 
+                            <Button 
+                                key="delete-product" 
+                                onClick={() => {this.handleDelete(item._id); successDelete();}}                                 
+                                style={deleteStyle}
+                                icon={<DeleteOutlined />}
+                            >
+                                delete
+                            </Button>]}
+                        >
+                        <List.Item.Meta
+                            avatar={<Avatar src={item.imageUrl} style={{ width: '4rem', height: '4rem' }}/>}
+                            title={item.title}
+                            description={item.description.substring(0, 35) + '...'}
+                        />
+                        </List.Item>
                         )}
                     /> 
                 </Col>
@@ -83,12 +92,24 @@ const columnStyle: CSSProperties = {
    width: '80%'
 }
 
+const deleteStyle: CSSProperties = {
+    color: 'red',
+    backgroundColor: 'white',
+    border: 'none',
+    cursor: 'pointer',
+    marginTop: '1.2rem',
+    marginLeft: '1rem',
+    boxShadow: 'none'
+}
+
 const editStyle: CSSProperties = {
-    color: 'red', 
-    display: 'flex', 
-    justifyContent: 'flex-end',
-    borderBottom: '1px solid lightgrey',
-    alignItems: 'center'
+    backgroundColor: 'white',
+    color: '#78757C',
+    border: 'none',
+    cursor: 'pointer',
+    marginTop: '1.2rem',
+    marginRight: '1rem',
+    boxShadow: 'none'
 }
 
 export default AdminList;
@@ -104,3 +125,13 @@ const getProducts = async () => {
         console.error(error);
     }
 }
+
+const deleteProduct = async (_id: string) => {
+    try {
+        await fetch('/api/products/' + _id, {
+          method: 'DELETE',
+        });
+    } catch (error) {
+        console.error(error);
+    }
+  }

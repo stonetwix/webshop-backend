@@ -20,14 +20,14 @@ function App() {
         <ScrollToTop />
         <Navbar />
         <Switch>
-          <Route path="/product/:id" component={ProductDetails} />
+          <Route path="/product/:_id" component={ProductDetails} />
           <Route path="/ordersuccess" component={OrderSuccessMessage} />
           <Route exact path="/" component={StartPageView} />
           <Route path="/cart" component={CartView} />
           <Route path="/admin" component={AdminLogIn} />
           <Route path="/admin-list" component={AdminList} />
           <Route path="/add-product" component={AddNewProduct} />
-          <Route path="/edit-product/:id" component={AdminEditDetails} />
+          <Route path="/edit-product/:_id" component={AdminEditDetails} />
         </Switch>
         <Footer2 />
       </Router>

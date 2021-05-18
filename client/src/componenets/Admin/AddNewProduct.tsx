@@ -1,7 +1,7 @@
 import { Component, CSSProperties } from "react";
 import { Form, Input, InputNumber, Button, Col, Row, message } from "antd";
-import { Product } from './AdminList';
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Product } from "../StartPage/ProductCardGrid";
 
 const layout = {
   labelCol: {
