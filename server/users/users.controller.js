@@ -3,8 +3,8 @@ const { body, validationResult } = require('express-validator');
 
 
 exports.getOneUser = async (req, res) => {
-    const users = await UserModel.find(user)
-    res.status(200).json(user); 
+    const users = await UserModel.find({})
+    res.status(200).json(users); 
 }
 
 exports.addUser = async (req, res) => {
