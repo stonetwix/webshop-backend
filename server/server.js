@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 require('express-async-errors');
 const cookieSession = require('cookie-session');
 const productsRouter = require('./products/products.router');
+const deliveryRouter = require('./deliveryMethods/delivery.router');
 
 const app = express();
 const port = 3001;
@@ -18,6 +19,8 @@ app.use(cookieSession({
     httpOnly: true
 }));
 app.use(productsRouter);
+app.use(deliveryRouter);
+
 
 //Start server
 async function run() {
