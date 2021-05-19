@@ -12,6 +12,9 @@ import CartProvider from "./contexts/CartContext";
 import ScrollToTop from "./componenets/ScrollToTop";
 import AddNewProduct from "./componenets/Admin/AddNewProduct";
 import LoginView from "./componenets/Admin/AdminLoginView";
+import SuccessMessage from "./componenets/Admin/RegisterSuccess";
+
+
 
 function App() {
   return (
@@ -28,6 +31,8 @@ function App() {
           <Route path="/admin-list" component={AdminList} />
           <Route path="/add-product" component={AddNewProduct} />
           <Route path="/edit-product/:_id" component={AdminEditDetails} />
+          <Route path="/registersuccess" component={SuccessMessage} />
+
         </Switch>
         <Footer2 />
       </Router>

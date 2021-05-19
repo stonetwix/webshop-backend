@@ -1,5 +1,5 @@
 import { Form, Input, Button, Row, Col, Divider } from "antd";
-import { CSSProperties, Component } from "react";
+import React, { CSSProperties, Component } from "react";
 import { Route } from "react-router-dom";
 
 const layout = {
@@ -21,12 +21,11 @@ const tailLayout = {
 class Register extends Component {
 
   onFinish = async (values: any, history: any) => {
-    const registeredUser = await register(values.username, values.email, values.password);
+    const registeredUser = await register(values.email, values.password);
     if (registeredUser) {
       history.push('/registersuccess');
-    } else {
-      alert('User name or e-mail already exists');
-    }
+    } 
+    
   };
 
   render() {
@@ -52,19 +51,7 @@ class Register extends Component {
               }}
               onFinish={(values) => this.onFinish(values, history)}
             >
-              <Form.Item 
-                label="User Name" 
-                name="username"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your user name",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-
+            
               <Form.Item
                 label="E-mail"
                 name="email"
@@ -119,14 +106,16 @@ class Register extends Component {
               </Form.Item>
 
               <Form.Item {...tailLayout}>
-                
+             
                   <Button
                     type="primary"
                     htmlType="submit" 
                     style={buttonStyle}
                   >
+             
                     Sign up
                   </Button>
+                
               </Form.Item>
             </Form>
           )}/>
@@ -142,6 +131,7 @@ const containerStyle: CSSProperties = {
     display: "flex",
     width: "60%",
     margin: "auto",
+    
   };
   
   const buttonStyle: CSSProperties = {
@@ -150,7 +140,7 @@ const containerStyle: CSSProperties = {
     fontWeight: "bold",
   };
   
-const register = async (username: string, email: string, password: string) => {
+const register = async (email: string, password: string) => {
     try {
         const response = await fetch('/api/users/', {
           method: 'POST',
@@ -158,7 +148,6 @@ const register = async (username: string, email: string, password: string) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            username: username,
             email: email,
             password: password,
           })

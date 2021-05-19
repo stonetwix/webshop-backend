@@ -97,8 +97,9 @@ const ContainerStyle: CSSProperties = {
 }
 
 const columnStyle: CSSProperties = {
-  marginTop: '14rem',
-  marginBottom: '3rem',
+  marginTop: '11rem',
+  marginBottom: '-5rem'
+ 
 }
 
 const buttonStyle: CSSProperties = {
