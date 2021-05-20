@@ -10,15 +10,6 @@ const { Option } = Select;
 const success = () => {
     message.success('The product was added to the cart', 5);
 };
-
-const children: any = [];
-for (let i = 10; i < 36; i++) {
-    children.push(
-        <Option value={i.toString(36) + i} key={i.toString(36) + i}>
-        {i.toString(36) + i}
-        </Option>
-    )
-}
 export interface Product {
     _id: string
     title: string
@@ -26,21 +17,45 @@ export interface Product {
     price: number
     imageUrl: string
 }
-
+export interface Category {
+    name: string
+}
 interface State {
     products?: Product[],
+    categories?: Category[],
 }
 class ProductCardGrid extends Component<State> {
     context!: ContextType<typeof CartContext>
     static contextType = CartContext;
-
+    
     state: State = {
         products: [],
+        categories: [],
+    }
+    
+    async componentDidMount() {
+        const children: any = [];
+        const products = await getProducts();
+        const categories = await getCategories();
+        console.log(categories)
+        this.setState({ products: products, categories: categories });
+        // for (const category of categories) {
+        //     console.log(category.name)
+        //     children.push(
+        //         <Option value={category.name} key={category.name}>
+        //             {category.name}
+        //         </Option>
+        //     )
+        // }
     }
 
-    async componentDidMount() {
-        const products = await getProducts();
-        this.setState({ products: products });
+    categoryOptions = () => {
+        console.log(this.state.categories)
+        return this.state.categories?.map((c: Category) => {
+            return <Option value={c.name} key={c.name}>
+                {c.name}
+            </Option>
+        })
     }
 
     handleChange(value: any) {
@@ -62,7 +77,7 @@ class ProductCardGrid extends Component<State> {
                             defaultValue={['all']}
                             onChange={this.handleChange}
                             >
-                            {children}
+                            {this.categoryOptions()}
                         </Select>
                     </Col>
                 </Row> 
@@ -143,4 +158,16 @@ const getProducts = async () => {
     } catch (error) {
         console.error(error);
     }
-  }
+}
+
+const getCategories = async () => {
+    try {
+        let response = await fetch('/api/categories');
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+} 
