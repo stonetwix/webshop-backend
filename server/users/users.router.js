@@ -8,8 +8,7 @@ usersRouter
     .post('/api/users', 
     body('email').isEmail().normalizeEmail(),
     body('password').not().isEmpty(),
-    controller.addUser
-); 
+    controller.addUser); 
 
 module.exports = usersRouter; 
  

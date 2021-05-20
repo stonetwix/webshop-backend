@@ -24,7 +24,9 @@ class Register extends Component {
     const registeredUser = await register(values.email, values.password);
     if (registeredUser) {
       history.push('/registersuccess');
-    } 
+    } else {
+      alert('User name or e-mail already exists');
+    }
     
   };
 
