@@ -1,0 +1,33 @@
+GET http://localhost:3001/api/products
+
+###
+
+GET http://localhost:3001/api/products/60a4b279bc09930eb282d9f9
+
+###
+
+POST http://localhost:3001/api/products
+Content-Type: application/json
+
+{
+    "title": "NEW PRODUCT",
+    "description": "Lorem ipsum dolor sit amet.",
+    "price": 222,
+    "imageUrl": "https://github.com/msmalinosterberg/miniprojekt/blob/master/src/assets/prod1.png?raw=true"
+}
+
+###
+
+PUT http://localhost:3001/api/products/60a6209e4dbb476ac9a6e3d8
+Content-Type: application/json
+
+{
+    "title": "EDITED PRODUCT",
+    "description": "Lorem ipsum dolor sit amet.",
+    "price": 222,
+    "imageUrl": "https://github.com/msmalinosterberg/miniprojekt/blob/master/src/assets/prod1.png?raw=true"
+}
+
+###
+
+DELETE http://localhost:3001/api/products/60a6209e4dbb476ac9a6e3d8

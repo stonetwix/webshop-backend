@@ -1,0 +1,23 @@
+GET http://localhost:3001/api/categories
+
+###
+
+POST http://localhost:3001/api/categories
+Content-Type: application/json
+
+{
+    "name": "Tops"
+}
+
+###
+
+PUT http://localhost:3001/api/categories/60a6246b6d524b6d89214791
+Content-Type: application/json
+
+{
+    "name": "Skirts"
+}
+
+###
+
+DELETE http://localhost:3001/api/categories/60a6260f5db1046e2e5b5578
