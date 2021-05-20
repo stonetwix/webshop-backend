@@ -1,4 +1,4 @@
-import { Form, Input, Button, Row, Col, Divider } from "antd";
+import { Form, Input, Button, Row, Col, Divider, message } from "antd";
 import React, { CSSProperties, Component } from "react";
 import { Route } from "react-router-dom";
 
@@ -18,6 +18,9 @@ const tailLayout = {
   },
 };
 
+const error = () => {
+  message.error('E-mail already exists.', 3);
+};
 class Register extends Component {
 
   onFinish = async (values: any, history: any) => {
@@ -25,9 +28,8 @@ class Register extends Component {
     if (registeredUser) {
       history.push('/registersuccess');
     } else {
-      alert('User name or e-mail already exists');
+       error();
     }
-    
   };
 
   render() {
