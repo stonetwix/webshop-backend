@@ -1,5 +1,6 @@
 const UserModel = require('./users.model'); 
 const { body, validationResult } = require('express-validator'); 
+const bcrypt = require('bcrypt');
 
 
 
@@ -13,8 +14,14 @@ exports.addUser = async (req, res) => {
     if(!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array() }); 
     }
-    //const user = req.body;
+    const user = req.body;
 
-    const newUser = await UserModel.create(req.body)
+    const userExists = await UserModel.exists({ 'email': user.email });
+         if (userExists) {
+            return res.status(400).json('Email already exists');
+        }
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    user.password = hashedPassword;
+    const newUser = await UserModel.create(user)
     res.status(201).json(newUser);
 }
