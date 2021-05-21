@@ -2,13 +2,13 @@ const CategoryModel = require('./categories.model');
 const { body, validationResult } = require('express-validator');
 
 exports.getAllCategories = async (req, res) => {
-    const categories = await CategoryModel.find({});
+    const categories = await CategoryModel.find({}).populate('products');
     res.status(200).json(categories);
 }
 
 exports.getOneCategory = async (req, res) => {
     try {
-        const category = await CategoryModel.findById(req.params.id);
+        const category = await CategoryModel.findById(req.params.id).populate('products');
         res.status(200).json(category);   
     } catch (error) {
         res.status(404).json({ error: 'Category not available' });   

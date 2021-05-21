@@ -34,19 +34,9 @@ class ProductCardGrid extends Component<State> {
     }
     
     async componentDidMount() {
-        const children: any = [];
         const products = await getProducts();
         const categories = await getCategories();
-        console.log(categories)
         this.setState({ products: products, categories: categories });
-        // for (const category of categories) {
-        //     console.log(category.name)
-        //     children.push(
-        //         <Option value={category.name} key={category.name}>
-        //             {category.name}
-        //         </Option>
-        //     )
-        // }
     }
 
     categoryOptions = () => {

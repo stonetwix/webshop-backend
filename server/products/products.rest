@@ -10,10 +10,11 @@ POST http://localhost:3001/api/products
 Content-Type: application/json
 
 {
-    "title": "NEW PRODUCT",
+    "title": "NEW PRODUCT 6",
     "description": "Lorem ipsum dolor sit amet.",
     "price": 222,
-    "imageUrl": "https://github.com/msmalinosterberg/miniprojekt/blob/master/src/assets/prod1.png?raw=true"
+    "imageUrl": "https://github.com/msmalinosterberg/miniprojekt/blob/master/src/assets/prod1.png?raw=true",
+    "categories": ["60a758b7128cef6621b4ad27", "60a758b7128cef6621b4ad28"]
 }
 
 ###
@@ -30,4 +31,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3001/api/products/60a6209e4dbb476ac9a6e3d8
+DELETE http://localhost:3001/api/products/60a75f989ddc266e97361c84
