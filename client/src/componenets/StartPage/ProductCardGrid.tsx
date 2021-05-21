@@ -18,7 +18,8 @@ export interface Product {
     imageUrl: string
 }
 export interface Category {
-    name: string
+    name: string;
+    _id: string;
 }
 interface State {
     products?: Product[],
@@ -42,7 +43,7 @@ class ProductCardGrid extends Component<State> {
     categoryOptions = () => {
         console.log(this.state.categories)
         return this.state.categories?.map((c: Category) => {
-            return <Option value={c.name} key={c.name}>
+            return <Option value={c._id} key={c.name}>
                 {c.name}
             </Option>
         })
@@ -50,6 +51,7 @@ class ProductCardGrid extends Component<State> {
 
     handleChange(value: any) {
         console.log(`selected ${value}`);
+        
     }
         
     render() {

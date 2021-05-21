@@ -6,6 +6,10 @@ exports.getAllProducts = async (req, res) => {
     res.status(200).json(products);
 }
 
+exports.getProductsByCategory = async (req, res) => {
+    const products = await ProductModel.find({})
+}
+
 exports.getOneProduct = async (req, res) => {
     try {
         const product = await ProductModel.findById(req.params.id);
