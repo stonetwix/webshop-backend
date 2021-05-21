@@ -11,7 +11,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3001/api/categories/60a6246b6d524b6d89214791
+PUT http://localhost:3001/api/categories/60a79b0a4bf15893b3aaa098
 Content-Type: application/json
 
 {

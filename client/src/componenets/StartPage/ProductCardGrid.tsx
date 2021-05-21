@@ -41,7 +41,6 @@ class ProductCardGrid extends Component<State> {
     }
 
     categoryOptions = () => {
-        console.log(this.state.categories)
         return this.state.categories?.map((c: Category) => {
             return <Option value={c._id} key={c.name}>
                 {c.name}
@@ -49,9 +48,9 @@ class ProductCardGrid extends Component<State> {
         })
     }
 
-    handleChange(value: any) {
-        console.log(`selected ${value}`);
-        
+    handleChange = async (value: any) => {
+        const products = await getProductsByCategory(value);
+        this.setState({ products: products });
     }
         
     render() {
@@ -66,7 +65,7 @@ class ProductCardGrid extends Component<State> {
                             allowClear
                             style={{ width: '100%' }}
                             placeholder="Please select"
-                            defaultValue={['all']}
+                            defaultValue={[]}
                             onChange={this.handleChange}
                             >
                             {this.categoryOptions()}
@@ -135,7 +134,6 @@ const selectContainer: CSSProperties = {
 
 const columnStyle: CSSProperties = {
     display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
     marginTop: '2rem',
 }
@@ -155,6 +153,18 @@ const getProducts = async () => {
 const getCategories = async () => {
     try {
         let response = await fetch('/api/categories');
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+} 
+
+const getProductsByCategory = async (_id: string) => {
+    try {
+        let response = await fetch('/api/products/category/' + _id);
         if (response.ok) {
             const data = await response.json();
             return data;
