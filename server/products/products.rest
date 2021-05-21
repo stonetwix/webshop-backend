@@ -10,11 +10,11 @@ POST http://localhost:3001/api/products
 Content-Type: application/json
 
 {
-    "title": "NEW PRODUCT 6",
+    "title": "NEW PRODUCT",
     "description": "Lorem ipsum dolor sit amet.",
     "price": 222,
     "imageUrl": "https://github.com/msmalinosterberg/miniprojekt/blob/master/src/assets/prod1.png?raw=true",
-    "categories": ["60a758b7128cef6621b4ad27", "60a758b7128cef6621b4ad28"]
+    "categories": ["60a79608dddab0a695d05e91"]
 }
 
 ###
