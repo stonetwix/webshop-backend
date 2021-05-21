@@ -14,7 +14,7 @@ POST http://localhost:3001/api/products
 Content-Type: application/json
 
 {
-    "title": "NEW PRODUCT 4",
+    "title": "NEW PRODUCT 2",
     "description": "Lorem ipsum dolor sit amet.",
     "price": 222,
     "imageUrl": "https://github.com/msmalinosterberg/miniprojekt/blob/master/src/assets/prod1.png?raw=true",

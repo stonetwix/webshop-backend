@@ -1,8 +1,8 @@
-import { Form, Input, Button, Col, Row, message } from "antd";
+import { Form, Input, Button, Col, Row, message, Select, InputNumber } from "antd";
 import { Component, CSSProperties } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import ErrorPage from "../ErrorPage";
-import { Product } from "../StartPage/ProductCardGrid";
+import { Category, Product } from "../StartPage/ProductCardGrid";
 
 const layout = {
   labelCol: {
@@ -12,6 +12,7 @@ const layout = {
     span: 16,
   },
 };
+const { Option } = Select;
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -29,6 +30,7 @@ interface Props extends RouteComponentProps<{ id: string }> {}
 
 interface State {
   product?: Product;
+  categories?: Category[];
   buttonSaveLoading: boolean;
   buttonDeleteLoading: boolean;
 }
@@ -44,6 +46,7 @@ const successDelete = () => {
 class AdminEditDetails extends Component<Props, State> {
   state: State = {
     product: undefined,
+    categories: [],
     buttonSaveLoading: false,
     buttonDeleteLoading: false,
   };
@@ -57,12 +60,27 @@ class AdminEditDetails extends Component<Props, State> {
 
   async componentDidMount() {
     const product = await getProduct((this.props.match.params as any)._id);
-    this.setState({ product: product });
+    const categories = await getCategories();
+    this.setState({ product: product, categories: categories });
   }
 
-componentWillUnmount() {
-  this.setState({ product: undefined });
+  categoryOptions = () => {
+    return this.state.categories?.map((c: Category) => {
+        return <Option value={c._id} key={c.name}>
+            {c.name}
+        </Option>
+    })
 }
+
+handleChange = async (value: any) => {
+  console.log(value);
+  //const products = await getCategories(value);
+  //this.setState({ products: products });
+}
+
+  componentWillUnmount() {
+    this.setState({ product: undefined });
+  }
 
   render() {
     const { product } = this.state;
@@ -96,7 +114,7 @@ componentWillUnmount() {
                   fontWeight: "bold",
                 }}
               >
-                EDIT
+                EDIT PRODUCT
               </h1>
               <Form.Item name={["product", "title"]} label="Title" rules={[{ required: true }]}>
                 <Input />
@@ -112,6 +130,20 @@ componentWillUnmount() {
               
               <Form.Item name={["product", "imageUrl"]} label="ImageUrl" rules={[{ required: true }]}>
                 <Input />
+              </Form.Item>
+              <Form.Item name={["product", "categories"]} label="Categories" rules={[{ required: true }]}>
+                <Select
+                  mode="multiple"
+                  allowClear
+                  placeholder="Please select"
+                  defaultValue={[]}
+                  //onChange={this.handleChange}
+                  >
+                  {this.categoryOptions()}
+                </Select>
+              </Form.Item>
+              <Form.Item name={["product", "inStock"]} label="In Stock" rules={[{ required: true }]}>
+                <InputNumber />
               </Form.Item>
 
               <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
@@ -177,3 +209,15 @@ const putProduct = async (product: Product, _id: string) => {
       console.error(error);
   }
 }
+
+const getCategories = async () => {
+  try {
+      let response = await fetch('/api/categories');
+      if (response.ok) {
+          const data = await response.json();
+          return data;
+      }
+  } catch (error) {
+      console.error(error);
+  }
+} 
