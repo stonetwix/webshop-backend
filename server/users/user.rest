@@ -7,8 +7,18 @@ POST http://localhost:3001/api/users
 Content-Type: application/json 
 
 {
-    "email": "hallo@gmail.com", 
+    "email": "hallo5@gmail.com", 
     "password": "hej"
 }
 
+### 
+
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+    "email": "hallo4@gmail.com", 
+    "password": "hej"
+
+}
 
