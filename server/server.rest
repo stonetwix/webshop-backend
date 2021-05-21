@@ -6,4 +6,15 @@ GET http://localhost:3001/api/delivery
 
 ###
 
-GET http://localhost:3001/api/delivery/:id
+GET http://localhost:3001/api/delivery/60a79faff5040cc41ba0ae11
+
+###
+
+POST http://localhost:3001/api/delivery
+Content-Type: application/json
+
+{
+    "company": "Budbee",
+    "price": 800,
+    "deliverytime": 12
+}
