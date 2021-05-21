@@ -2,7 +2,11 @@ GET http://localhost:3001/api/products
 
 ###
 
-GET http://localhost:3001/api/products/60a4b279bc09930eb282d9f9
+GET http://localhost:3001/api/products/60a79b0ae6374ead67a378aa
+
+###
+
+GET http://localhost:3001/api/products/category/60a79608dddab0a695d05e91
 
 ###
 
@@ -10,7 +14,7 @@ POST http://localhost:3001/api/products
 Content-Type: application/json
 
 {
-    "title": "NEW PRODUCT",
+    "title": "NEW PRODUCT AGAIN",
     "description": "Lorem ipsum dolor sit amet.",
     "price": 222,
     "imageUrl": "https://github.com/msmalinosterberg/miniprojekt/blob/master/src/assets/prod1.png?raw=true",

@@ -7,7 +7,9 @@ exports.getAllProducts = async (req, res) => {
 }
 
 exports.getProductsByCategory = async (req, res) => {
-    const products = await ProductModel.find({categories: mongoose.Types.ObjectId('60a79608dddab0a695d05e91')})
+    const products = await ProductModel.find({'categories': req.params.id});
+    console.log(products);
+    res.status(200).json(products);
 }
 
 exports.getOneProduct = async (req, res) => {
