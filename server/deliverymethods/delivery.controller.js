@@ -8,8 +8,8 @@ exports.getAllDeliveryMethods = async (req, res) => {
 
 exports.getOneDeliveryMethod = async (req, res) => {
     try {
-        const product = await DeliveryModel.findById(req.params.id);
-        res.status(200).json(deliveryMethods);   
+        const deliveryMethod = await DeliveryModel.findById(req.params.id);
+        res.status(200).json(deliveryMethod);   
     } catch (error) {
         res.status(404).json({ error: 'Delivery method not available' });   
     }

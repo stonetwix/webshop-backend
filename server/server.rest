@@ -1,34 +1,9 @@
-GET http://localhost:3001/products
+GET http://localhost:3001/api/products
+
+### 
+
+GET http://localhost:3001/api/delivery
 
 ###
 
-GET http://localhost:3001/products/4
-
-###
-
-POST http://localhost:3001/products
-Content-Type: application/json
-
-{
-    "title": "NEW DRESS",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ornare auctor purus, vel vehicula neque bibendum eget.",
-    "price": 799,
-    "imageUrl": "https://www.na-kd.com/globalassets/nakd_chiffon_dress_burgundy_1018-002281-0039_01j.jpg?ref=D83B036F87"
-}
-
-###
-
-PUT http://localhost:3001/products/1
-Content-Type: application/json
-
-{
-    "id": 1,
-    "title": "EDITED DRESS",
-    "description": "Woven long sleeve sequin mini dress. Zipper and button closure at the neck. It´s the perfect party dress.",
-    "price": 429,
-    "imageUrl": "https://github.com/msmalinosterberg/miniprojekt/blob/master/src/assets/prod6.png?raw=true"
-}
-
-###
-
-DELETE http://localhost:3001/products/2
+GET http://localhost:3001/api/delivery/:id
