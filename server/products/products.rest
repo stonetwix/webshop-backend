@@ -2,6 +2,10 @@ GET http://localhost:3001/api/products
 
 ###
 
+GET http://localhost:3001/api/products?category=60a8b9b6c4649b239bf4900a&category=60a8b9b6c4649b239bf4900c
+
+###
+
 GET http://localhost:3001/api/products/60a8b79f7aa5db1d8d014d01
 
 ###

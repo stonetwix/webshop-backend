@@ -2,7 +2,14 @@ const ProductModel = require('./products.model');
 const { body, validationResult } = require('express-validator');
 
 exports.getAllProducts = async (req, res) => {
-    const products = await ProductModel.find({}).populate('categories').sort({ title: 1 });
+    console.log(req.query);
+    let filter = {};
+    if (req.query.category) {
+        filter = {
+            categories: { $in: req.query.category }
+        }
+    }
+    const products = await ProductModel.find(filter).populate('categories').sort({ title: 1 });
     res.status(200).json(products);
 }
 

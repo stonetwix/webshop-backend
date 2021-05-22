@@ -37,7 +37,7 @@ class ProductCardGrid extends Component<State> {
     }
     
     async componentDidMount() {
-        const products = await getProducts();
+        const products = await getProducts([]);
         const categories = await getCategories();
         this.setState({ products: products, categories: categories });
     }
@@ -50,13 +50,14 @@ class ProductCardGrid extends Component<State> {
         })
     }
 
-    handleChange = async (value: any) => {
+    handleChange = async (value: any, values: any) => {
         let products;
         if (value.length === 0) {
-            products = await getProducts();
+            products = await getProducts([]);
         } else {
-            products = await getProductsByCategory(value);
+            products = await getProducts(values);
         }
+        // TODO: Add categoryFilter state update to context
         this.setState({ products: products });
     }
         
@@ -145,9 +146,13 @@ const columnStyle: CSSProperties = {
     marginTop: '2rem',
 }
 
-const getProducts = async () => {
+const getProducts = async (categories: any[]) => {
     try {
-        let response = await fetch('/api/products');
+        let query = '';
+        if (categories.length !== 0) {
+            query = '?' + categories.map(x => 'category=' + x.value).join('&');
+        }
+        const response = await fetch('/api/products' + query);
         if (response.ok) {
           const data = await response.json();
           return data;
