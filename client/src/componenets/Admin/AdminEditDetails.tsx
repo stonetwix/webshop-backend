@@ -39,10 +39,6 @@ const successSave = () => {
   message.success('The product has been updated', 3);
 };
 
-const successDelete = () => {
-  message.success('The product has been deleted', 3);
-};
-
 class AdminEditDetails extends Component<Props, State> {
   state: State = {
     product: undefined,
@@ -52,6 +48,7 @@ class AdminEditDetails extends Component<Props, State> {
   };
 
   onFinish = async (values: any) => {
+    console.log(values)
     this.setState({ buttonSaveLoading: true });
     await putProduct(values.product, (this.props.match.params as any)._id);
     this.props.history.push('/admin-list');
@@ -99,6 +96,7 @@ class AdminEditDetails extends Component<Props, State> {
                   price: this.state.product?.price,
                   imageUrl: this.state.product?.imageUrl,
                   categories: this.state.product?.categories,
+                  inventory: this.state.product?.inventory,
                 }
               }}
             >
@@ -135,7 +133,7 @@ class AdminEditDetails extends Component<Props, State> {
                   {this.categoryOptions()}
                 </Select>
               </Form.Item>
-              <Form.Item name={["product", "inStock"]} label="In Stock" rules={[{ required: true }]}>
+              <Form.Item name={["product", "inventory"]} label="Inventory" rules={[{ required: true }]}>
                 <InputNumber />
               </Form.Item>
 
