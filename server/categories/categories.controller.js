@@ -2,7 +2,7 @@ const CategoryModel = require('./categories.model');
 const { body, validationResult } = require('express-validator');
 
 exports.getAllCategories = async (req, res) => {
-    const categories = await CategoryModel.find({}).populate('products');
+    const categories = await CategoryModel.find({}).populate('products').sort({ name: 1 });
     res.status(200).json(categories);
 }
 
