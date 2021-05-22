@@ -11,11 +11,12 @@ const success = () => {
     message.success('The product was added to the cart', 5);
 };
 export interface Product {
-    _id: string
-    title: string
-    description: string
-    price: number
-    imageUrl: string
+    _id: string;
+    title: string;
+    description: string;
+    price: number;
+    imageUrl: string;
+    categories: Category[];
 }
 export interface Category {
     name: string;
@@ -49,7 +50,12 @@ class ProductCardGrid extends Component<State> {
     }
 
     handleChange = async (value: any) => {
-        const products = await getProductsByCategory(value);
+        let products;
+        if (value.length === 0) {
+            products = await getProducts();
+        } else {
+            products = await getProductsByCategory(value);
+        }
         this.setState({ products: products });
     }
         
@@ -68,7 +74,7 @@ class ProductCardGrid extends Component<State> {
                             defaultValue={[]}
                             onChange={this.handleChange}
                             >
-                            {this.categoryOptions()}
+                                {this.categoryOptions()}
                         </Select>
                     </Col>
                 </Row> 

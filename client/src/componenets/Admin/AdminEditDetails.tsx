@@ -72,12 +72,6 @@ class AdminEditDetails extends Component<Props, State> {
     })
 }
 
-handleChange = async (value: any) => {
-  console.log(value);
-  //const products = await getCategories(value);
-  //this.setState({ products: products });
-}
-
   componentWillUnmount() {
     this.setState({ product: undefined });
   }
@@ -104,6 +98,7 @@ handleChange = async (value: any) => {
                   description: this.state.product?.description,
                   price: this.state.product?.price,
                   imageUrl: this.state.product?.imageUrl,
+                  categories: this.state.product?.categories,
                 }
               }}
             >
@@ -136,8 +131,6 @@ handleChange = async (value: any) => {
                   mode="multiple"
                   allowClear
                   placeholder="Please select"
-                  defaultValue={[]}
-                  //onChange={this.handleChange}
                   >
                   {this.categoryOptions()}
                 </Select>
