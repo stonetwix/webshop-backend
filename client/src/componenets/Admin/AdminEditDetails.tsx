@@ -67,7 +67,7 @@ class AdminEditDetails extends Component<Props, State> {
             {c.name}
         </Option>
     })
-}
+  }
 
   componentWillUnmount() {
     this.setState({ product: undefined });
