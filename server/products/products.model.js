@@ -9,7 +9,8 @@ const productSchema = new mongoose.Schema({
         [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Category'
-        }]
+        }],
+    inventory: { type: Number, required: true }
 });
 
 const ProductModel = mongoose.model('Product', productSchema);
