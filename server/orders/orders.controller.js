@@ -18,11 +18,10 @@ exports.getOneOrder = async (req, res) => {
 }
 
 exports.addOrder = async (req, res) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() });
-    // }
-    // TODO: Validering kollar om priset ändrats
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
 
     const cartProducts = req.body.cartProducts;
     const productIds = cartProducts.map(p => p._id);
@@ -62,7 +61,7 @@ exports.addOrder = async (req, res) => {
     }
 
     const orderData = {
-        orderProducts: orderProducts.map(p => p._id),
+        orderProducts: orderProducts,
         deliveryMethod: req.body.deliveryMethod,
         totalPrice: orderProducts.reduce((acc, p) => acc + p.totalPrice, 0),
         //user: ,
