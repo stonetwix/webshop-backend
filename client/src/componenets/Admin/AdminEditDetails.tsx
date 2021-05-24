@@ -1,8 +1,8 @@
-import { Form, Input, Button, Col, Row, message } from "antd";
+import { Form, Input, Button, Col, Row, message, Select, InputNumber } from "antd";
 import { Component, CSSProperties } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import ErrorPage from "../ErrorPage";
-import { Product } from "../StartPage/ProductCardGrid";
+import { Category, Product } from "../StartPage/ProductCardGrid";
 
 const layout = {
   labelCol: {
@@ -12,6 +12,7 @@ const layout = {
     span: 16,
   },
 };
+const { Option } = Select;
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -29,6 +30,7 @@ interface Props extends RouteComponentProps<{ id: string }> {}
 
 interface State {
   product?: Product;
+  categories?: Category[];
   buttonSaveLoading: boolean;
   buttonDeleteLoading: boolean;
 }
@@ -37,18 +39,16 @@ const successSave = () => {
   message.success('The product has been updated', 3);
 };
 
-const successDelete = () => {
-  message.success('The product has been deleted', 3);
-};
-
 class AdminEditDetails extends Component<Props, State> {
   state: State = {
     product: undefined,
+    categories: [],
     buttonSaveLoading: false,
     buttonDeleteLoading: false,
   };
 
   onFinish = async (values: any) => {
+    console.log(values)
     this.setState({ buttonSaveLoading: true });
     await putProduct(values.product, (this.props.match.params as any)._id);
     this.props.history.push('/admin-list');
@@ -57,12 +57,21 @@ class AdminEditDetails extends Component<Props, State> {
 
   async componentDidMount() {
     const product = await getProduct((this.props.match.params as any)._id);
-    this.setState({ product: product });
+    const categories = await getCategories();
+    this.setState({ product: product, categories: categories });
   }
 
-componentWillUnmount() {
-  this.setState({ product: undefined });
-}
+  categoryOptions = () => {
+    return this.state.categories?.map((c: Category) => {
+        return <Option value={c._id} key={c.name}>
+            {c.name}
+        </Option>
+    })
+  }
+
+  componentWillUnmount() {
+    this.setState({ product: undefined });
+  }
 
   render() {
     const { product } = this.state;
@@ -86,6 +95,8 @@ componentWillUnmount() {
                   description: this.state.product?.description,
                   price: this.state.product?.price,
                   imageUrl: this.state.product?.imageUrl,
+                  categories: this.state.product?.categories,
+                  inventory: this.state.product?.inventory,
                 }
               }}
             >
@@ -96,7 +107,7 @@ componentWillUnmount() {
                   fontWeight: "bold",
                 }}
               >
-                EDIT
+                EDIT PRODUCT
               </h1>
               <Form.Item name={["product", "title"]} label="Title" rules={[{ required: true }]}>
                 <Input />
@@ -112,6 +123,18 @@ componentWillUnmount() {
               
               <Form.Item name={["product", "imageUrl"]} label="ImageUrl" rules={[{ required: true }]}>
                 <Input />
+              </Form.Item>
+              <Form.Item name={["product", "categories"]} label="Categories" rules={[{ required: true }]}>
+                <Select
+                  mode="multiple"
+                  allowClear
+                  placeholder="Please select"
+                  >
+                  {this.categoryOptions()}
+                </Select>
+              </Form.Item>
+              <Form.Item name={["product", "inventory"]} label="Inventory" rules={[{ required: true }]}>
+                <InputNumber />
               </Form.Item>
 
               <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
@@ -177,3 +200,15 @@ const putProduct = async (product: Product, _id: string) => {
       console.error(error);
   }
 }
+
+const getCategories = async () => {
+  try {
+      let response = await fetch('/api/categories');
+      if (response.ok) {
+          const data = await response.json();
+          return data;
+      }
+  } catch (error) {
+      console.error(error);
+  }
+} 

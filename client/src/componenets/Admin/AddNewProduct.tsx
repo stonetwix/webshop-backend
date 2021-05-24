@@ -1,7 +1,7 @@
 import { Component, CSSProperties } from "react";
-import { Form, Input, InputNumber, Button, Col, Row, message } from "antd";
+import { Form, Input, Button, Col, Row, message, Select, InputNumber } from "antd";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { Product } from "../StartPage/ProductCardGrid";
+import { Category, Product } from "../StartPage/ProductCardGrid";
 
 const layout = {
   labelCol: {
@@ -11,6 +11,8 @@ const layout = {
     span: 16,
   },
 };
+
+const { Option } = Select;
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -27,6 +29,7 @@ const validateMessages = {
 interface Props extends RouteComponentProps<{ id: string }> {}
 interface State {
   product: Product | undefined;
+  categories?: Category[]; 
   buttonSaveLoading: boolean;
 }
 
@@ -37,6 +40,7 @@ class AddNewProduct extends Component<Props, State> {
   
   state: State = {
     product: undefined,
+    categories: [],
     buttonSaveLoading: false,
   };
   
@@ -46,6 +50,19 @@ class AddNewProduct extends Component<Props, State> {
     this.props.history.push('/admin-list');
     this.setState({ buttonSaveLoading: false });
   };
+
+  async componentDidMount() {
+    const categories = await getCategories();
+    this.setState({ categories: categories });
+  }
+
+  categoryOptions = () => {
+    return this.state.categories?.map((c: Category) => {
+        return <Option value={c._id} key={c.name}>
+            {c.name}
+        </Option>
+    })
+  }
 
   componentWillUnmount() {
     this.setState({ product: undefined });
@@ -85,6 +102,19 @@ class AddNewProduct extends Component<Props, State> {
               
               <Form.Item name={["product", "imageUrl"]} label="ImageUrl" rules={[{ required: true }]}>
                 <Input />
+              </Form.Item>
+
+              <Form.Item name={["product", "categories"]} label="Categories" rules={[{ required: true }]}>
+                <Select
+                  mode="multiple"
+                  allowClear
+                  placeholder="Please select"
+                  >
+                  {this.categoryOptions()}
+                </Select>
+              </Form.Item>
+              <Form.Item name={["product", "inventory"]} label="Inventory" rules={[{ required: true }]}>
+                <InputNumber />
               </Form.Item>
 
               <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
@@ -137,3 +167,15 @@ const addProduct = async (product: Product) => {
       console.error(error);
   }
 }
+
+const getCategories = async () => {
+  try {
+      let response = await fetch('/api/categories');
+      if (response.ok) {
+          const data = await response.json();
+          return data;
+      }
+  } catch (error) {
+      console.error(error);
+  }
+} 

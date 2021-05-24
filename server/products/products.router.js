@@ -6,6 +6,7 @@ const { body, validationResult } = require('express-validator');
 productsRouter
     .get('/api/products', controller.getAllProducts)
     .get('/api/products/:id', controller.getOneProduct)
+    .get('/api/products/category/:id', controller.getProductsByCategory)
     .post('/api/products',
         body('title').not().isEmpty(),
         body('description').not().isEmpty(),

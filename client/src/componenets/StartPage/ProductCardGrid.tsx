@@ -1,75 +1,120 @@
 import { Component, ContextType, CSSProperties } from 'react';
-import { Card, Col, List, Row, message } from 'antd';
+import { Card, Col, List, Row, message, Select } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
 
 const { Meta } = Card;
+const { Option } = Select;
+
 const success = () => {
     message.success('The product was added to the cart', 5);
 };
-
 export interface Product {
-    _id: string
-    title: string
-    description: string
-    price: number
-    imageUrl: string
+    _id: string;
+    title: string;
+    description: string;
+    price: number;
+    imageUrl: string;
+    categories: Category[];
+    inventory: number;
 }
-
+export interface Category {
+    name: string;
+    _id: string;
+}
 interface State {
     products?: Product[],
+    categories?: Category[],
 }
 class ProductCardGrid extends Component<State> {
     context!: ContextType<typeof CartContext>
     static contextType = CartContext;
-
+    
     state: State = {
         products: [],
+        categories: [],
+    }
+    
+    async componentDidMount() {
+        const products = await getProducts([]);
+        const categories = await getCategories();
+        this.setState({ products: products, categories: categories });
     }
 
-    async componentDidMount() {
-        const products = await getProducts();
+    categoryOptions = () => {
+        return this.state.categories?.map((c: Category) => {
+            return <Option value={c._id} key={c.name}>
+                {c.name}
+            </Option>
+        })
+    }
+
+    handleChange = async (value: any, values: any) => {
+        let products;
+        if (value.length === 0) {
+            products = await getProducts([]);
+        } else {
+            products = await getProducts(values);
+        }
+        // TODO: Add categoryFilter state update to context
         this.setState({ products: products });
-      }
+    }
         
     render() {
         const { addProductToCart } = this.context;
-        return(    
-            <Row style={cardContainer}>
-                <Col span={24} style={columnStyle}>
-                    <List
-                        grid={{
-                            gutter: 25,
-                            xs: 1,
-                            sm: 2,
-                            md: 2,
-                            lg: 4,
-                            xl: 4,
-                            xxl: 4,
-                        }}
-                        dataSource={this.state.products}
-                        renderItem={item => (
-                            <List.Item>
-                                <Link to={'/product/' + item._id}>
-                                    <Card
-                                        hoverable
-                                        cover={<img src={item.imageUrl} alt='product' />}
-                                        actions={[
-                                            <ShoppingCartOutlined 
-                                                style={{ fontSize: '2rem' }}
-                                                onClick={(e) => {success(); e.preventDefault(); addProductToCart(item, undefined)}} 
-                                            />
-                                        ]}
-                                    >
-                                    <Meta title={item.title} description={item.price + ' kr'} />
-                                    </Card>
-                                </Link>
-                            </List.Item>
-                        )}    
-                    />
-                </Col>
-            </Row>
+        return(
+            <>
+                <Row style={selectContainer}>
+                    <Col span={24}>
+                        <h3>Filter products</h3>
+                        <Select
+                            mode="multiple"
+                            allowClear
+                            style={{ width: '100%' }}
+                            placeholder="Please select"
+                            defaultValue={[]}
+                            onChange={this.handleChange}
+                            >
+                                {this.categoryOptions()}
+                        </Select>
+                    </Col>
+                </Row> 
+                <Row style={cardContainer}>
+                    <Col span={24} style={columnStyle}>
+                        <List
+                            grid={{
+                                gutter: 25,
+                                xs: 1,
+                                sm: 2,
+                                md: 2,
+                                lg: 4,
+                                xl: 4,
+                                xxl: 4,
+                            }}
+                            dataSource={this.state.products}
+                            renderItem={item => (
+                                <List.Item>
+                                    <Link to={'/product/' + item._id}>
+                                        <Card
+                                            hoverable
+                                            cover={<img src={item.imageUrl} alt='product' />}
+                                            actions={[
+                                                <ShoppingCartOutlined 
+                                                    style={{ fontSize: '2rem' }}
+                                                    onClick={(e) => {success(); e.preventDefault(); addProductToCart(item, undefined)}} 
+                                                />
+                                            ]}
+                                        >
+                                        <Meta title={item.title} description={item.price + ' kr'} />
+                                        </Card>
+                                    </Link>
+                                </List.Item>
+                            )}    
+                        />
+                    </Col>
+                </Row>
+            </>
         )
     }
 }
@@ -85,16 +130,29 @@ const cardContainer: CSSProperties = {
     paddingBottom: '8rem',
 }
 
-const columnStyle: CSSProperties = {
+const selectContainer: CSSProperties = {
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: '3rem',
+    justifyContent: 'space-around',
+    alignItems: 'space-around',
+    width: '80%',
+    margin: 'auto',
+    paddingBottom: '2rem',
+    paddingTop: '2rem',
 }
 
-const getProducts = async () => {
+const columnStyle: CSSProperties = {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: '2rem',
+}
+
+const getProducts = async (categories: any[]) => {
     try {
-        let response = await fetch('/api/products');
+        let query = '';
+        if (categories.length !== 0) {
+            query = '?' + categories.map(x => 'category=' + x.value).join('&');
+        }
+        const response = await fetch('/api/products' + query);
         if (response.ok) {
           const data = await response.json();
           return data;
@@ -102,4 +160,28 @@ const getProducts = async () => {
     } catch (error) {
         console.error(error);
     }
-  }
+}
+
+const getCategories = async () => {
+    try {
+        let response = await fetch('/api/categories');
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+} 
+
+const getProductsByCategory = async (_id: string) => {
+    try {
+        let response = await fetch('/api/products/category/' + _id);
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+} 

@@ -2,7 +2,20 @@ const ProductModel = require('./products.model');
 const { body, validationResult } = require('express-validator');
 
 exports.getAllProducts = async (req, res) => {
-    const products = await ProductModel.find({});
+    console.log(req.query);
+    let filter = {};
+    if (req.query.category) {
+        filter = {
+            categories: { $in: req.query.category }
+        }
+    }
+    const products = await ProductModel.find(filter).populate('categories').sort({ title: 1 });
+    res.status(200).json(products);
+}
+
+exports.getProductsByCategory = async (req, res) => {
+    const products = await ProductModel.find({'categories': req.params.id}).populate('categories').sort({ title: 1 });
+    console.log(products);
     res.status(200).json(products);
 }
 
@@ -20,7 +33,7 @@ exports.addProduct = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    const newProduct = await ProductModel.create(req.body);;
+    const newProduct = await (await ProductModel.create(req.body));
     res.status(201).json(newProduct);
 }
 
@@ -29,11 +42,17 @@ exports.editProduct = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
+    let queryRes;
+    const product = req.body;
     try {
-        const product = await ProductModel.findById(req.params.id).updateOne(req.body);
-        res.status(200).json(product);
+        queryRes = await ProductModel.findById(req.params.id).updateOne(product);
     } catch (error) {
         res.status(404).json({ error: 'Product not available' });
+    }
+    if (!queryRes.nModified) {
+        res.status(404).json({ error: 'Product not available' });
+    } else {
+        res.status(200).json(await ProductModel.findById(req.params.id));
     }
 }
 
