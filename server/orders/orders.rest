@@ -1,0 +1,18 @@
+POST http://localhost:3001/api/orders
+Content-Type: application/json
+
+{
+    "deliveryMethod": "PostNord",
+    "totalPrize": 299,
+    "deliveryAddress": {
+        "street": "Street name 2",
+        "zipcode": "11111",
+        "city": "Gothenburg"
+    },
+    "deliveryDay": "2021-05-30",
+    "isShipped": false
+}
+
+###
+
+GET http://localhost:3001/api/orders
