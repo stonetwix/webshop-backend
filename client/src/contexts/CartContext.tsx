@@ -4,7 +4,7 @@ import { UserInfo } from '../componenets/Cart/InformationForm';
 import { PaymentCard } from '../componenets/Cart/PayCard';
 import { PaymentKlarna } from '../componenets/Cart/PayKlarna';
 import { PaymentSwish } from '../componenets/Cart/PaySwish';
-import { DeliveryMethod, deliveryMethods } from '../componenets/deliveryMethods';
+import { DeliveryMethod } from '../componenets/Cart/DeliverySelection';
 import { IReceipt } from '../componenets/OrderSuccess/Reciept';
 import { Product } from '../componenets/StartPage/ProductCardGrid';
 //import { Product } from '../componenets/ProductItemsList';

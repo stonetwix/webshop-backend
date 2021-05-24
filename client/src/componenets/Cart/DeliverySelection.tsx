@@ -1,29 +1,48 @@
 import { Button, Radio, Row } from 'antd';
 import { Component, ContextType, CSSProperties } from 'react';
 import { CartContext } from '../../contexts/CartContext';
-import { calculateDeliveryDay, DeliveryMethod, deliveryMethods } from '../deliveryMethods';
+import { calculateDeliveryDay } from '../deliveryMethods';
 interface Props {
   next(): void;
 }
+
+export interface DeliveryMethod {
+  id: number;
+  company: string;
+  time: number;
+  price: number;
+}
+
+interface State {
+  deliveryMethods?: DeliveryMethod[],
+  value: number
+}
+
 class DeliverySection extends Component<Props> {
   context!: ContextType<typeof CartContext>
   static contextType = CartContext;
 
-  state = {
-    value: 1,
-  };
+  state: State = {
+    deliveryMethods: [],
+    value: 1
+  }
+
+  async componentDidMount() {
+    const deliveryMethods = await getAllDeliveryMethods();
+    this.setState({ deliveryMethods: deliveryMethods });
+  } 
   
   onChange = (e: any) => {
     const { setDeliveryMethod } = this.context;
     this.setState({
       value: e.target.value,
     });
-    const method = deliveryMethods.filter((item: DeliveryMethod) => item.id === e.target.value)[0];
+    const method = this.state.deliveryMethods?.filter((item: DeliveryMethod) => item.id === e.target.value)[0];
     setDeliveryMethod(method);
   };
 
   mapMethodToRadio() {
-    return deliveryMethods.map(item =>
+    return this.state.deliveryMethods?.map(item =>
       <Radio value={item.id} style={{ marginTop: '2rem' }}>
         <span style={deliveryCompanyStyle}>{item.company}</span>
         <br/>
@@ -78,4 +97,16 @@ const deliveryTextStyle: CSSProperties = {
 
 const deliveryCompanyStyle: CSSProperties = {
   fontWeight: 'bold',
+}
+
+const getAllDeliveryMethods = async () => {
+  try {
+      let response = await fetch('/api/delivery');
+      if (response.ok) {
+          const data = await response.json();
+          return data;
+      }
+  } catch (error) {
+      console.error(error);
+  }
 }
