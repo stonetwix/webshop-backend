@@ -2,11 +2,8 @@ import { Component, createContext } from 'react';
 
 
 interface State {
-    email: string,
-  
+    email: string;
     isLoggedIn: boolean;
-
-
 }
 
 interface ContextValue extends State {
@@ -14,13 +11,11 @@ interface ContextValue extends State {
     logoutUser: () => void; 
 }
 
-export const UserContext = createContext<ContextValue> ({
+export const UserContext = createContext<ContextValue>({
     email: '', 
     isLoggedIn: false,
-
     setUser: () => {},
-    logoutUser: () => {}
-
+    logoutUser: () => {},
 }); 
 
 class UserProvider extends Component <{}, State> {
@@ -38,11 +33,11 @@ class UserProvider extends Component <{}, State> {
     }
  
     setUser = (email: string) => {
-        this.setState({ isLoggedIn: true });
+        this.setState({ email: email, isLoggedIn: true });
     }
     
     logoutUser = () => {
-        this.setState({ isLoggedIn: false });
+        this.setState({ email: '', isLoggedIn: false });
     }
 
     render() {
@@ -58,6 +53,8 @@ class UserProvider extends Component <{}, State> {
         );
     }
 }
+
+export default UserProvider;    
 
 
 const whoami = async () => {
