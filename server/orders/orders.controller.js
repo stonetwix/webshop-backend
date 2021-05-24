@@ -40,9 +40,17 @@ exports.addOrder = async (req, res) => {
         totalPrice: productMap[p._id]['price'] * p.quantity,
     }));
 
+    //Checks if products inventory is more than quantity. 
     const allProductsAvailable = orderProductsData.map(p => productMap[p.originalProductID]['inventory'] >= p.quantity).every(x => x === true);
     if (!allProductsAvailable) {
         res.status(400).json({ error: 'Product inventory too low' });
+        return;
+    }
+
+    //Checks if products price has changed????????
+    const productsPrice = orderProductsData.map(p => productMap[p.originalProductID]['price'] === p.price).every(x => x === true);
+    if (!productsPrice) {
+        res.status(400).json({ error: 'Product price has changed, check your updated cart' });
         return;
     }
 
