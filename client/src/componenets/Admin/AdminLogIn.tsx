@@ -1,6 +1,6 @@
-import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
-import { CSSProperties, Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Form, Input, Button, message, Row, Col } from 'antd';
+import React, { CSSProperties, Component } from 'react';
+import { Route } from 'react-router-dom';
 
 const layout = {
   labelCol: {
@@ -17,11 +17,18 @@ const tailLayout = {
     span: 16,
   },
 };
-
+const error = () => {
+  message.error('Not valid e-mail or password', 3);
+};
 class AdminLogIn extends Component {
 
-  onFinish = (values: any) => {
-    console.log('Success:', values);
+  onFinish = async (values: any, history: any) => {
+    const user = await login(values.email, values.password);
+    if (user) {
+      history.push('/');
+    } else {
+      error(); 
+    }
   };
 
   onFinishFailed = (errorInfo: any) => {
@@ -34,22 +41,27 @@ class AdminLogIn extends Component {
         <Row style={ContainerStyle}>
           <Col span={24} style={columnStyle}>
             <h1 style={{display: 'flex', justifyContent: 'center', fontWeight: 'bold'}}>LOG IN </h1>
+            <Route render={({ history }) => (
             <Form
               {...layout}
               name="basic"
               initialValues={{
                 remember: true,
               }}
-              onFinish={this.onFinish}
-              onFinishFailed={this.onFinishFailed}
+              onFinish={(values) => this.onFinish(values, history)}
+              
             >
               <Form.Item
-                label="Username"
-                name="username"
+                label="Email"
+                name="email"
                 rules={[
                   {
+                    type: 'email',
+                    message: 'The input is not valid email',
+                  },
+                  { 
                     required: true,
-                    message: 'Please input your username!',
+                    message: 'Please input your email!',
                   },
                 ]}
               >
@@ -68,19 +80,16 @@ class AdminLogIn extends Component {
               >
                 <Input.Password />
               </Form.Item>
-      
-              <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                <Checkbox>Remember me</Checkbox>
-              </Form.Item>
         
               <Form.Item {...tailLayout}>        
-                <Link to={'/admin-list'}>
+                
                   <Button type="primary" htmlType="submit" style={buttonStyle}>
                     Log in 
                   </Button> 
-                </Link> 
+              
               </Form.Item>
             </Form>
+             )}/>
           </Col>
         </Row>
       </div> 
@@ -107,3 +116,23 @@ const buttonStyle: CSSProperties = {
 }
 
 export default AdminLogIn; 
+const login = async (email: string, password: string) => {
+  try {
+      const response = await fetch('/api/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        })
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      }
+  } catch (error) {
+      console.error(error);
+  }
+}

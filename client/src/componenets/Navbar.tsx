@@ -23,7 +23,7 @@ function Navbar() {
             </Menu.Item> 
             <Menu.Item key="2">
               <Link to='/admin'>
-                <h3 style={{ color: 'white', marginTop: '1.5rem' }}>Admin</h3>
+                <h3 style={{ color: 'white', marginTop: '1.5rem' }}>Log in</h3>
               </Link>
             </Menu.Item>
           </Menu>
