@@ -2,8 +2,16 @@ POST http://localhost:3001/api/orders
 Content-Type: application/json
 
 {
+    "cartProducts": [{
+        "_id": "60ab9e2339c3341a427b5eca",
+        "quantity": 1
+    },
+    {
+        "_id": "60ab9e2339c3341a427b5ed3",
+        "quantity": 1
+    }],
     "deliveryMethod": "PostNord",
-    "totalPrize": 299,
+    "totalPrice": 299,
     "deliveryAddress": {
         "street": "Street name 2",
         "zipcode": "11111",

@@ -1,5 +1,6 @@
 const OrderModel = require('./orders.model');
 const OrderProductModel = require('./orderProducts.model');
+const ProductModel = require('../products/products.model');
 const { body, validationResult } = require('express-validator');
 
 exports.getAllOrders = async (req, res) => {
@@ -21,32 +22,43 @@ exports.addOrder = async (req, res) => {
     // if (!errors.isEmpty()) {
     //     return res.status(400).json({ errors: errors.array() });
     // }
-    // TODO: Validering kollar om varan är slut eller om priset ändrats
-    // [{_id: '...', quantity: 2, price: 1111}]
-    const cartProucts = req.body.cartProducts;
-    const products = await ProductModel.findById(cartProucts.map(p => p._id));
-    const productMap = Objects.fromEntries(products.map(p => [p._id, p]));
-    const orderProductsData = cartProucts.map(p => ({
-        title: productMap[p.id]['title'],
-        price: productMap[p.id]['price'],
-        originalProductID: productMap[p.id]['_id'],
+    // TODO: Validering kollar om priset ändrats
+
+    const cartProducts = req.body.cartProducts;
+    const productIds = cartProducts.map(p => p._id);
+    const filter = {
+        _id: { $in: productIds }
+    }
+    const products = await ProductModel.find(filter);
+    const productMap = Object.fromEntries(products.map(p => [p._id, p]));
+
+    const orderProductsData = cartProducts.map(p => ({
+        title: productMap[p._id]['title'],
+        price: productMap[p._id]['price'],
+        originalProductID: productMap[p._id]['_id'],
         quantity: p.quantity,
+        totalPrice: productMap[p._id]['price'] * p.quantity,
     }));
 
-    // const orderProductData = {
-    //     title: 'Dress',
-    //     price: 300,
-    //     originalProductID: '60a8b9b64a964c6c9d5b8dd9',
-    //     quantity: 1,
-    // };
-    const orderProduct = await OrderProductModel.create(orderProductData);
+    const allProductsAvailable = orderProductsData.map(p => productMap[p.originalProductID]['inventory'] >= p.quantity).every(x => x === true);
+    if (!allProductsAvailable) {
+        res.status(400).json({ error: 'Product inventory too low' });
+        return;
+    }
+
+    const orderProducts = await OrderProductModel.create(orderProductsData);
+
+    for (const cartProduct of cartProducts) {
+        const productId = cartProduct._id;
+        await ProductModel.findById(productId).updateOne({ inventory: productMap[productId].inventory - cartProduct.quantity})
+    }
 
     const orderData = {
-        orderProducts: [orderProduct._id],
-        deliveryMethod: 'Frakt',
-        totalPrice: 22,
+        orderProducts: orderProducts.map(p => p._id),
+        deliveryMethod: req.body.deliveryMethod,
+        totalPrice: orderProducts.reduce((acc, p) => acc + p.totalPrice, 0),
         //user: ,
-        deliveryAddress: [],
+        deliveryAddress: req.body.deliveryAddress,
         deliveryDay: '2021-06-01',
         isShipped: false,
     }
