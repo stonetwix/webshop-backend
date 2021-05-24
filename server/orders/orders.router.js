@@ -1,0 +1,12 @@
+const express = require('express');
+const ordersRouter = express.Router();
+const controller = require('./orders.controller');
+const { body, validationResult } = require('express-validator');
+
+ordersRouter
+    .get('/api/orders', controller.getAllOrders)
+    .get('/api/orders/:id')
+    .post('/api/orders', controller.addOrder);
+
+
+module.exports = ordersRouter;
