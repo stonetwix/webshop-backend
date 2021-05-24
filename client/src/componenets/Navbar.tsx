@@ -1,13 +1,33 @@
 import { Row, Col, Menu } from "antd";
 import { Header} from "antd/lib/layout/layout";
-import { CSSProperties } from "react";
+import { Component, ContextType, CSSProperties } from "react";
 import logo from '../assets/logga-fs.png'; 
 import { ShoppingCartOutlined} from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import AddToBadge from "./Badge";
+import { UserContext } from "../contexts/UserContext";
 
-function Navbar() {
+class Navbar extends Component {
+  context!: ContextType<typeof UserContext>
+  static contextType = UserContext;
+
+  handleLogout = async (history: any) => {
+    const { logoutUser } = this.context;
+    const ok = await logout();
+    if (ok) {
+      logoutUser();
+      history.push('/login');
+    } else {
+      alert('Problem logging out, try again')
+    }
+  }
+
+
+
+  render() { 
   return (
+    <UserContext.Consumer>
+       {({ isLoggedIn }) => { 
     <Header style={layoutStyle}>
       <Row style={{ width: '100%' }}>
         <Col span={8}>
@@ -30,7 +50,10 @@ function Navbar() {
         </Col>
       </Row>
     </Header> 
+    </UserContext.Consumer>
+
   )
+  }
 }
 
 const layoutStyle: CSSProperties = {
@@ -73,3 +96,14 @@ const menuStyle: CSSProperties = {
 }
 
 export default Navbar; 
+
+const logout = async () => {
+  try {
+      const response = await fetch('/api/logout/', {
+        method: 'DELETE',
+      });
+      return response.ok;
+  } catch (error) {
+      console.error(error);
+  }
+}

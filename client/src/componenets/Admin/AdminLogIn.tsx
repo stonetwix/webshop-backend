@@ -1,6 +1,7 @@
 import { Form, Input, Button, message, Row, Col } from 'antd';
-import React, { CSSProperties, Component } from 'react';
+import React, { CSSProperties, Component, ContextType } from 'react';
 import { Route } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContext';
 
 const layout = {
   labelCol: {
@@ -22,9 +23,14 @@ const error = () => {
 };
 class AdminLogIn extends Component {
 
+  context!: ContextType<typeof UserContext>
+  static contextType = UserContext;
+
   onFinish = async (values: any, history: any) => {
+    const {  setUser }= this.context;  
     const user = await login(values.email, values.password);
     if (user) {
+      setUser(user.isLoggedIn)
       history.push('/');
     } else {
       error(); 
