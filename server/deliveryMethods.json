@@ -1,0 +1,15 @@
+{
+    "company": "PostNord",
+    "price": 145,
+    "deliverytime": 24
+}
+{
+    "company": "Bring",
+    "price": 129,
+    "deliverytime": 48
+}
+{
+    "company": "DB Schenker",
+    "price": 89,
+    "deliverytime": 72
+}
