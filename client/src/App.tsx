@@ -12,6 +12,7 @@ import StartPageView from "./componenets/StartPage/StartPageView";
 import CartProvider from "./contexts/CartContext";
 import ScrollToTop from "./componenets/ScrollToTop";
 import AddNewProduct from "./componenets/Admin/AddNewProduct";
+import AdminStartpage from "./componenets/Admin/AdminStartpage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route exact path="/" component={StartPageView} />
           <Route path="/cart" component={CartView} />
           <Route path="/admin" component={AdminLogIn} />
+          <Route path="/admin-start" component={AdminStartpage} />
           <Route path="/admin-list" component={AdminList} />
           <Route path="/add-product" component={AddNewProduct} />
           <Route path="/edit-product/:_id" component={AdminEditDetails} />
