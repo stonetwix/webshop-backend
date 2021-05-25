@@ -1,6 +1,10 @@
 @import '~antd/dist/antd.css';
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
 
+th {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
 
 .ant-menu-horizontal {
   border-bottom: none;
