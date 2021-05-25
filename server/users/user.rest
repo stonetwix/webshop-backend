@@ -17,8 +17,11 @@ POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
-    "email": "hallo4@gmail.com", 
+    "email": "hallo5@gmail.com", 
     "password": "hej"
 
 }
 
+###
+
+DELETE http://localhost:3001/api/logout

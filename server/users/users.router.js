@@ -13,6 +13,8 @@ usersRouter
     body('email').isEmail().normalizeEmail(),
     body('password').not().isEmpty(),
     controller.userLogin)
+    .delete('/api/logout', controller.userLogout)
+    .get('/api/whoami', controller.whoami)
 
 module.exports = usersRouter; 
  

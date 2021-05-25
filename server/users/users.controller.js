@@ -45,3 +45,21 @@ exports.userLogin = async (req, res) => {
         res.status(200).json(user);
     
 }
+
+
+//Logga ut som user 
+exports.userLogout = (req, res) => {
+    if (!req.session.email) {
+        return res.status(400).json('You are already logged out');
+    }
+    req.session = null;
+    res.status(200).json('Logged out')
+};
+
+exports.whoami = async (req, res) => {
+    if (!req.session.email) {
+        return res.status(200).json({ error: 'You are not logged in' });
+    }
+    const user = await UserModel.findOne({ 'email': req.session.email });
+    res.status(200).json(user);
+}
