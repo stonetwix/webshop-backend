@@ -13,6 +13,7 @@ import CartProvider from "./contexts/CartContext";
 import ScrollToTop from "./componenets/ScrollToTop";
 import AddNewProduct from "./componenets/Admin/AddNewProduct";
 import AdminStartpage from "./componenets/Admin/AdminStartpage";
+import OrdersList from "./componenets/Admin/OrdersList";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/admin" component={AdminLogIn} />
           <Route path="/admin-start" component={AdminStartpage} />
           <Route path="/admin-list" component={AdminList} />
+          <Route path="/admin-orders" component={OrdersList} />
           <Route path="/add-product" component={AddNewProduct} />
           <Route path="/edit-product/:_id" component={AdminEditDetails} />
         </Switch>

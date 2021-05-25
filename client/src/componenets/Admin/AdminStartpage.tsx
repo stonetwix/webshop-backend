@@ -21,7 +21,7 @@ const layout = {
                     <Col span={24}>
                           <div style={adminStyle}>
                             <h1 style={{display: 'flex', justifyContent: 'left', fontWeight: 'bold'}}>ADMIN </h1>
-                            <Link to='/'>
+                            <Link to='/admin-orders'>
                               <h2>Orders</h2>
                             </Link>
                               <p>View and set status of orders.</p>
