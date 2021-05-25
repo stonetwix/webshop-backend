@@ -60,4 +60,5 @@ const orderListStyle: CSSProperties = {
   justifyContent: 'center',
   alignItems: 'center',
   paddingTop: '10rem',
+  margin: '1rem'
 }
