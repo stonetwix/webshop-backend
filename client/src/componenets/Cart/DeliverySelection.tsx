@@ -10,11 +10,12 @@ export interface DeliveryMethod {
   company: string;
   deliverytime: number;
   price: number;
+  deliveryDay: string;
 }
 
 interface State {
-  deliveryMethods?: DeliveryMethod[],
-  value: number
+  deliveryMethods: DeliveryMethod[],
+  value: string
 }
 
 class DeliverySection extends Component<Props> {
@@ -23,12 +24,15 @@ class DeliverySection extends Component<Props> {
 
   state: State = {
     deliveryMethods: [],
-    value: 1
+    value: ''
   }
 
   async componentDidMount() {
     const deliveryMethods = await getAllDeliveryMethods();
-    this.setState({ deliveryMethods: deliveryMethods });
+    this.setState({
+      deliveryMethods: deliveryMethods,
+      value: deliveryMethods[0]?._id || '',
+    });
   } 
   
   onChange = (e: any) => {
@@ -43,23 +47,15 @@ class DeliverySection extends Component<Props> {
     setDeliveryMethod(method);
   };
 
-  calculateDeliveryDay = (timeInHours: number) => {
-    const today = new Date();
-    const deliveryDay = new Date(today);
-    deliveryDay.setDate(deliveryDay.getDate() + timeInHours / 24);
-    return deliveryDay.toISOString().split('T')[0];
-    
-  }
-
   mapMethodToRadio() {
-    if (!this.state.deliveryMethods) {
+    if (this.state.deliveryMethods.length === 0) {
       return;
     }
     return this.state.deliveryMethods.map(item =>
-      <Radio value={item._id} style={{ marginTop: '2rem' }}>
+      <Radio key={item._id} value={item._id} style={{ marginTop: '2rem' }}>
         <span style={deliveryCompanyStyle}>{item.company}</span>
         <br/>
-        <span style={deliveryTextStyle}>{'Delivery on ' + this.calculateDeliveryDay(item.deliverytime)}</span>
+        <span style={deliveryTextStyle}>{'Delivery on ' + item.deliveryDay}</span>
         <br/>
         <span style={deliveryTextStyle}>{item.price + ' kr '}</span>
       </Radio>
@@ -68,7 +64,10 @@ class DeliverySection extends Component<Props> {
 
   render() {
     const { value } = this.state;
-
+    if (this.state.deliveryMethods.length === 0) {
+      return <div></div>
+    }
+    console.log(this.state.deliveryMethods)
     return (
       <Row style={deliveryContainer}>
           <h2>

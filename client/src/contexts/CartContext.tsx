@@ -33,6 +33,7 @@ const defaultDeliveryMethod: DeliveryMethod = {
     company: 'PostNord',
     deliverytime: 24,
     price: 145,
+    deliveryDay: '',
 }
 
 const emptyReceipt: IReceipt = {
@@ -221,10 +222,6 @@ class CartProvider extends Component<{}, State> {
 }
 
 export default CartProvider;
-
-async function createOrderMockApi() {
-    return new Promise((res) => setTimeout(() => res("success"), 2000));
-}
 
 const addOrder = async (cartProducts: CartItem[], deliveryMethod: DeliveryMethod, deliveryInformation: UserInfo) => {
     try {

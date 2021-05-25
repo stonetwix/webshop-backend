@@ -2,6 +2,7 @@ const OrderModel = require('./orders.model');
 const OrderProductModel = require('./orderProducts.model');
 const ProductModel = require('../products/products.model');
 const { body, validationResult } = require('express-validator');
+const DeliveryModel = require('../deliveryMethods/delivery.model');
 
 exports.getAllOrders = async (req, res) => {
     const orders = await OrderModel.find({}).populate('orderProducts');
@@ -64,15 +65,26 @@ exports.addOrder = async (req, res) => {
         await ProductModel.findById(productId).updateOne({ inventory: productMap[productId].inventory - cartProduct.quantity})
     }
 
+    const deliveryMethod = await DeliveryModel.findById(req.body.deliveryMethod._id);
+    const deliveryDay = calculateDeliveryDay(deliveryMethod.deliverytime);
+
     const orderData = {
         orderProducts: orderProducts,
         deliveryMethod: req.body.deliveryMethod,
         totalPrice: orderProducts.reduce((acc, p) => acc + p.totalPrice, 0),
         //user: ,
         deliveryInformation: req.body.deliveryInformation,
-        deliveryDay: '2021-06-01',
+        deliveryDay: deliveryDay,
         isShipped: false,
     }
     const newOrder = await OrderModel.create(orderData);
     res.status(201).json(newOrder);
 }
+
+//Helper function calculate delivery day
+function calculateDeliveryDay (timeInHours) {
+    const today = new Date();
+    const deliveryDay = new Date(today);
+    deliveryDay.setDate(deliveryDay.getDate() + timeInHours / 24);
+    return deliveryDay.toISOString().split('T')[0];
+  }

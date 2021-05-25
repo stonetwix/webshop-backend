@@ -14,7 +14,9 @@ Content-Type: application/json
         },
         "quantity": 1
     }],
-    "deliveryMethod": "PostNord",
+    "deliveryMethod": {
+        "_id": "60acadc70cbf89eb9fbaf5b1"
+    },
     "totalPrice": 299,
     "deliveryInformation": {
         "name": "Moa",
