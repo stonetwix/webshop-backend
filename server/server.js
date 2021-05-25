@@ -21,7 +21,6 @@ app.use(cookieSession({
 }));
 app.use(productsRouter);
 app.use(deliveryRouter);
-
 app.use(categoriesRouter);
 app.use(ordersRouter);
 

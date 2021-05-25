@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
     totalPrice: { type: Number, required: true },
     //TODO: Add User
     //user: { type: mongoose.Schema.Types.ObjectId, required: true },
-    deliveryAddress: { type: Object, required: true },
+    deliveryInformation: { type: Object, required: true },
     deliveryDay: { type: String, required: true },
     isShipped: { type: Boolean, required: true },
 },

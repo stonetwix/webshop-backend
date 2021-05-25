@@ -3,16 +3,23 @@ Content-Type: application/json
 
 {
     "cartProducts": [{
-        "_id": "60ab9e2339c3341a427b5eca",
-        "quantity": 2
+        "product": {
+            "_id": "60acadc7f067a07653c2a50b"
+        },
+        "quantity": 1
     },
     {
-        "_id": "60ab9e2339c3341a427b5ed3",
+        "product": {
+            "_id": "60acadc7f067a07653c2a507"
+        },
         "quantity": 1
     }],
     "deliveryMethod": "PostNord",
     "totalPrice": 299,
-    "deliveryAddress": {
+    "deliveryInformation": {
+        "name": "Moa",
+        "email": "moa@stonetwig.se",
+        "phone": "0000111111",
         "street": "Street name 2",
         "zipcode": "11111",
         "city": "Gothenburg"

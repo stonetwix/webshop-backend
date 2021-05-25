@@ -24,24 +24,27 @@ exports.addOrder = async (req, res) => {
     }
 
     const cartProducts = req.body.cartProducts;
-    const productIds = cartProducts.map(p => p._id);
+    const productIds = cartProducts.map(p => p.product._id);
+    console.log('ProductIds: ', productIds);
     const filter = {
         _id: { $in: productIds }
     }
     const products = await ProductModel.find(filter);
     const productMap = Object.fromEntries(products.map(p => [p._id, p]));
-    console.log(cartProducts);
+    console.log('ProductMap: ', productMap);
 
     const orderProductsData = cartProducts.map(p => ({
-        title: productMap[p._id]['title'],
-        price: productMap[p._id]['price'],
-        originalProductID: productMap[p._id]['_id'],
+        title: productMap[p.product._id]['title'],
+        price: productMap[p.product._id]['price'],
+        originalProductID: productMap[p.product._id]['_id'],
         quantity: p.quantity,
-        totalPrice: productMap[p._id]['price'] * p.quantity,
+        totalPrice: productMap[p.product._id]['price'] * p.quantity,
     }));
+    console.log('OrderProductsData: ', orderProductsData);
 
     //Checks if products inventory is more than quantity. 
     const allProductsAvailable = orderProductsData.map(p => productMap[p.originalProductID]['inventory'] >= p.quantity).every(x => x === true);
+    console.log('allProductsAvailable: ', allProductsAvailable);
     if (!allProductsAvailable) {
         res.status(400).json({ error: 'Product inventory too low' });
         return;
@@ -57,7 +60,7 @@ exports.addOrder = async (req, res) => {
     const orderProducts = await OrderProductModel.create(orderProductsData);
 
     for (const cartProduct of cartProducts) {
-        const productId = cartProduct._id;
+        const productId = cartProduct.product._id;
         await ProductModel.findById(productId).updateOne({ inventory: productMap[productId].inventory - cartProduct.quantity})
     }
 
@@ -66,7 +69,7 @@ exports.addOrder = async (req, res) => {
         deliveryMethod: req.body.deliveryMethod,
         totalPrice: orderProducts.reduce((acc, p) => acc + p.totalPrice, 0),
         //user: ,
-        deliveryAddress: req.body.deliveryAddress,
+        deliveryInformation: req.body.deliveryInformation,
         deliveryDay: '2021-06-01',
         isShipped: false,
     }
