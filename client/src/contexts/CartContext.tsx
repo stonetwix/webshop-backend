@@ -226,7 +226,7 @@ async function createOrderMockApi() {
     return new Promise((res) => setTimeout(() => res("success"), 2000));
 }
 
-const addOrder = async (cartProducts: CartItem[], deliveryMethod: DeliveryMethod, deliveryAddress: UserInfo) => {
+const addOrder = async (cartProducts: CartItem[], deliveryMethod: DeliveryMethod, deliveryInformation: UserInfo) => {
     try {
         await fetch('/api/orders', {
             method: 'POST',
@@ -236,7 +236,7 @@ const addOrder = async (cartProducts: CartItem[], deliveryMethod: DeliveryMethod
             body: JSON.stringify({
                 cartProducts: cartProducts, 
                 deliveryMethod: deliveryMethod,
-                deliveryAddress: deliveryAddress
+                deliveryInformation: deliveryInformation
             })
         });
     } catch (error) {
