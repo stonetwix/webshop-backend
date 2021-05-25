@@ -30,6 +30,7 @@ exports.addOrder = async (req, res) => {
     }
     const products = await ProductModel.find(filter);
     const productMap = Object.fromEntries(products.map(p => [p._id, p]));
+    console.log(cartProducts);
 
     const orderProductsData = cartProducts.map(p => ({
         title: productMap[p._id]['title'],
@@ -46,7 +47,7 @@ exports.addOrder = async (req, res) => {
         return;
     }
 
-    //Checks if products price has changed????????
+    //Checks if products price has changed?? – NOT TESTED!!!
     const productsPrice = orderProductsData.map(p => productMap[p.originalProductID]['price'] === p.price).every(x => x === true);
     if (!productsPrice) {
         res.status(400).json({ error: 'Product price has changed, check your updated cart' });

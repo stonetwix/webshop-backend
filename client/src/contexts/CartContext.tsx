@@ -9,6 +9,7 @@ import { IReceipt } from '../componenets/OrderSuccess/Reciept';
 import { Product } from '../componenets/StartPage/ProductCardGrid';
 //import { Product } from '../componenets/ProductItemsList';
 
+
 const emptyUser: UserInfo = {
     name: '',
     email: '',
@@ -172,9 +173,9 @@ class CartProvider extends Component<{}, State> {
     handlePlaceOrder = async (history: any) => {
         this.setState({ disablePlaceOrderButton: true });
         try {
-            await createOrderMockApi();
+            await addOrder(this.state.cart, this.state.deliveryMethod, this.state.userInfo);
         } catch (error) {
-            console.log(error);
+            console.log(error); 
             return;
         }
         this.setState({
@@ -217,3 +218,21 @@ export default CartProvider;
 async function createOrderMockApi() {
     return new Promise((res) => setTimeout(() => res("success"), 2000));
 }
+
+const addOrder = async (cartProducts: CartItem[], deliveryMethod: DeliveryMethod, deliveryAddress: UserInfo) => {
+    try {
+        await fetch('/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cartProducts: cartProducts, 
+                deliveryMethod: deliveryMethod,
+                deliveryAddress: deliveryAddress
+            })
+        });
+    } catch (error) {
+        console.error(error);
+    }
+  }
