@@ -28,6 +28,7 @@ const defaultPayment: PaymentMethod = {
     cvc: '',
 }
 
+//TODO: remove??
 const defaultDeliveryMethod: DeliveryMethod = {
     _id: '',
     company: 'PostNord',
@@ -239,4 +240,4 @@ const addOrder = async (cartProducts: CartItem[], deliveryMethod: DeliveryMethod
     } catch (error) {
         console.error(error);
     }
-  }
+}

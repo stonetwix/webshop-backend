@@ -1,4 +1,4 @@
-import { Button, Radio, Row } from 'antd';
+import { Button, Radio, Row, Form} from 'antd';
 import { Component, ContextType, CSSProperties } from 'react';
 import { CartContext } from '../../contexts/CartContext';
 interface Props {
@@ -28,11 +28,17 @@ class DeliverySection extends Component<Props> {
   }
 
   async componentDidMount() {
+    const { setDeliveryMethod } = this.context;
     const deliveryMethods = await getAllDeliveryMethods();
     this.setState({
       deliveryMethods: deliveryMethods,
-      value: deliveryMethods[0]?._id || '',
+      value: deliveryMethods[0]?._id,
     });
+    const method = deliveryMethods[0];
+    if (!method) {
+      return;
+    }
+    setDeliveryMethod(method);
   } 
   
   onChange = (e: any) => {
@@ -52,7 +58,7 @@ class DeliverySection extends Component<Props> {
       return;
     }
     return this.state.deliveryMethods.map(item =>
-      <Radio key={item._id} value={item._id} style={{ marginTop: '2rem' }}>
+      <Radio key={item._id} value={item._id} style={{ marginTop: '2rem' }} >
         <span style={deliveryCompanyStyle}>{item.company}</span>
         <br/>
         <span style={deliveryTextStyle}>{'Delivery on ' + item.deliveryDay}</span>
@@ -73,9 +79,9 @@ class DeliverySection extends Component<Props> {
           <h2>
               Delivery
           </h2>
-          <Radio.Group onChange={this.onChange} value={value}>
-            {this.mapMethodToRadio()}
-          </Radio.Group>
+            <Radio.Group onChange={this.onChange} value={value}>
+              {this.mapMethodToRadio()}
+            </Radio.Group>
           <br/>
           <Button type="primary" style={buttonStyle} onClick={this.props.next}>
             Next
