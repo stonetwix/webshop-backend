@@ -11,20 +11,6 @@ const layout = {
     },
   };
 
-  const data = [
-    {
-      title: 'Orders',
-      description: 'View and set status of orders.'
-    },
-    {
-      title: 'Products',
-      description: 'View and edit products.'
-    },
-    {
-      title: 'Users',
-      description: 'Review admin requests.'
-    },
-  ];
 
 
   class AdminStartpage extends Component {
@@ -33,13 +19,21 @@ const layout = {
             <div>
                 <Row>
                     <Col span={24}>
-                        <h1 style={{display: 'flex', justifyContent: 'center', fontWeight: 'bold', padding: '10rem'}}>ADMIN </h1>
-                            <h2>Orders</h2>
-                            <p>View and set status of orders.</p>
-                            <h2>Products</h2>
-                            <p>View and edit products.</p>
-                            <h2>Admin requests</h2>
-                            <p>Review admin requests.</p>
+                          <div style={adminStyle}>
+                            <h1 style={{display: 'flex', justifyContent: 'left', fontWeight: 'bold'}}>ADMIN </h1>
+                            <Link to='/'>
+                              <h2>Orders</h2>
+                            </Link>
+                              <p>View and set status of orders.</p>
+                            <Link to='/admin-list'>
+                              <h2>Products</h2>
+                            </Link>
+                              <p>View and edit products.</p>
+                            <Link to='/'>
+                              <h2>Admin requests</h2>
+                            </Link>
+                              <p>Review admin requests.</p>
+                          </div>
                     </Col>
                 </Row>
             </div> 
@@ -49,3 +43,12 @@ const layout = {
   }
 
   export default AdminStartpage; 
+
+  
+  const adminStyle: CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '1rem',
+    marginLeft: '10rem',
+    marginTop: '7rem'
+  }
