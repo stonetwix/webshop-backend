@@ -7,8 +7,9 @@ POST http://localhost:3001/api/users
 Content-Type: application/json 
 
 {
-    "email": "hallo5@gmail.com", 
-    "password": "hej"
+    "email": "hallo6@gmail.com", 
+    "password": "hej",
+    "role": "admin"
 }
 
 ### 

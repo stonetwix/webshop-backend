@@ -23,7 +23,7 @@ exports.addUser = async (req, res) => {
             return res.status(400).json('Email already exists');
         }
 
-    user.role = 'user'    
+   
     const hashedPassword = await bcrypt.hash(user.password, 10);
     user.password = hashedPassword;
     const newUser = await UserModel.create(user)

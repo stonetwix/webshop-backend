@@ -1,4 +1,4 @@
-import { Form, Input, Button, Row, Col, Divider, message } from "antd";
+import { Form, Input, Button, Row, Col, Divider, message, Select } from "antd";
 import React, { CSSProperties, Component } from "react";
 import { Route } from "react-router-dom";
 
@@ -31,6 +31,11 @@ class Register extends Component {
        error();
     }
   };
+
+  onSelectChange = (value: any) => {
+    this.setState({ isAdmin: value === 'admin' });
+    
+}
 
   render() {
     return (
@@ -67,6 +72,13 @@ class Register extends Component {
                 ]}
               >
                 <Input />
+              </Form.Item>
+
+              <Form.Item name={["user", "status"]} label="Status: " rules={[{ required: true }]}>
+                            <Select onChange={this.onSelectChange}>
+                                <Select.Option value="member">Member</Select.Option>
+                                <Select.Option value="admin">Admin</Select.Option>
+                            </Select>
               </Form.Item>
 
               <Form.Item
@@ -108,6 +120,9 @@ class Register extends Component {
               >
                 <Input.Password />
               </Form.Item>
+
+
+            
 
               <Form.Item {...tailLayout}>
              

@@ -4,15 +4,17 @@ import { Component, createContext } from 'react';
 interface State {
     email: string;
     isLoggedIn: boolean;
+    isAdmin: boolean; 
 }
 
 interface ContextValue extends State {
-    setUser: (email: string) => void; 
+    setUser: (email: string, isAdmin: boolean) => void; 
     logoutUser: () => void; 
 }
 
 export const UserContext = createContext<ContextValue>({
     email: '', 
+    isAdmin: false,
     isLoggedIn: false,
     setUser: () => {},
     logoutUser: () => {},
@@ -22,16 +24,17 @@ class UserProvider extends Component <{}, State> {
 
   state: State = {
         email: '', 
+        isAdmin: false,
         isLoggedIn: false,
     }
-
+  
     componentDidMount = async () => {
         const user = await whoami();
         if (user && !user.error) {
             this.setUser( user.isLoggedIn);
         }
     }
- 
+ // Vad blir rollen? 
     setUser = (email: string) => {
         this.setState({ email: email, isLoggedIn: true });
     }
@@ -44,6 +47,7 @@ class UserProvider extends Component <{}, State> {
         return (
             <UserContext.Provider value={{
                 email: this.state.email,
+                isAdmin: this.state.isAdmin,
                 isLoggedIn: this.state.isLoggedIn,
                 setUser: this.setUser,
                 logoutUser: this.logoutUser,

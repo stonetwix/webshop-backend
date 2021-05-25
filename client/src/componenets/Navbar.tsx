@@ -27,30 +27,29 @@ class Navbar extends Component {
   
   render() {
 
-    return (
-      <UserContext.Consumer> 
+  return (
+
+        <UserContext.Consumer> 
         {({ isLoggedIn }) => {
-          const userMenuItem = !isLoggedIn ?
-          <Menu.Item key="2">
-          <Link to='/admin'>
-            <h3 style={{ color: 'white', marginTop: '1.5rem' }}>Log in</h3>
-          </Link>
-          </Menu.Item> :
-          <Route render={({ history }) => (
-            <>
+            const userMenuItem = !isLoggedIn ?
+            <Menu.Item key="2">
+            <Link to='/admin'>
+                   <h3 style={{ color: 'white', marginTop: '1.5rem' }}>Log in</h3>
+            </Link>
+            </Menu.Item> :
+            <Route render={({ history }) => (
+              <>
                 <Menu.Item key="3">
                   <Button
                     onClick={() => this.handleLogout(history)}
                     style={{ borderRadius: '10rem' }}
-                    > 
+                  > 
                     Log out 
                   </Button>
                 </Menu.Item>
-          </>
-           )}/>; 
-           } 
-          })
-          
+              </>
+           )}/> 
+           
           
           return (
             <Header style={layoutStyle}>
@@ -66,15 +65,15 @@ class Navbar extends Component {
             <ShoppingCartOutlined style={iconStyle}/> </Link>  
               <AddToBadge />
             </Menu.Item> 
+            {userMenuItem}
           </Menu>
         </Col>
       </Row>
     </Header> 
+          )}}
+    </UserContext.Consumer>
     )
-
-
-  </UserContext.Consumer>
-  )}
+}
 }
   
 

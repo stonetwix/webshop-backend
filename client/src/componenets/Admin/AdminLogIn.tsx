@@ -30,7 +30,7 @@ class AdminLogIn extends Component {
     const {  setUser }= this.context;  
     const user = await login(values.email, values.password);
     if (user) {
-      setUser(user.isLoggedIn)
+      setUser(user.isLoggedIn, user.role === 'user')
       history.push('/');
     } else {
       error(); 
