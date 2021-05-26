@@ -25,6 +25,7 @@ class Register extends Component {
 
   onFinish = async (values: any, history: any) => {
     const registeredUser = await register(values.email, values.password, values.role);
+    console.log(registeredUser);
     if (registeredUser) {
       history.push('/registersuccess');
     } else {
@@ -72,9 +73,9 @@ class Register extends Component {
                 <Input />
               </Form.Item>
 
-              <Form.Item name={["user", "status"]} label="Status: " rules={[{ required: true }]}>
+              <Form.Item name="role" label="Role: " rules={[{ required: true }]}>
                 <Select onChange={this.onSelectChange}>
-                  <Select.Option value="member">Customer</Select.Option>
+                  <Select.Option value="customer">Customer</Select.Option>
                   <Select.Option value="admin">Admin</Select.Option>
                 </Select>
               </Form.Item>
@@ -155,7 +156,7 @@ const containerStyle: CSSProperties = {
   
 const register = async (email: string, password: string, role: string) => {
     try {
-        const response = await fetch('/api/users/', {
+        const response = await fetch('/api/users', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -163,6 +164,7 @@ const register = async (email: string, password: string, role: string) => {
           body: JSON.stringify({
             email: email,
             password: password,
+            role: role,
           })
         });
         if (response.ok) {

@@ -32,17 +32,17 @@ class UserProvider extends Component <{}, State> {
         const user = await whoami();
         console.log('User from Context: ', user)
         if (user && !user.error) {
-            this.setUser( user.isLoggedIn);
+            this.setUser( user.username, user.role === 'admin');
         }
     }
  // Vad blir rollen? 
-    setUser = (email: string) => {
-        this.setState({ email: email, isLoggedIn: true });
+    setUser = (email: string, isAdmin: boolean) => {
+        this.setState({ email: email, isLoggedIn: true, isAdmin: isAdmin });
         console.log('IsLoggedIn? ', this.state.isLoggedIn);
     }
     
     logoutUser = () => {
-        this.setState({ email: '', isLoggedIn: false });
+        this.setState({ email: '', isLoggedIn: false, isAdmin: false });
     }
 
     render() {
