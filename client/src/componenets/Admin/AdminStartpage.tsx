@@ -10,32 +10,32 @@ import { ShoppingFilled, TagFilled, SettingFilled } from "@ant-design/icons";
           <Col span={20} style={{ marginTop: '7rem', marginLeft: '5rem' }}>
             <h1 style={{display: 'flex', justifyContent: 'left', fontWeight: 'bold'}}>ADMIN </h1>
           </Col>
-          <Col span={8} style={colStyle}>
-              <Link to='/admin-orders' style={colStyle}>
-              <Button style={{ padding: '2rem', height: '8rem' }}>
+          <Col lg={8} style={colStyle}>
+            <Button style={{ padding: '2rem', height: '8rem', width: '18rem' }}>
+              <Link to='/admin-orders'>
                 <ShoppingFilled style={{ fontSize: '2rem' }}/>
-                  <h2>Orders</h2>
-              </Button>
-                <p style={{marginTop: '1rem', textAlign: 'center'}}>View and set status of orders.</p>
+                <h2>Orders</h2>
               </Link>
+            </Button>
+            <p style={{marginTop: '1rem'}}>View and set status orders.</p>
           </Col>
-          <Col span={8} style={colStyle}>
-          <Button style={{ padding: '2rem', height: '8rem' }}>
-            <TagFilled style={{ fontSize: '2rem' }}/>
-            <Link to='/admin-list'>
-              <h2>Products</h2>
-            </Link>
-          </Button>
-            <p style={{marginTop: '1rem', textAlign: 'center'}}>View and edit products.</p>
-            </Col>
-          <Col span={8} style={colStyle}>
-          <Button style={{ padding: '2rem', height: '8rem' }}>
-            <SettingFilled style={{ fontSize: '2rem' }}/>
-            <Link to='/'>
-              <h2>Admin requests</h2>
-            </Link>
-          </Button>
-            <p style={{marginTop: '1rem', textAlign: 'center'}}>Review admin requests.</p>
+          <Col lg={8} style={colStyle}>
+            <Button style={{ padding: '2rem', height: '8rem', width: '18rem' }}>
+              <Link to='/admin-list'>
+                <TagFilled style={{ fontSize: '2rem' }}/>
+                <h2>Products</h2>
+              </Link>
+            </Button>
+            <p style={{marginTop: '1rem'}}>View and edit products.</p>
+          </Col>
+          <Col lg={8} style={colStyle}>
+            <Button style={{ padding: '2rem', height: '8rem', width: '18rem' }}>
+              <Link to='/'>
+                <SettingFilled style={{ fontSize: '2rem' }}/>
+                <h2>Admin requests</h2>
+              </Link>
+            </Button>
+            <p style={{marginTop: '1rem'}}>Review admin requests.</p>
           </Col>
         </Row>
       )
