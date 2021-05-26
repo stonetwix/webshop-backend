@@ -1,4 +1,4 @@
-import { Row, Col, Menu, Button } from "antd";
+import { Row, Col, Menu, Button, message } from "antd";
 import { Header} from "antd/lib/layout/layout";
 import React, { Component, ContextType, CSSProperties } from "react";
 import logo from '../assets/logga-fs.png'; 
@@ -7,6 +7,10 @@ import { Link, Route } from 'react-router-dom';
 import AddToBadge from "./Badge";
 import { UserContext } from "../contexts/UserContext";
 
+
+const error = () => {
+  message.error('Problem logging out, try again', 3);
+};
 class Navbar extends Component {
 
   context!: ContextType<typeof UserContext>
@@ -19,7 +23,7 @@ class Navbar extends Component {
       logoutUser();
       history.push('/');
     } else {
-      alert('Problem logging out, try again')
+      error();
     }
   }
   

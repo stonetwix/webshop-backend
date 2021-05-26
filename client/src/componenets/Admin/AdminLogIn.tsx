@@ -33,7 +33,7 @@ class AdminLogIn extends Component {
     if (user) {
       setUser(user.isLoggedIn, user.role === 'user')
       console.log('User after SET USER: ', user)
-      history.push('/');
+      history.goBack();
     } else {
       error(); 
     }
