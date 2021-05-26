@@ -2,7 +2,7 @@ import { Row, Col, Menu, Button, message } from "antd";
 import { Header} from "antd/lib/layout/layout";
 import React, { Component, ContextType, CSSProperties } from "react";
 import logo from '../assets/logga-fs.png'; 
-import { ShoppingCartOutlined} from '@ant-design/icons';
+import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, Route } from 'react-router-dom';
 import AddToBadge from "./Badge";
 import { UserContext } from "../contexts/UserContext";
@@ -50,6 +50,19 @@ class Navbar extends Component {
                   > 
                     Log out 
                   </Button>
+                  <UserOutlined style={iconStyleUser}
+                    onClick={() => 
+                    history.push('/profile')
+
+                    // { 
+                    //   if (role === admin) {
+                    //     history.push('/admin-start')
+                    //   } else {
+                    //     history.push('/profile')
+                    //   }
+                    // }}
+                    }
+                  />
                 </Menu.Item>
               </>
            )}/> 
@@ -107,6 +120,14 @@ const iconStyle: CSSProperties = {
   float: 'right',
   position: 'absolute',
   margin: window.innerWidth > 768 ? '2.3rem -1.6rem' : '2.3rem -1.5rem', 
+  boxSizing: 'border-box'
+}
+const iconStyleUser: CSSProperties = {
+  color: 'white', 
+  fontSize: '1.8rem',
+  float: 'right',
+  position: 'absolute',
+  margin: window.innerWidth > 768 ? '1rem -0.2rem' : '2.3rem -1.5rem', 
   boxSizing: 'border-box'
 }
 

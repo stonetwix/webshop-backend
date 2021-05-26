@@ -17,6 +17,7 @@ import SuccessMessage from "./componenets/Admin/RegisterSuccess";
 
 import AdminStartpage from "./componenets/Admin/AdminStartpage";
 import OrdersList from "./componenets/Admin/OrdersList";
+import UserPage from "./componenets/UserPage";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/add-product" component={AddNewProduct} />
           <Route path="/edit-product/:_id" component={AdminEditDetails} />
           <Route path="/registersuccess" component={SuccessMessage} />
+          <Route path="/profile" component={UserPage} />
         </Switch>
         <Footer2 />
       </Router>
