@@ -7,7 +7,7 @@ class CartLogin extends Component {
         return (
             <div style={containerStyle}>
                 <h3>You need to login to proceed to checkout</h3>
-                <Link to='/admin'>
+                <Link to='/login'>
                     <Button type="primary">Log in</Button>
                 </Link>
             </div>

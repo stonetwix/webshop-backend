@@ -7,6 +7,7 @@ const productsRouter = require('./products/products.router');
 const usersRouter = require('./users/users.router'); 
 const deliveryRouter = require('./deliveryMethods/delivery.router');
 const categoriesRouter = require('./categories/categories.router');
+const ordersRouter = require('./orders/orders.router');
 
 const app = express();
 const port = 3001;
@@ -22,8 +23,8 @@ app.use(cookieSession({
 app.use(productsRouter);
 app.use(usersRouter); 
 app.use(deliveryRouter);
-
 app.use(categoriesRouter);
+app.use(ordersRouter);
 
 //Start server
 async function run() {

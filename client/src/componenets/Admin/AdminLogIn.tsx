@@ -1,6 +1,6 @@
 import { Form, Input, Button, message, Row, Col } from 'antd';
-import React, { CSSProperties, Component, ContextType } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { CSSProperties, Component, ContextType } from 'react';
+import { Route } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 
 const layout = {
@@ -22,18 +22,22 @@ const error = () => {
   message.error('Not valid e-mail or password', 3);
 };
 class AdminLogIn extends Component {
-
   context!: ContextType<typeof UserContext>
   static contextType = UserContext;
 
   onFinish = async (values: any, history: any) => {
-    const { setUser } = this.context;  
+    const { setUser } = this.context;
     const user = await login(values.email, values.password);
     console.log('User from LogIn: ', user)
     if (user) {
-      setUser(user.isLoggedIn, user.role === 'user')
-      console.log('User after SET USER: ', user)
-      history.goBack();
+      setUser(user.email, user.role === 'admin');
+      const { isAdmin } = this.context;
+      console.log('User after SET USER: ', user, this.context.isAdmin)
+      if (isAdmin) {
+        history.push('/admin-start');
+      } else {
+        history.goBack();
+      }
     } else {
       error(); 
     }
@@ -57,7 +61,6 @@ class AdminLogIn extends Component {
                 remember: true,
               }}
               onFinish={(values) => this.onFinish(values, history)}
-              
             >
               <Form.Item
                 label="Email"
@@ -94,7 +97,6 @@ class AdminLogIn extends Component {
                   <Button type="primary" htmlType="submit" style={buttonStyle}>
                     Log in 
                   </Button> 
-           
               </Form.Item>
             </Form>
              )}/>
@@ -124,6 +126,7 @@ const buttonStyle: CSSProperties = {
 }
 
 export default AdminLogIn; 
+
 const login = async (email: string, password: string) => {
   try {
       const response = await fetch('/api/login/', {

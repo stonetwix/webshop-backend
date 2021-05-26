@@ -31,7 +31,7 @@ function App() {
           <Route path="/ordersuccess" component={OrderSuccessMessage} />
           <Route exact path="/" component={StartPageView} />
           <Route path="/cart" component={CartView} />
-          <Route path="/admin" component={LoginView} />
+          <Route path="/login" component={LoginView} />
           <Route path="/admin-start" component={AdminStartpage} />
           <Route path="/admin-list" component={AdminList} />
           <Route path="/admin-orders" component={OrdersList} />

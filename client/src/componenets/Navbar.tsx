@@ -12,7 +12,6 @@ const error = () => {
   message.error('Problem logging out, try again', 3);
 };
 class Navbar extends Component {
-
   context!: ContextType<typeof UserContext>
   static contextType = UserContext;
   
@@ -26,19 +25,15 @@ class Navbar extends Component {
       error();
     }
   }
-  
-  
-  
+
   render() {
-
-  return (
-
-        <UserContext.Consumer> 
+    return (
+      <UserContext.Consumer> 
         {({ isLoggedIn }) => {
-            const userMenuItem = !isLoggedIn ?
-            <Menu.Item key="2">
-            <Link to='/admin'>
-                <h3 style={{ color: 'white', marginTop: '1.5rem' }}>Log in</h3>
+          const userMenuItem = !isLoggedIn ?
+          <Menu.Item key="2">
+            <Link to='/login'>
+                <h3 style={{ color: 'white', marginTop: '1.5rem', marginLeft: '2rem' }}>Log in</h3>
             </Link>
             </Menu.Item> :
             <Route render={({ history }) => (
@@ -70,30 +65,31 @@ class Navbar extends Component {
           
           return (
             <Header style={layoutStyle}>
-      <Row style={{ width: '100%' }}>
-        <Col span={8}>
-          <Link to='/'>
-            <img src={logo} alt="logo" style={logoStyle} />
-          </Link>
-        </Col>
-        <Col span={10} offset={6}>
-          <Menu mode="horizontal" style={menuStyle}>
-            <Menu.Item key="1"><Link to='/cart' style={{ color: 'white' }} >
-            <ShoppingCartOutlined style={iconStyle}/> </Link>  
-              <AddToBadge />
-            </Menu.Item> 
-            {userMenuItem}
-          </Menu>
-        </Col>
-      </Row>
-    </Header> 
-          )}}
-    </UserContext.Consumer>
+              <Row style={{ width: '100%' }}>
+                <Col span={8}>
+                  <Link to='/'>
+                    <img src={logo} alt="logo" style={logoStyle} />
+                  </Link>
+                </Col>
+                <Col span={10} offset={6}>
+                  <Menu mode="horizontal" style={menuStyle}>
+                    <Menu.Item key="1">
+                      <Link to='/cart' style={{ color: 'white' }} >
+                        <ShoppingCartOutlined style={iconStyle}/> 
+                      </Link>  
+                      <AddToBadge />
+                    </Menu.Item> 
+                    {userMenuItem}
+                  </Menu>
+                </Col>
+              </Row>
+            </Header> 
+          )
+        }}
+      </UserContext.Consumer>
     )
+  }
 }
-}
-  
-
 
 const layoutStyle: CSSProperties = {
   width: '100%', 
