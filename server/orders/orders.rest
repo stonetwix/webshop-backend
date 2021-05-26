@@ -1,0 +1,42 @@
+GET http://localhost:3001/api/orders
+
+###
+
+GET http://localhost:3001/api/orders/60ae101e7ded1c838aab3101
+
+###
+
+POST http://localhost:3001/api/orders
+Content-Type: application/json
+
+{
+    "cartProducts": [{
+        "product": {
+            "_id": "60acadc7f067a07653c2a50b"
+        },
+        "quantity": 1
+    },
+    {
+        "product": {
+            "_id": "60acadc7f067a07653c2a507"
+        },
+        "quantity": 1
+    }],
+    "deliveryMethod": {
+        "_id": "60acadc70cbf89eb9fbaf5b1"
+    },
+    "totalPrice": 299,
+    "deliveryInformation": {
+        "name": "Moa",
+        "email": "moa@stonetwig.se",
+        "phone": "0000111111",
+        "street": "Street name 2",
+        "zipcode": "11111",
+        "city": "Gothenburg"
+    },
+    "deliveryDay": "2021-05-30",
+    "isShipped": false
+}
+
+###
+

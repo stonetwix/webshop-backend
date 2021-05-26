@@ -1,74 +1,54 @@
-import React, { Component, CSSProperties } from 'react'
-import { Table, Select, Space } from 'antd';
-
-const { Option } = Select;
+import { Component, CSSProperties } from 'react'
+import { Table, Space, Row } from 'antd';
 
 const { Column } = Table;
+interface Order {
+  _id: string;
+  customerName: string;
+  deliveryMethod: string;
+  totalPrice: number;
+  isShipped: boolean;
+  createdAt: string;
+}
+interface State {
+  orders: Order[];
+}
 
+class OrdersList extends Component<{}, State> {
 
+  state: State = {
+    orders: [],
+  }
 
-const data = [
-    {
-      orderNumber: '7t3g48372',
-      products: 'VOLUMINOUS BELTED COAT, BREEZY JUMPSUIT',
-      customer: 'Amanda Samuelsson',
-      delivery: 'Bring',
-      totalPrice: 899,
-    },
-    {
-      orderNumber: '673y43q84',
-      products: 'HIGH WAIST TROUSERS',
-      customer: 'Moa Stenqvist',
-      delivery: 'DB Schenker',
-      totalPrice: 2299,
-    },
-    {
-      orderNumber: '5id9f8900',
-      products: 'VOLUMINOUS BELTED COAT, BREEZY JUMPSUIT',
-      customer: 'Malin Österberg',
-      delivery: 'PostNord',
-      totalPrice: 1899
-    },
-    {
-      orderNumber: '68s4t2yh9',
-      products: 'BASIC TEE WITH PRINT',
-      customer: 'David Jensen',
-      delivery: 'Bring',
-      totalPrice: 299
-    },
-  ];
-
+  async componentDidMount() {
+    const orders = await getAllOrders();
+    this.setState({ orders: orders });
+    console.log(this.state.orders);
+  }
   
-
-
-
-class OrdersList extends Component {
-  
-    render () {
-        return (
-          <div style={orderListStyle}>
-            <Table dataSource={data}>
-              <Column title="Order number" dataIndex="orderNumber" key="orderNumber" />
-              <Column title="Products" dataIndex="products" key="products" />
-              <Column title="Customer" dataIndex="customer" key="customer" />
-              <Column title="Delivery method" dataIndex="delivery" key="delivery" />
-              <Column title="Total price" dataIndex="totalPrice" key="totalPrice" />
-              <Column
-                title="Status"
-                key="action"
-                render={(text, record) => (
-                  <Space size="middle">
-                    <a>Mark as sent</a>
-                    {/* <a onClick={() => this.handleSent()}>Mark as sent</a> */}
-
-                  </Space>
-                )}
-              />
-            </Table>
-          </div>
- 
-        )
-    }
+  render () {
+    return (
+      <Row style={orderListStyle}>
+        <Table dataSource={this.state.orders}>
+          <Column title="Order number" dataIndex="_id" key="_id" />
+          <Column title="Customer" dataIndex={["user", "email"]} key="customer" />
+          <Column title="Delivery method" dataIndex={["deliveryMethod", "company"]} key="delivery" />
+          <Column title="Total price" dataIndex="totalPrice" key="totalPrice" />
+          <Column title="Created" dataIndex="createdAt" key="totalPrice" />
+          <Column
+            title="Status"
+            key="action"
+            render={(text, record) => (
+              <Space size="middle">
+                <a>Mark as sent</a>
+                {/* <a onClick={() => this.handleSent()}>Mark as sent</a> */}
+              </Space>
+            )}
+          />
+        </Table>
+      </Row>
+    )
+  }
 }
 
 export default OrdersList;
@@ -79,4 +59,16 @@ const orderListStyle: CSSProperties = {
   alignItems: 'center',
   paddingTop: '10rem',
   margin: '1rem'
+}
+
+const getAllOrders = async () => {
+  try {
+      let response = await fetch('/api/orders');
+      if (response.ok) {
+          const data = await response.json();
+          return data;
+      }
+  } catch (error) {
+      console.error(error);
+  }
 }

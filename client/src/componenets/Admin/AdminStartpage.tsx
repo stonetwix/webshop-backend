@@ -1,54 +1,56 @@
-import { List, Row, Col } from 'antd';
+import { Row, Col, Button } from 'antd';
 import { CSSProperties, Component } from 'react';
 import { Link } from 'react-router-dom';
-
-const layout = {
-    labelCol: {
-      span: 8,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-  };
-
-
+import { ShoppingFilled, TagFilled, SettingFilled } from "@ant-design/icons";
 
   class AdminStartpage extends Component {
-      render() {
-          return (
-            <div>
-                <Row>
-                    <Col span={24}>
-                          <div style={adminStyle}>
-                            <h1 style={{display: 'flex', justifyContent: 'left', fontWeight: 'bold'}}>ADMIN </h1>
-                            <Link to='/admin-orders'>
-                              <h2>Orders</h2>
-                            </Link>
-                              <p>View and set status of orders.</p>
-                            <Link to='/admin-list'>
-                              <h2>Products</h2>
-                            </Link>
-                              <p>View and edit products.</p>
-                            <Link to='/'>
-                              <h2>Admin requests</h2>
-                            </Link>
-                              <p>Review admin requests.</p>
-                          </div>
-                    </Col>
-                </Row>
-            </div> 
-
-          )
-      }
+    render() {
+      return (
+        <Row style={adminStyle}>
+          <Col span={20} style={{ marginTop: '7rem', marginLeft: '5rem' }}>
+            <h1 style={{display: 'flex', justifyContent: 'left', fontWeight: 'bold'}}>ADMIN </h1>
+          </Col>
+          <Col lg={8} style={colStyle}>
+            <Button style={{ padding: '2rem', height: '8rem', width: '18rem' }}>
+              <Link to='/admin-orders'>
+                <ShoppingFilled style={{ fontSize: '2rem' }}/>
+                <h2>Orders</h2>
+              </Link>
+            </Button>
+            <p style={{marginTop: '1rem'}}>View and set status orders.</p>
+          </Col>
+          <Col lg={8} style={colStyle}>
+            <Button style={{ padding: '2rem', height: '8rem', width: '18rem' }}>
+              <Link to='/admin-list'>
+                <TagFilled style={{ fontSize: '2rem' }}/>
+                <h2>Products</h2>
+              </Link>
+            </Button>
+            <p style={{marginTop: '1rem'}}>View and edit products.</p>
+          </Col>
+          <Col lg={8} style={colStyle}>
+            <Button style={{ padding: '2rem', height: '8rem', width: '18rem' }}>
+              <Link to='/'>
+                <SettingFilled style={{ fontSize: '2rem' }}/>
+                <h2>Admin requests</h2>
+              </Link>
+            </Button>
+            <p style={{marginTop: '1rem'}}>Review admin requests.</p>
+          </Col>
+        </Row>
+      )
+    }
   }
 
-  export default AdminStartpage; 
-
+export default AdminStartpage; 
   
-  const adminStyle: CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '1rem',
-    marginLeft: '10rem',
-    marginTop: '7rem'
-  }
+const adminStyle: CSSProperties = {
+  display: 'flex',
+  padding: '1rem',
+}
+
+const colStyle: CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '5rem',
+}

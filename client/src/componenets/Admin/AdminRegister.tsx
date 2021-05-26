@@ -1,5 +1,5 @@
 import { Form, Input, Button, Row, Col, Divider, message, Select } from "antd";
-import React, { CSSProperties, Component } from "react";
+import { CSSProperties, Component } from "react";
 import { Route } from "react-router-dom";
 
 const layout = {
@@ -24,7 +24,8 @@ const error = () => {
 class Register extends Component {
 
   onFinish = async (values: any, history: any) => {
-    const registeredUser = await register(values.email, values.password);
+    const registeredUser = await register(values.email, values.password, values.role);
+    console.log(registeredUser);
     if (registeredUser) {
       history.push('/registersuccess');
     } else {
@@ -34,8 +35,7 @@ class Register extends Component {
 
   onSelectChange = (value: any) => {
     this.setState({ isAdmin: value === 'admin' });
-    
-}
+  }
 
   render() {
     return (
@@ -60,7 +60,6 @@ class Register extends Component {
               }}
               onFinish={(values) => this.onFinish(values, history)}
             >
-            
               <Form.Item
                 label="E-mail"
                 name="email"
@@ -74,11 +73,11 @@ class Register extends Component {
                 <Input />
               </Form.Item>
 
-              <Form.Item name={["user", "status"]} label="Status: " rules={[{ required: true }]}>
-                            <Select onChange={this.onSelectChange}>
-                                <Select.Option value="member">Member</Select.Option>
-                                <Select.Option value="admin">Admin</Select.Option>
-                            </Select>
+              <Form.Item name="role" label="Role: " rules={[{ required: true }]}>
+                <Select onChange={this.onSelectChange}>
+                  <Select.Option value="customer">Customer</Select.Option>
+                  <Select.Option value="admin">Admin</Select.Option>
+                </Select>
               </Form.Item>
 
               <Form.Item
@@ -121,9 +120,6 @@ class Register extends Component {
                 <Input.Password />
               </Form.Item>
 
-
-            
-
               <Form.Item {...tailLayout}>
              
                   <Button
@@ -131,7 +127,6 @@ class Register extends Component {
                     htmlType="submit" 
                     style={buttonStyle}
                   >
-             
                     Sign up
                   </Button>
                 
@@ -159,9 +154,9 @@ const containerStyle: CSSProperties = {
     fontWeight: "bold",
   };
   
-const register = async (email: string, password: string) => {
+const register = async (email: string, password: string, role: string) => {
     try {
-        const response = await fetch('/api/users/', {
+        const response = await fetch('/api/users', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -169,6 +164,7 @@ const register = async (email: string, password: string) => {
           body: JSON.stringify({
             email: email,
             password: password,
+            role: role,
           })
         });
         if (response.ok) {

@@ -7,7 +7,7 @@ import { PaymentSwish } from '../componenets/Cart/PaySwish';
 import { DeliveryMethod } from '../componenets/Cart/DeliverySelection';
 import { IReceipt } from '../componenets/OrderSuccess/Reciept';
 import { Product } from '../componenets/StartPage/ProductCardGrid';
-//import { Product } from '../componenets/ProductItemsList';
+
 
 const emptyUser: UserInfo = {
     name: '',
@@ -27,11 +27,13 @@ const defaultPayment: PaymentMethod = {
     cvc: '',
 }
 
+//TODO: remove??
 const defaultDeliveryMethod: DeliveryMethod = {
     _id: '',
     company: 'PostNord',
     deliverytime: 24,
     price: 145,
+    deliveryDay: '',
 }
 
 const emptyReceipt: IReceipt = {
@@ -81,6 +83,7 @@ export const CartContext = createContext<ContextValue>({
 });
 
 class CartProvider extends Component<{}, State> {
+
     state: State = {
         cart: [],
         deliveryMethod: defaultDeliveryMethod,
@@ -179,9 +182,9 @@ class CartProvider extends Component<{}, State> {
     handlePlaceOrder = async (history: any) => {
         this.setState({ disablePlaceOrderButton: true });
         try {
-            await createOrderMockApi();
+            await addOrder(this.state.cart, this.state.deliveryMethod, this.state.userInfo);
         } catch (error) {
-            console.log(error);
+            console.log(error); 
             return;
         }
         this.setState({
@@ -221,6 +224,20 @@ class CartProvider extends Component<{}, State> {
 
 export default CartProvider;
 
-async function createOrderMockApi() {
-    return new Promise((res) => setTimeout(() => res("success"), 2000));
+const addOrder = async (cartProducts: CartItem[], deliveryMethod: DeliveryMethod, deliveryInformation: UserInfo) => {
+    try {
+        await fetch('/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cartProducts: cartProducts, 
+                deliveryMethod: deliveryMethod,
+                deliveryInformation: deliveryInformation,
+            })
+        });
+    } catch (error) {
+        console.error(error);
+    }
 }
