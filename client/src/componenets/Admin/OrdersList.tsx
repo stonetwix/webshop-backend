@@ -31,7 +31,7 @@ class OrdersList extends Component<{}, State> {
       <Row style={orderListStyle}>
         <Table dataSource={this.state.orders}>
           <Column title="Order number" dataIndex="_id" key="_id" />
-          <Column title="Customer" dataIndex={["deliveryInformation", "name"]} key="customer" />
+          <Column title="Customer" dataIndex={["user", "email"]} key="customer" />
           <Column title="Delivery method" dataIndex={["deliveryMethod", "company"]} key="delivery" />
           <Column title="Total price" dataIndex="totalPrice" key="totalPrice" />
           <Column title="Created" dataIndex="createdAt" key="totalPrice" />
