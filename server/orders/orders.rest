@@ -19,7 +19,7 @@ Content-Type: application/json
     },
     "totalPrice": 299,
     "deliveryInformation": {
-        "name": "Tove",
+        "name": "Moa",
         "email": "moa@stonetwig.se",
         "phone": "0000111111",
         "street": "Street name 2",

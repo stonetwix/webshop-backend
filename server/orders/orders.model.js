@@ -5,7 +5,10 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'OrderProduct'
     }],
-    deliveryMethod: { type: String, required: true },
+    deliveryMethod: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'DeliveryMethod'
+    },
     totalPrice: { type: Number, required: true },
     //TODO: Add User
     //user: { type: mongoose.Schema.Types.ObjectId, required: true },

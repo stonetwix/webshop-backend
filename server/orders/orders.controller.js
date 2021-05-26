@@ -62,7 +62,7 @@ exports.addOrder = async (req, res) => {
 
     for (const cartProduct of cartProducts) {
         const productId = cartProduct.product._id;
-        await ProductModel.findById(productId).updateOne({ inventory: productMap[productId].inventory - cartProduct.quantity})
+        await ProductModel.findById(productId).updateOne({ inventory: productMap[productId].inventory - cartProduct.quantity })
     }
 
     const deliveryMethod = await DeliveryModel.findById(req.body.deliveryMethod._id);
@@ -70,7 +70,7 @@ exports.addOrder = async (req, res) => {
 
     const orderData = {
         orderProducts: orderProducts,
-        deliveryMethod: req.body.deliveryMethod,
+        deliveryMethod: deliveryMethod,
         totalPrice: orderProducts.reduce((acc, p) => acc + p.totalPrice, 0),
         //user: ,
         deliveryInformation: req.body.deliveryInformation,

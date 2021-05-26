@@ -1,6 +1,6 @@
 import { Form, Input, Button, message, Row, Col } from 'antd';
-import React, { CSSProperties, Component, ContextType } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { CSSProperties, Component, ContextType } from 'react';
+import { Route } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 
 const layout = {
@@ -57,7 +57,6 @@ class AdminLogIn extends Component {
                 remember: true,
               }}
               onFinish={(values) => this.onFinish(values, history)}
-              
             >
               <Form.Item
                 label="Email"
@@ -94,7 +93,6 @@ class AdminLogIn extends Component {
                   <Button type="primary" htmlType="submit" style={buttonStyle}>
                     Log in 
                   </Button> 
-           
               </Form.Item>
             </Form>
              )}/>
@@ -124,6 +122,7 @@ const buttonStyle: CSSProperties = {
 }
 
 export default AdminLogIn; 
+
 const login = async (email: string, password: string) => {
   try {
       const response = await fetch('/api/login/', {
