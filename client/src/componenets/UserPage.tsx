@@ -1,5 +1,5 @@
 import { Component, CSSProperties } from 'react';
-import { Table, Select, Space } from 'antd';
+import { Table } from 'antd';
 const { Column } = Table;
 
 const data = [
