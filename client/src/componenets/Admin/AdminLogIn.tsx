@@ -90,11 +90,11 @@ class AdminLogIn extends Component {
               </Form.Item>
         
               <Form.Item {...tailLayout}>        
-                <Link to={'/admin-start'}>
+                
                   <Button type="primary" htmlType="submit" style={buttonStyle}>
                     Log in 
                   </Button> 
-              </Link>
+           
               </Form.Item>
             </Form>
              )}/>
