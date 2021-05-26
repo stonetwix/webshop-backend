@@ -5,10 +5,11 @@ require('express-async-errors');
 const cookieSession = require('cookie-session');
 const productsRouter = require('./products/products.router');
 const usersRouter = require('./users/users.router'); 
+const deliveryRouter = require('./deliveryMethods/delivery.router');
+const categoriesRouter = require('./categories/categories.router');
 
 const app = express();
 const port = 3001;
-
 
 app.use(express.json());
 app.use(cookieSession({
@@ -19,7 +20,10 @@ app.use(cookieSession({
     httpOnly: true
 }));
 app.use(productsRouter);
-app.use(usersRouter)
+app.use(usersRouter); 
+app.use(deliveryRouter);
+
+app.use(categoriesRouter);
 
 //Start server
 async function run() {

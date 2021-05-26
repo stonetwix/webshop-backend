@@ -1,6 +1,6 @@
 import { Form, Input, Button, message, Row, Col } from 'antd';
 import React, { CSSProperties, Component, ContextType } from 'react';
-import { Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 
 const layout = {
@@ -90,11 +90,11 @@ class AdminLogIn extends Component {
               </Form.Item>
         
               <Form.Item {...tailLayout}>        
-                
+                <Link to={'/admin-start'}>
                   <Button type="primary" htmlType="submit" style={buttonStyle}>
                     Log in 
                   </Button> 
-              
+              </Link>
               </Form.Item>
             </Form>
              )}/>

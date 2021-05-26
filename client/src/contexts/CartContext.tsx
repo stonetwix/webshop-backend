@@ -4,7 +4,7 @@ import { UserInfo } from '../componenets/Cart/InformationForm';
 import { PaymentCard } from '../componenets/Cart/PayCard';
 import { PaymentKlarna } from '../componenets/Cart/PayKlarna';
 import { PaymentSwish } from '../componenets/Cart/PaySwish';
-import { DeliveryMethod, deliveryMethods } from '../componenets/deliveryMethods';
+import { DeliveryMethod } from '../componenets/Cart/DeliverySelection';
 import { IReceipt } from '../componenets/OrderSuccess/Reciept';
 import { Product } from '../componenets/StartPage/ProductCardGrid';
 //import { Product } from '../componenets/ProductItemsList';
@@ -25,6 +25,13 @@ const defaultPayment: PaymentMethod = {
     expDate: '',
     cardName: '',
     cvc: '',
+}
+
+const defaultDeliveryMethod: DeliveryMethod = {
+    _id: '',
+    company: 'PostNord',
+    deliverytime: 24,
+    price: 145,
 }
 
 const emptyReceipt: IReceipt = {
@@ -57,7 +64,7 @@ interface ContextValue extends State {
 
 export const CartContext = createContext<ContextValue>({
     cart: [],
-    deliveryMethod: deliveryMethods[0],
+    deliveryMethod: defaultDeliveryMethod,
     userInfo: emptyUser,
     paymentInfo: defaultPayment,
     receipt: emptyReceipt,
@@ -76,7 +83,7 @@ export const CartContext = createContext<ContextValue>({
 class CartProvider extends Component<{}, State> {
     state: State = {
         cart: [],
-        deliveryMethod: deliveryMethods[0],
+        deliveryMethod: defaultDeliveryMethod,
         userInfo: emptyUser,
         paymentInfo: defaultPayment,
         receipt: emptyReceipt,
@@ -163,7 +170,7 @@ class CartProvider extends Component<{}, State> {
 
     clearCart = () => {
         this.setState({ 
-            deliveryMethod: deliveryMethods[0],
+            deliveryMethod: defaultDeliveryMethod,
             cart: [],
         });
         localStorage.setItem('cartItems', JSON.stringify([]));
