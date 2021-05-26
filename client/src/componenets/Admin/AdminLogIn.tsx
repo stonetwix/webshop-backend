@@ -22,18 +22,22 @@ const error = () => {
   message.error('Not valid e-mail or password', 3);
 };
 class AdminLogIn extends Component {
-
   context!: ContextType<typeof UserContext>
   static contextType = UserContext;
 
   onFinish = async (values: any, history: any) => {
-    const { setUser } = this.context;  
+    const { setUser } = this.context;
     const user = await login(values.email, values.password);
     console.log('User from LogIn: ', user)
     if (user) {
-      setUser(user.isLoggedIn, user.role === 'user')
-      console.log('User after SET USER: ', user)
-      history.push('/');
+      setUser(user.email, user.role === 'admin');
+      const { isAdmin } = this.context;
+      console.log('User after SET USER: ', user, this.context.isAdmin)
+      if (isAdmin) {
+        history.push('/admin-start');
+      } else {
+        history.push('/');
+      }
     } else {
       error(); 
     }
