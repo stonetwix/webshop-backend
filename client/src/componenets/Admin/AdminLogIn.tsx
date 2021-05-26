@@ -36,7 +36,7 @@ class AdminLogIn extends Component {
       if (isAdmin) {
         history.push('/admin-start');
       } else {
-        history.push('/');
+        history.goBack();
       }
     } else {
       error(); 
