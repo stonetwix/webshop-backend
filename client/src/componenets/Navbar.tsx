@@ -1,14 +1,58 @@
-import { Row, Col, Menu } from "antd";
+import { Row, Col, Menu, Button } from "antd";
 import { Header} from "antd/lib/layout/layout";
-import { CSSProperties } from "react";
+import React, { Component, ContextType, CSSProperties } from "react";
 import logo from '../assets/logga-fs.png'; 
 import { ShoppingCartOutlined} from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import AddToBadge from "./Badge";
+import { UserContext } from "../contexts/UserContext";
 
-function Navbar() {
+class Navbar extends Component {
+
+  context!: ContextType<typeof UserContext>
+  static contextType = UserContext;
+  
+  handleLogout = async (history: any) => {
+    const { logoutUser } = this.context;
+    const ok = await logout();
+    if (ok) {
+      logoutUser();
+      history.push('/');
+    } else {
+      alert('Problem logging out, try again')
+    }
+  }
+  
+  
+  
+  render() {
+
   return (
-    <Header style={layoutStyle}>
+
+        <UserContext.Consumer> 
+        {({ isLoggedIn }) => {
+            const userMenuItem = !isLoggedIn ?
+            <Menu.Item key="2">
+            <Link to='/admin'>
+                <h3 style={{ color: 'white', marginTop: '1.5rem' }}>Log in</h3>
+            </Link>
+            </Menu.Item> :
+            <Route render={({ history }) => (
+              <>
+                <Menu.Item key="3">
+                  <Button
+                    onClick={() => this.handleLogout(history)}
+                    style={{ borderRadius: '10rem' }}
+                  > 
+                    Log out 
+                  </Button>
+                </Menu.Item>
+              </>
+           )}/> 
+           
+          
+          return (
+            <Header style={layoutStyle}>
       <Row style={{ width: '100%' }}>
         <Col span={8}>
           <Link to='/'>
@@ -21,17 +65,18 @@ function Navbar() {
             <ShoppingCartOutlined style={iconStyle}/> </Link>  
               <AddToBadge />
             </Menu.Item> 
-            <Menu.Item key="2">
-              <Link to='/admin'>
-                <h3 style={{ color: 'white', marginTop: '1.5rem' }}>Admin</h3>
-              </Link>
-            </Menu.Item>
+            {userMenuItem}
           </Menu>
         </Col>
       </Row>
     </Header> 
-  )
+          )}}
+    </UserContext.Consumer>
+    )
 }
+}
+  
+
 
 const layoutStyle: CSSProperties = {
   width: '100%', 
@@ -73,3 +118,14 @@ const menuStyle: CSSProperties = {
 }
 
 export default Navbar; 
+
+const logout = async () => {
+  try {
+      const response = await fetch('/api/logout/', {
+        method: 'DELETE',
+      });
+      return response.ok;
+  } catch (error) {
+      console.error(error);
+  }
+}

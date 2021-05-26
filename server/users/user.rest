@@ -1,0 +1,28 @@
+
+GET http://localhost:3001/api/users
+
+### 
+
+POST http://localhost:3001/api/users
+Content-Type: application/json 
+
+{
+    "email": "hallo6@gmail.com", 
+    "password": "hej",
+    "role": "admin"
+}
+
+### 
+
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+    "email": "hallo5@gmail.com", 
+    "password": "hej"
+
+}
+
+###
+
+DELETE http://localhost:3001/api/logout
