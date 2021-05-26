@@ -6,13 +6,13 @@ const { body, validationResult } = require('express-validator');
 usersRouter
     .get('/api/users', controller.getOneUser)
     .post('/api/users', 
-    body('email').isEmail().normalizeEmail(),
-    body('password').not().isEmpty(),
-    controller.addUser)
+        body('email').isEmail().normalizeEmail(),
+        body('password').not().isEmpty(),
+        controller.addUser)
     .post('/api/login',
-    body('email').isEmail().normalizeEmail(),
-    body('password').not().isEmpty(),
-    controller.userLogin)
+        body('email').isEmail().normalizeEmail(),
+        body('password').not().isEmpty(),
+        controller.userLogin)
     .delete('/api/logout', controller.userLogout)
     .get('/api/whoami', controller.whoami)
 

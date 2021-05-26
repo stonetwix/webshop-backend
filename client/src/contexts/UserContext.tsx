@@ -30,6 +30,7 @@ class UserProvider extends Component <{}, State> {
   
     componentDidMount = async () => {
         const user = await whoami();
+        console.log('User from Context: ', user)
         if (user && !user.error) {
             this.setUser( user.isLoggedIn);
         }
@@ -37,6 +38,7 @@ class UserProvider extends Component <{}, State> {
  // Vad blir rollen? 
     setUser = (email: string) => {
         this.setState({ email: email, isLoggedIn: true });
+        console.log('IsLoggedIn? ', this.state.isLoggedIn);
     }
     
     logoutUser = () => {
@@ -63,7 +65,7 @@ export default UserProvider;
 
 const whoami = async () => {
     try {
-        let response = await fetch('/api/whoami/');
+        let response = await fetch('/api/whoami');
         if (response.ok) {
             const data = await response.json();
             return data;

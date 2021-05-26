@@ -27,10 +27,12 @@ class AdminLogIn extends Component {
   static contextType = UserContext;
 
   onFinish = async (values: any, history: any) => {
-    const {  setUser }= this.context;  
+    const { setUser } = this.context;  
     const user = await login(values.email, values.password);
+    console.log('User from LogIn: ', user)
     if (user) {
       setUser(user.isLoggedIn, user.role === 'user')
+      console.log('User after SET USER: ', user)
       history.push('/');
     } else {
       error(); 

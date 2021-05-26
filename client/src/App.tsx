@@ -9,16 +9,17 @@ import OrderSuccessMessage from "./componenets/OrderSuccess/OrderSuccessMessage"
 import ProductDetails from "./componenets/ProductDetails/ProductDetails";
 import StartPageView from "./componenets/StartPage/StartPageView";
 import CartProvider from "./contexts/CartContext";
+import UserProvider from "./contexts/UserContext";
 import ScrollToTop from "./componenets/ScrollToTop";
 import AddNewProduct from "./componenets/Admin/AddNewProduct";
 import LoginView from "./componenets/Admin/AdminLoginView";
 import SuccessMessage from "./componenets/Admin/RegisterSuccess";
 
 
-
 function App() {
   return (
     <CartProvider>
+      <UserProvider>
       <Router>
         <ScrollToTop />
         <Navbar />
@@ -32,10 +33,10 @@ function App() {
           <Route path="/add-product" component={AddNewProduct} />
           <Route path="/edit-product/:_id" component={AdminEditDetails} />
           <Route path="/registersuccess" component={SuccessMessage} />
-
         </Switch>
         <Footer2 />
       </Router>
+      </UserProvider>
     </CartProvider>
   );
 }
