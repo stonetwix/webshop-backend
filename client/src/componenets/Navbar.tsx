@@ -17,7 +17,7 @@ class Navbar extends Component {
     const ok = await logout();
     if (ok) {
       logoutUser();
-      history.push('/login');
+      history.push('/');
     } else {
       alert('Problem logging out, try again')
     }
@@ -34,7 +34,7 @@ class Navbar extends Component {
             const userMenuItem = !isLoggedIn ?
             <Menu.Item key="2">
             <Link to='/admin'>
-                   <h3 style={{ color: 'white', marginTop: '1.5rem' }}>Log in</h3>
+                <h3 style={{ color: 'white', marginTop: '1.5rem' }}>Log in</h3>
             </Link>
             </Menu.Item> :
             <Route render={({ history }) => (
