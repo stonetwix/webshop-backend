@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 require('express-async-errors');
 const cookieSession = require('cookie-session');
 const productsRouter = require('./products/products.router');
+const usersRouter = require('./users/users.router'); 
 const deliveryRouter = require('./deliveryMethods/delivery.router');
 const categoriesRouter = require('./categories/categories.router');
 const ordersRouter = require('./orders/orders.router');
@@ -20,6 +21,7 @@ app.use(cookieSession({
     httpOnly: true
 }));
 app.use(productsRouter);
+app.use(usersRouter); 
 app.use(deliveryRouter);
 app.use(categoriesRouter);
 app.use(ordersRouter);
