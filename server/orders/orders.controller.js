@@ -3,9 +3,10 @@ const OrderProductModel = require('./orderProducts.model');
 const ProductModel = require('../products/products.model');
 const { body, validationResult } = require('express-validator');
 const DeliveryModel = require('../deliveryMethods/delivery.model');
+const UserModel = require('../users/users.model');
 
 exports.getAllOrders = async (req, res) => {
-    const orders = await OrderModel.find({}).populate('orderProducts');
+    const orders = await OrderModel.find({}).populate('orderProducts').populate('deliveryMethod').populate('user');
     res.status(200).json(orders);
 }
 
@@ -26,13 +27,11 @@ exports.addOrder = async (req, res) => {
 
     const cartProducts = req.body.cartProducts;
     const productIds = cartProducts.map(p => p.product._id);
-    console.log('ProductIds: ', productIds);
     const filter = {
         _id: { $in: productIds }
     }
     const products = await ProductModel.find(filter);
     const productMap = Object.fromEntries(products.map(p => [p._id, p]));
-    console.log('ProductMap: ', productMap);
 
     const orderProductsData = cartProducts.map(p => ({
         title: productMap[p.product._id]['title'],
@@ -41,7 +40,6 @@ exports.addOrder = async (req, res) => {
         quantity: p.quantity,
         totalPrice: productMap[p.product._id]['price'] * p.quantity,
     }));
-    console.log('OrderProductsData: ', orderProductsData);
 
     //Checks if products inventory is more than quantity. 
     const allProductsAvailable = orderProductsData.map(p => productMap[p.originalProductID]['inventory'] >= p.quantity).every(x => x === true);
@@ -51,7 +49,7 @@ exports.addOrder = async (req, res) => {
         return;
     }
 
-    //Checks if products price has changed?? – NOT TESTED!!!
+    //Checks if product prices has changed?? – NOT TESTED!!!
     const productsPrice = orderProductsData.map(p => productMap[p.originalProductID]['price'] === p.price).every(x => x === true);
     if (!productsPrice) {
         res.status(400).json({ error: 'Product price has changed, check your updated cart' });
@@ -67,12 +65,13 @@ exports.addOrder = async (req, res) => {
 
     const deliveryMethod = await DeliveryModel.findById(req.body.deliveryMethod._id);
     const deliveryDay = calculateDeliveryDay(deliveryMethod.deliverytime);
+    const user = await UserModel.find({ email: req.session.email });
 
     const orderData = {
         orderProducts: orderProducts,
         deliveryMethod: deliveryMethod,
         totalPrice: orderProducts.reduce((acc, p) => acc + p.totalPrice, 0),
-        //user: ,
+        user: user,
         deliveryInformation: req.body.deliveryInformation,
         deliveryDay: deliveryDay,
         isShipped: false,
@@ -81,10 +80,10 @@ exports.addOrder = async (req, res) => {
     res.status(201).json(newOrder);
 }
 
-//Helper function calculate delivery day
+//Helper function that calculates the delivery day
 function calculateDeliveryDay (timeInHours) {
     const today = new Date();
     const deliveryDay = new Date(today);
     deliveryDay.setDate(deliveryDay.getDate() + timeInHours / 24);
     return deliveryDay.toISOString().split('T')[0];
-  }
+}

@@ -7,7 +7,6 @@ import { PaymentSwish } from '../componenets/Cart/PaySwish';
 import { DeliveryMethod } from '../componenets/Cart/DeliverySelection';
 import { IReceipt } from '../componenets/OrderSuccess/Reciept';
 import { Product } from '../componenets/StartPage/ProductCardGrid';
-//import { Product } from '../componenets/ProductItemsList';
 
 
 const emptyUser: UserInfo = {
@@ -84,6 +83,7 @@ export const CartContext = createContext<ContextValue>({
 });
 
 class CartProvider extends Component<{}, State> {
+
     state: State = {
         cart: [],
         deliveryMethod: defaultDeliveryMethod,
@@ -234,7 +234,7 @@ const addOrder = async (cartProducts: CartItem[], deliveryMethod: DeliveryMethod
             body: JSON.stringify({
                 cartProducts: cartProducts, 
                 deliveryMethod: deliveryMethod,
-                deliveryInformation: deliveryInformation
+                deliveryInformation: deliveryInformation,
             })
         });
     } catch (error) {

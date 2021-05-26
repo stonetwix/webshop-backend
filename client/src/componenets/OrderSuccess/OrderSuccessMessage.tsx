@@ -37,3 +37,15 @@ const colStyle: CSSProperties = {
     justifyContent: 'center',
     alignItems: 'center',
 }
+
+const getOneOrder = async () => {
+    try {
+        let response = await fetch('/api/orders');
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+  }

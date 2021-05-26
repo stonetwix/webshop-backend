@@ -8,7 +8,6 @@ import AddToBadge from "./Badge";
 import { UserContext } from "../contexts/UserContext";
 
 class Navbar extends Component {
-
   context!: ContextType<typeof UserContext>
   static contextType = UserContext;
   

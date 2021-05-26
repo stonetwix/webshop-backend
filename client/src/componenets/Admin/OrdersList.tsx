@@ -1,10 +1,7 @@
 import { Component, CSSProperties } from 'react'
-import { Table, Select, Space } from 'antd';
-
-const { Option } = Select;
+import { Table, Space, Row } from 'antd';
 
 const { Column } = Table;
-
 interface Order {
   _id: string;
   customerName: string;
@@ -31,11 +28,11 @@ class OrdersList extends Component<{}, State> {
   
   render () {
     return (
-      <div style={orderListStyle}>
+      <Row style={orderListStyle}>
         <Table dataSource={this.state.orders}>
           <Column title="Order number" dataIndex="_id" key="_id" />
           <Column title="Customer" dataIndex={["deliveryInformation", "name"]} key="customer" />
-          <Column title="Delivery method" dataIndex="deliveryMethod" key="delivery" />
+          <Column title="Delivery method" dataIndex={["deliveryMethod", "company"]} key="delivery" />
           <Column title="Total price" dataIndex="totalPrice" key="totalPrice" />
           <Column title="Created" dataIndex="createdAt" key="totalPrice" />
           <Column
@@ -49,7 +46,7 @@ class OrdersList extends Component<{}, State> {
             )}
           />
         </Table>
-      </div>
+      </Row>
     )
   }
 }
