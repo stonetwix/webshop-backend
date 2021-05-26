@@ -70,7 +70,7 @@ exports.addOrder = async (req, res) => {
     const orderData = {
         orderProducts: orderProducts,
         deliveryMethod: deliveryMethod,
-        totalPrice: orderProducts.reduce((acc, p) => acc + p.totalPrice, 0),
+        totalPrice: orderProducts.reduce((acc, p) => acc + p.totalPrice, 0) + deliveryMethod.price,
         user: user,
         deliveryInformation: req.body.deliveryInformation,
         deliveryDay: deliveryDay,
