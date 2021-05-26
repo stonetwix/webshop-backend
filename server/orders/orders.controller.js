@@ -12,7 +12,7 @@ exports.getAllOrders = async (req, res) => {
 
 exports.getOneOrder = async (req, res) => {
     try {
-        const order = await OrderModel.findById(req.params.id);
+        const order = await OrderModel.findById(req.params.id).populate('orderProducts').populate('deliveryMethod').populate('user');
         res.status(200).json(order);
     } catch (error) {
         res.status(404).json({ error: 'Order not available' });
@@ -65,8 +65,8 @@ exports.addOrder = async (req, res) => {
 
     const deliveryMethod = await DeliveryModel.findById(req.body.deliveryMethod._id);
     const deliveryDay = calculateDeliveryDay(deliveryMethod.deliverytime);
-    const user = await UserModel.find({ email: req.session.email });
-
+    const user = await UserModel.findOne({ email: req.session.email });
+    console.log(user)
     const orderData = {
         orderProducts: orderProducts,
         deliveryMethod: deliveryMethod,

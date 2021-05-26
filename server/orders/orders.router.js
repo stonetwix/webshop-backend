@@ -5,7 +5,7 @@ const { body, validationResult } = require('express-validator');
 
 ordersRouter
     .get('/api/orders', controller.getAllOrders)
-    .get('/api/orders/:id')
+    .get('/api/orders/:id', controller.getOneOrder)
     .post('/api/orders', controller.addOrder);
 
 
