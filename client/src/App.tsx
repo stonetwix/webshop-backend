@@ -28,7 +28,7 @@ function App() {
         <Navbar />
         <Switch>
           <Route path="/product/:_id" component={ProductDetails} />
-          <Route path="/ordersuccess" component={OrderSuccessMessage} />
+          <Route path="/ordersuccess/:_id" component={OrderSuccessMessage} />
           <Route exact path="/" component={StartPageView} />
           <Route path="/cart" component={CartView} />
           <Route path="/login" component={LoginView} />

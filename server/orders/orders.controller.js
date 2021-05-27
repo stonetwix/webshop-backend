@@ -87,3 +87,22 @@ function calculateDeliveryDay (timeInHours) {
     deliveryDay.setDate(deliveryDay.getDate() + timeInHours / 24);
     return deliveryDay.toISOString().split('T')[0];
 }
+
+exports.editOrder = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    let queryRes;
+    const order = req.body;
+    try {
+        queryRes = await OrderModel.findById(req.params.id).updateOne(order);
+    } catch (error) {
+        res.status(404).json({ error: 'Order not available' });
+    }
+    if (!queryRes.nModified) {
+        res.status(404).json({ error: 'Order not available' });
+    } else {
+        res.status(200).json(await OrderModel.findById(req.params.id));
+    }
+}

@@ -46,6 +46,8 @@ class OrderDetails extends Component<Props, State> {
           return <ErrorPage />
         }
         console.log('Orders in render', order)
+
+        //TODO: New lines on products
     
         return (
             <Row>

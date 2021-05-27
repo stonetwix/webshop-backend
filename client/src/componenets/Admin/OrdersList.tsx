@@ -55,7 +55,7 @@ const columns = [
   },
   {
     title: 'Created',
-    dataIndex: 'createdAt',
+    dataIndex: 'createdAt'.split('T')[0],
     key: 'created',
   },
   {
