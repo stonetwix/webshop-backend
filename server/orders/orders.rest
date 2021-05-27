@@ -6,7 +6,7 @@ GET http://localhost:3001/api/user-orders
 
 ###
 
-GET http://localhost:3001/api/orders/60ae101e7ded1c838aab3101
+GET http://localhost:3001/api/orders/60afa83a7e3b59e2787553bf
 
 ###
 
@@ -44,7 +44,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3001/api/orders/60ae3d3dca5378130c4fd3ca/isShipped
+PUT http://localhost:3001/api/orders/60afa9667e3b59e2787553c2/isShipped
 Content-Type: application/json
 
 {

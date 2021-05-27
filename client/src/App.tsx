@@ -14,11 +14,10 @@ import ScrollToTop from "./componenets/ScrollToTop";
 import AddNewProduct from "./componenets/Admin/AddNewProduct";
 import LoginView from "./componenets/Admin/AdminLoginView";
 import SuccessMessage from "./componenets/Admin/RegisterSuccess";
-
 import AdminStartpage from "./componenets/Admin/AdminStartpage";
 import OrdersList from "./componenets/Admin/OrdersList";
-import UserPage from "./componenets/UserPage";
 import OrderDetails from "./componenets/Admin/OrderDetailView";
+import UserPage from "./componenets/UserPage";
 
 function App() {
   return (
