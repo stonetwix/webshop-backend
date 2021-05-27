@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 class SuccessMessage extends Component {
 
     handleLogInClick = (history: any) => {
-        history.push('/admin');
+        history.push('/login');
     }
 
     render() {
