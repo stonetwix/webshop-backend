@@ -19,13 +19,17 @@ class OrderDetails extends Component<Props, State> {
     async componentDidMount() {
         const orderId = (this.props.match.params as any)._id;
         const result = await getOneOrder(orderId);
+        console.log('Result: ', result)
+        if (result?.Response === 'False') {
+            return;
+        }
 
         const orderDetails = {
             _id: result._id,
-            orderProducts: result.orderProducts.title,
+            orderProducts: result.orderProducts,
             user: result.user.email,
             deliveryMethod: result.deliveryMethod.company,
-            deliveryInformation: result.deliveryInformation.addess,
+            deliveryInformation: result.deliveryInformation,
             deliveryDay: result.deliveryDay,
             totalPrice: result.totalPrice,
             isShipped: result.isShipped,
@@ -41,19 +45,28 @@ class OrderDetails extends Component<Props, State> {
         if (!order) {
           return <ErrorPage />
         }
+        console.log('Orders in render', order)
     
         return (
             <Row>
                 <Col span={20} style={colStyle}>
                     <Card title="Order information" style={cardStyle}>
                         <p><strong>Order number:</strong> {order._id}</p>
-                        <p><strong>Products:</strong> {order.orderProducts}</p>
+                        <p><strong>Products: </strong> 
+                            {order.orderProducts?.map(p => (p.quantity + ' ' + p.title)).join(', ')}
+                        </p>
                         <p><strong>User:</strong> {order.user}</p>
                         <p><strong>Delivery method:</strong> {order.deliveryMethod}</p>
-                        <p><strong>Delivery information:</strong> {order.deliveryInformation}</p>
+                        <p><strong>Delivery information:</strong> <br/>
+                            Name: {order.deliveryInformation?.name}<br/> 
+                            Phone: {order.deliveryInformation?.phone}<br/> 
+                            E-mail: {order.deliveryInformation?.email}<br/> 
+                            Street: {order.deliveryInformation?.street}<br/> 
+                            Zipcode: {order.deliveryInformation?.zipcode}<br/> 
+                            City: {order.deliveryInformation?.city}<br/> 
+                        </p>
                         <p><strong>Delivery day:</strong> {order.deliveryDay}</p>
                         <p><strong>Total price:</strong> SEK {order.totalPrice}</p>
-                        <p><strong>Is shipped:</strong> {order.isShipped}</p>
                         <p><strong>Order created:</strong> {order.createdAt.split('T')[0]}</p>
                         
                     </Card>

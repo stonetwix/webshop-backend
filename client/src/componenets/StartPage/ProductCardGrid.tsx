@@ -18,6 +18,7 @@ export interface Product {
     imageUrl: string;
     categories: Category[];
     inventory: number;
+    quantity?: number;
 }
 export interface Category {
     name: string;

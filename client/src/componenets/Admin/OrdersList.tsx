@@ -4,12 +4,22 @@ import { Link } from "react-router-dom";
 import { Product } from '../StartPage/ProductCardGrid';
 
 const { Column } = Table;
+
+interface DeliveryInformation {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  street: string;
+  zipcode: string;
+  city: string;
+}
 export interface Order {
   _id: string;
   orderProducts?: Product[];
   user: string;
   deliveryMethod: string;
-  deliveryInformation?: object;
+  deliveryInformation?: DeliveryInformation;
   deliveryDay: string;
   totalPrice: number;
   isShipped: boolean;
