@@ -6,7 +6,7 @@ const DeliveryModel = require('../deliveryMethods/delivery.model');
 const UserModel = require('../users/users.model');
 
 exports.getAllOrders = async (req, res) => {
-    const orders = await OrderModel.find({}).populate('orderProducts').populate('deliveryMethod').populate('user');
+    const orders = await OrderModel.find({}).populate('orderProducts').populate('deliveryMethod').populate('user').sort({'createdAt': 'desc'});;
     res.status(200).json(orders);
 }
 
