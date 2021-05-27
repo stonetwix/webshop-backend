@@ -1,27 +1,32 @@
 import { Result, Button, Row, Col } from 'antd';
-import { CSSProperties } from 'react';
-import { Link } from 'react-router-dom';
+import { Component, CSSProperties } from 'react';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import Reciept from '../OrderSuccess/Reciept';
 
-function OrderSuccessMessage() {
-    return (
-        <Row style={containerStyle}>
-            <Col span={24} style={colStyle}>
-                <Result
-                    status="success"
-                    title="You successfully purchased from FashionStore"
-                    subTitle={'Your order number is: ' + Math.floor(Math.random() * 1000000000000)}
-                    extra={[
-                    <Link to='/'>
-                        <Button type="primary" key="console">Continue shopping</Button>
-                    </Link>
-                    ]}
-                />
-                <Reciept />
-            </Col>
-        </Row>
-    ) 
+interface Props extends RouteComponentProps<{ _id: string }> {}
+class OrderSuccessMessage extends Component<Props> {
+    render() {
+        return (
+            <Row style={containerStyle}>
+                <Col span={24} style={colStyle}>
+                    <Result
+                        status="success"
+                        title="You successfully purchased from FashionStore"
+                        subTitle={'Your order number is: ' + this.props.location.pathname.split('/')[2]}
+                        extra={[
+                        <Link to='/'>
+                            <Button type="primary" key="console">Continue shopping</Button>
+                        </Link>
+                        ]}
+                    />
+                    <Reciept />
+                </Col>
+            </Row>
+        ) 
+    }
 }
+
+//Math.floor(Math.random() * 1000000000000)
 
 export default OrderSuccessMessage; 
 

@@ -7,6 +7,7 @@ import { PaymentSwish } from '../componenets/Cart/PaySwish';
 import { DeliveryMethod } from '../componenets/Cart/DeliverySelection';
 import { IReceipt } from '../componenets/OrderSuccess/Reciept';
 import { Product } from '../componenets/StartPage/ProductCardGrid';
+import { Order } from '../componenets/Admin/OrdersList';
 
 
 const emptyUser: UserInfo = {
@@ -181,19 +182,24 @@ class CartProvider extends Component<{}, State> {
 
     handlePlaceOrder = async (history: any) => {
         this.setState({ disablePlaceOrderButton: true });
+        let order: Order | undefined;
         try {
-            await addOrder(this.state.cart, this.state.deliveryMethod, this.state.userInfo);
+            order = await addOrder(this.state.cart, this.state.deliveryMethod, this.state.userInfo);
         } catch (error) {
             console.log(error); 
             return;
         }
+        if (!order) {
+            //TODO: Handle error!
+            return;
+        }
         this.setState({
-            receipt: this.createReceipt()
+            receipt: this.createReceipt(),
         });
         console.log('receipt', this.state.receipt);
         this.clearCart();
 
-        history.push('/ordersuccess');
+        history.push('/ordersuccess/' + order._id);
         this.setState({ disablePlaceOrderButton: false });
     }
 
@@ -226,7 +232,7 @@ export default CartProvider;
 
 const addOrder = async (cartProducts: CartItem[], deliveryMethod: DeliveryMethod, deliveryInformation: UserInfo) => {
     try {
-        await fetch('/api/orders', {
+        let response = await fetch('/api/orders', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -237,6 +243,11 @@ const addOrder = async (cartProducts: CartItem[], deliveryMethod: DeliveryMethod
                 deliveryInformation: deliveryInformation,
             })
         });
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        }
+        
     } catch (error) {
         console.error(error);
     }

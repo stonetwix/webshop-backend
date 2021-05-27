@@ -18,6 +18,7 @@ export interface Product {
     imageUrl: string;
     categories: Category[];
     inventory: number;
+    quantity?: number;
 }
 export interface Category {
     name: string;
@@ -50,7 +51,7 @@ class ProductCardGrid extends Component<State> {
         })
     }
 
-    handleChange = async (value: any, values: any) => {
+    handleCategoryChange = async (value: any, values: any) => {
         let products;
         if (value.length === 0) {
             products = await getProducts([]);
@@ -74,7 +75,7 @@ class ProductCardGrid extends Component<State> {
                             style={{ width: '100%' }}
                             placeholder="Please select"
                             defaultValue={[]}
-                            onChange={this.handleChange}
+                            onChange={this.handleCategoryChange}
                             >
                                 {this.categoryOptions()}
                         </Select>

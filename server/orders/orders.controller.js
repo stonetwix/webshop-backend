@@ -70,7 +70,7 @@ exports.addOrder = async (req, res) => {
     const orderData = {
         orderProducts: orderProducts,
         deliveryMethod: deliveryMethod,
-        totalPrice: orderProducts.reduce((acc, p) => acc + p.totalPrice, 0),
+        totalPrice: orderProducts.reduce((acc, p) => acc + p.totalPrice, 0) + deliveryMethod.price,
         user: user,
         deliveryInformation: req.body.deliveryInformation,
         deliveryDay: deliveryDay,
@@ -86,4 +86,24 @@ function calculateDeliveryDay (timeInHours) {
     const deliveryDay = new Date(today);
     deliveryDay.setDate(deliveryDay.getDate() + timeInHours / 24);
     return deliveryDay.toISOString().split('T')[0];
+}
+
+//TODO: Add validation for isShipped
+exports.editOrder = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    let queryRes;
+    const isShipped = { isShipped: req.body.isShipped };
+    try {
+        queryRes = await OrderModel.findById(req.params.id).updateOne(isShipped);
+    } catch (error) {
+        res.status(404).json({ error: 'Order not available' });
+    }
+    if (!queryRes.nModified) {
+        res.status(404).json({ error: 'Order not available' });
+    } else {
+        res.status(200).json(await OrderModel.findById(req.params.id));
+    }
 }
