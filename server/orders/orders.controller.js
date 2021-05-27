@@ -15,7 +15,7 @@ exports.getUserOrders = async (req, res) => {
     if (req.session.role === 'customer') {
         const orders = await OrderModel.find({}).populate('orderProducts').populate('deliveryMethod').populate('user');
         const userOrders = orders.filter(order => order.user.email === req.session.email)
-       res.status(200).json(userOrders);
+        res.status(200).json(userOrders);
     }}
 
 
