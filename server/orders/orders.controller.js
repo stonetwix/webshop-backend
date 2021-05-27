@@ -88,15 +88,16 @@ function calculateDeliveryDay (timeInHours) {
     return deliveryDay.toISOString().split('T')[0];
 }
 
+//TODO: Add validation for isShipped
 exports.editOrder = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
     let queryRes;
-    const order = req.body;
+    const isShipped = { isShipped: req.body.isShipped };
     try {
-        queryRes = await OrderModel.findById(req.params.id).updateOne(order);
+        queryRes = await OrderModel.findById(req.params.id).updateOne(isShipped);
     } catch (error) {
         res.status(404).json({ error: 'Order not available' });
     }

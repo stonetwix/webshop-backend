@@ -7,7 +7,7 @@ ordersRouter
     .get('/api/orders', controller.getAllOrders)
     .get('/api/orders/:id', controller.getOneOrder)
     .post('/api/orders', controller.addOrder)
-    .put('/api/orders/:id', controller.editOrder);
+    .put('/api/orders/:id/isShipped', controller.editOrder);
 
 
 module.exports = ordersRouter;
