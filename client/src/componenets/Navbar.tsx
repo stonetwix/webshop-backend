@@ -38,26 +38,23 @@ class Navbar extends Component {
             </Menu.Item> :
             <Route render={({ history }) => (
               <>
-                <Menu.Item key="3">
+                <Menu.Item key="3" style={loggedInStyle}>
+                    <UserOutlined style={iconStyleUser}
+                      onClick={() => { 
+                        const { isAdmin } = this.context;
+                        if (isAdmin) {
+                          history.push('/admin-start')
+                        } else {
+                          history.push('/profile')
+                        }
+                      }}
+                    />
                   <Button
                     onClick={() => this.handleLogout(history)}
                     style={{ borderRadius: '10rem' }}
                   > 
                     Log out 
                   </Button>
-                  <UserOutlined style={iconStyleUser}
-                    onClick={() => 
-                    history.push('/profile')
-
-                    // { 
-                    //   if (role === admin) {
-                    //     history.push('/admin-start')
-                    //   } else {
-                    //     history.push('/profile')
-                    //   }
-                    // }}
-                    }
-                  />
                 </Menu.Item>
               </>
            )}/> 
@@ -116,15 +113,21 @@ const iconStyle: CSSProperties = {
   float: 'right',
   position: 'absolute',
   margin: window.innerWidth > 768 ? '2.3rem -1.6rem' : '2.3rem -1.5rem', 
-  boxSizing: 'border-box'
+  boxSizing: 'border-box',
 }
+const loggedInStyle: CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+}
+
 const iconStyleUser: CSSProperties = {
   color: 'white', 
   fontSize: '1.8rem',
   float: 'right',
   position: 'absolute',
-  margin: window.innerWidth > 768 ? '1rem -0.2rem' : '2.3rem -1.5rem', 
-  boxSizing: 'border-box'
+  margin: window.innerWidth > 2000 ? '10rem -0.2rem' : '2.3rem -1.5rem', 
+  boxSizing: 'border-box',
+  marginRight: '1.5rem',
 }
 
 const menuStyle: CSSProperties = {
