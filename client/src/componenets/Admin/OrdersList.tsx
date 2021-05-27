@@ -3,8 +3,9 @@ import { Table, Space, Row, Col, Button } from 'antd';
 import { Link, RouteComponentProps } from "react-router-dom";
 import { Product } from '../StartPage/ProductCardGrid';
 import { CheckCircleFilled } from '@ant-design/icons';
-
-const { Column } = Table;
+import dayjs from 'dayjs';
+var utc = require('dayjs/plugin/utc')
+dayjs.extend(utc);
 
 interface DeliveryInformation {
   _id: string;
@@ -64,8 +65,11 @@ class OrdersList extends Component<Props, State> {
     },
     {
       title: 'Created',
-      dataIndex: 'createdAt'.split('T')[0],
       key: 'created',
+      render: (record: Order) => {
+        //return dayjs(record.createdAt).locale();
+        return record.createdAt.split('.')[0].split('T').join(' ');
+      }
     },
     {
       title: 'Shipping status',
