@@ -39,5 +39,5 @@ PUT http://localhost:3001/api/orders/60ae3d3dca5378130c4fd3ca/isShipped
 Content-Type: application/json
 
 {
-    "isShipped": false
+    "isShipped": true
 }

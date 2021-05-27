@@ -70,6 +70,7 @@ class OrderDetails extends Component<Props, State> {
                         <p><strong>Delivery day:</strong> {order.deliveryDay}</p>
                         <p><strong>Total price:</strong> SEK {order.totalPrice}</p>
                         <p><strong>Order created:</strong> {order.createdAt.split('T')[0]}</p>
+                        <p><strong>Shipping status:</strong> {order.isShipped ? 'Sent' : 'Pending'}</p>
                         
                     </Card>
                 </Col>
