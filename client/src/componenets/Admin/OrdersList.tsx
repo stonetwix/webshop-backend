@@ -1,11 +1,16 @@
 import { Component, CSSProperties } from 'react'
-import { Table, Space, Row } from 'antd';
+import { Table, Space, Row, Col, Button } from 'antd';
+import { Link } from "react-router-dom";
+import { Product } from '../StartPage/ProductCardGrid';
 
 const { Column } = Table;
-interface Order {
+export interface Order {
   _id: string;
-  customerName: string;
+  orderProducts?: Product[];
+  user: string;
   deliveryMethod: string;
+  deliveryInformation?: object;
+  deliveryDay: string;
   totalPrice: number;
   isShipped: boolean;
   createdAt: string;
@@ -13,6 +18,46 @@ interface Order {
 interface State {
   orders: Order[];
 }
+
+const columns = [
+  {
+    title: 'Order number',
+    dataIndex: '_id',
+    key: '_id',
+    render: (text: string, record: Order) => (
+      <Link to={'/admin-orders/' + record._id}>{text}</Link>
+    ),
+  },
+  {
+    title: 'Customer',
+    dataIndex: ["user", "email"],
+    key: 'customer',
+  },
+  {
+    title: 'Delivery method',
+    dataIndex: ["deliveryMethod", "company"],
+    key: 'delivery',
+  },
+  {
+    title: 'Total price',
+    dataIndex: 'totalPrice',
+    key: 'totalPrice',
+  },
+  {
+    title: 'Created',
+    dataIndex: 'createdAt',
+    key: 'created',
+  },
+  {
+    title: 'Status',
+    key: 'action',
+    render: (record: Order) => (
+      <Space size="middle">
+        <Button onClick={() => {}}>Mark as sent</Button>
+      </Space>
+    ),
+  },
+];
 
 class OrdersList extends Component<{}, State> {
 
@@ -29,23 +74,10 @@ class OrdersList extends Component<{}, State> {
   render () {
     return (
       <Row style={orderListStyle}>
-        <Table dataSource={this.state.orders}>
-          <Column title="Order number" dataIndex="_id" key="_id" />
-          <Column title="Customer" dataIndex={["user", "email"]} key="customer" />
-          <Column title="Delivery method" dataIndex={["deliveryMethod", "company"]} key="delivery" />
-          <Column title="Total price" dataIndex="totalPrice" key="totalPrice" />
-          <Column title="Created" dataIndex="createdAt" key="totalPrice" />
-          <Column
-            title="Status"
-            key="action"
-            render={(text, record) => (
-              <Space size="middle">
-                <a>Mark as sent</a>
-                {/* <a onClick={() => this.handleSent()}>Mark as sent</a> */}
-              </Space>
-            )}
-          />
-        </Table>
+        <Col span={20}>
+         <h1 style={{fontWeight: 'bold'}}>ADMIN ORDERS</h1>
+         <Table columns={columns} dataSource={this.state.orders} pagination={false} />
+        </Col>
       </Row>
     )
   }

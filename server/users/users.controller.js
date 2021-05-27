@@ -34,7 +34,8 @@ exports.userLogin = async (req, res) => {
         return;
     }
     req.session.email = user.email;
-    req.session.role = user.role; 
+    req.session.role = user.role;
+    console.log(user.role);
     res.status(200).json(user);
 }
 
