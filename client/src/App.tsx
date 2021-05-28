@@ -18,6 +18,7 @@ import AdminStartpage from "./componenets/Admin/AdminStartpage";
 import OrdersList from "./componenets/Admin/OrdersList";
 import OrderDetails from "./componenets/Admin/OrderDetailView";
 import UserPage from "./componenets/UserPage";
+import UserOrderDetailView from "./componenets/UserOrderDetailView";
 
 function App() {
   return (
@@ -40,6 +41,8 @@ function App() {
           <Route path="/edit-product/:_id" component={AdminEditDetails} />
           <Route path="/registersuccess" component={SuccessMessage} />
           <Route path="/profile" component={UserPage} />
+          <Route path="/user-orders/:_id" component={UserOrderDetailView} />
+
         </Switch>
         <Footer2 />
       </Router>
