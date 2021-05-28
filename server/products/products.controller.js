@@ -13,12 +13,6 @@ exports.getAllProducts = async (req, res) => {
     res.status(200).json(products);
 }
 
-exports.getProductsByCategory = async (req, res) => {
-    const products = await ProductModel.find({'categories': req.params.id}).populate('categories').sort({ title: 1 });
-    console.log(products);
-    res.status(200).json(products);
-}
-
 exports.getOneProduct = async (req, res) => {
     try {
         const product = await ProductModel.findById(req.params.id);

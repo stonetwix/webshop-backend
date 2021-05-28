@@ -10,10 +10,6 @@ GET http://localhost:3001/api/products/60acadc7f067a07653c2a507
 
 ###
 
-GET http://localhost:3001/api/products/category/60acadc7f067a07653c2a507
-
-###
-
 POST http://localhost:3001/api/products
 Content-Type: application/json
 

@@ -7,7 +7,6 @@ const auth = require('../auth');
 productsRouter
     .get('/api/products', controller.getAllProducts)
     .get('/api/products/:id', controller.getOneProduct)
-    .get('/api/products/category/:id', controller.getProductsByCategory)
     .post('/api/products',
         auth.secureWithAdmin,
         body('title').not().isEmpty(),

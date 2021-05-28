@@ -100,6 +100,7 @@ class ProductCardGrid extends Component<State> {
                                         <Card
                                             hoverable
                                             cover={<img src={item.imageUrl} alt='product' />}
+                                            style={{ minWidth: '250px' }}
                                             actions={[
                                                 <ShoppingCartOutlined 
                                                     style={{ fontSize: '2rem' }}
@@ -173,16 +174,4 @@ const getCategories = async () => {
     } catch (error) {
         console.error(error);
     }
-} 
-
-const getProductsByCategory = async (_id: string) => {
-    try {
-        let response = await fetch('/api/products/category/' + _id);
-        if (response.ok) {
-            const data = await response.json();
-            return data;
-        }
-    } catch (error) {
-        console.error(error);
-    }
-} 
+}

@@ -13,14 +13,15 @@ Content-Type: application/json
     "cartProducts": [
     {
         "product": {
-            "_id": "60acadc7f067a07653c2a506"
+            "_id": "60acadc7f067a07653c2a50c"
         },
         "quantity": 1
     }],
     "deliveryMethod": {
         "_id": "60acadc70cbf89eb9fbaf5b1"
     },
-    "totalPrice": 299,
+    //TODO: Validate?
+    //"totalPrice": 299,
     "deliveryInformation": {
         "name": "Moa",
         "email": "moa@stonetwig.se",
@@ -28,9 +29,9 @@ Content-Type: application/json
         "street": "Street name 2",
         "zipcode": "11111",
         "city": "Gothenburg"
-    },
-    "deliveryDay": "2021-05-30",
-    "isShipped": false
+    }
+    //TODO: Validate in backend – not changed?
+    //"deliveryDay": "2021-05-30",
 }
 
 ###

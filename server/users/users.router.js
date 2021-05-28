@@ -8,6 +8,7 @@ usersRouter
     .post('/api/users', 
         body('email').isEmail().normalizeEmail(),
         body('password').not().isEmpty(),
+        body('role').not().isEmpty(),
         controller.addUser)
     .post('/api/login',
         body('email').isEmail().normalizeEmail(),
@@ -16,8 +17,7 @@ usersRouter
     .delete('/api/logout', controller.userLogout)
     .get('/api/whoami', controller.whoami)
 
-module.exports = usersRouter; 
- 
+module.exports = usersRouter;
 
 
 
