@@ -1,8 +1,8 @@
 import { Row, Col, Menu, Button, message } from "antd";
-import { Header} from "antd/lib/layout/layout";
+import { Header } from "antd/lib/layout/layout";
 import React, { Component, ContextType, CSSProperties } from "react";
 import logo from '../assets/logga-fs.png'; 
-import { ShoppingCartOutlined} from '@ant-design/icons';
+import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, Route } from 'react-router-dom';
 import AddToBadge from "./Badge";
 import { UserContext } from "../contexts/UserContext";
@@ -35,19 +35,34 @@ class Navbar extends Component {
             <Link to='/login'>
                 <h3 style={{ color: 'white', marginTop: '1.5rem', marginLeft: '2rem' }}>Log in</h3>
             </Link>
-          </Menu.Item> :
-          <Route render={({ history }) => (
-            <>
-              <Menu.Item key="3">
-                <Button
-                  onClick={() => this.handleLogout(history)}
-                  style={{ borderRadius: '10rem', marginTop: '1.5rem', marginLeft: '2rem' }}
-                > 
-                  Log out 
-                </Button>
-              </Menu.Item>
-            </>
-          )}/> 
+            </Menu.Item> :
+            <Route render={({ history }) => (
+              <>
+                <Menu.Item key="3">
+                    <UserOutlined style={iconStyleUser}
+                      onClick={() => { 
+                        const { isAdmin } = this.context;
+                        if (isAdmin) {
+                          history.push('/admin-start')
+                        } else {
+                          history.push('/profile')
+                        }
+                      }}
+                    />
+                </Menu.Item>
+                <Menu.Item key="4">
+
+                  <Button style={buttonStyle}
+                    onClick={() => this.handleLogout(history)}
+                  > 
+                    Log out 
+                  </Button>
+                </Menu.Item>
+
+              </>
+           )}/> 
+           
+          
           return (
             <Header style={layoutStyle}>
               <Row style={{ width: '100%' }}>
@@ -95,25 +110,40 @@ const logoStyle: CSSProperties = {
   width: window.innerWidth > 768 ? '11.5rem' : '8rem',
 }
 
+const menuStyle: CSSProperties = {
+  background: 'black', 
+  color: 'white', 
+  display: 'flex', 
+  justifyContent: 'space-evenly',
+  alignItems: 'center',
+  marginTop: window.innerWidth > 768 ? '1.2rem' : '-0.3rem',
+  marginRight: window.innerWidth > 768 ? '0' : '-2rem',
+}
+
 const iconStyle: CSSProperties = {
   color: 'white', 
   fontSize: '2.3rem',
   float: 'right',
   position: 'absolute',
-  margin: window.innerWidth > 768 ? '2.3rem -1.6rem' : '2.3rem -1.5rem', 
-  boxSizing: 'border-box'
+  alignItems: 'center',
+  margin: window.innerWidth > 768 ? '2rem -1.6rem' : '2.3rem -1.5rem', 
+  boxSizing: 'border-box',
 }
 
-const menuStyle: CSSProperties = {
+const buttonStyle: CSSProperties = {
+  borderRadius: '10rem',
   float: 'right',
-  background: 'black', 
-  color: 'white', 
-  display: 'flex', 
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginTop: window.innerWidth > 768 ? '1.2rem' : '-0.3rem',
-  marginRight: window.innerWidth > 768 ? '0' : '-2rem',
+  margin: window.innerWidth > 768 ? '2rem -1.6rem' : '2.3rem -1.5rem', 
 }
+
+const iconStyleUser: CSSProperties = {
+  color: 'white', 
+  fontSize: '1.8rem',
+  borderRadius: '10rem',
+  marginLeft: '3rem',
+  margin: window.innerWidth > 768 ? '2rem -1.6rem' : '2.3rem -1.5rem', 
+}
+
 
 export default Navbar; 
 
