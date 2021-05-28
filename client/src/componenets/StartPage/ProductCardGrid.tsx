@@ -93,7 +93,7 @@ class ProductCardGrid extends Component<State> {
                                 xl: 4,
                                 xxl: 4,
                             }}
-                            dataSource={this.state.products}
+                            dataSource={this.state.products?.filter(p => p.inventory > 0)}
                             renderItem={item => (
                                 <List.Item>
                                     <Link to={'/product/' + item._id}>
