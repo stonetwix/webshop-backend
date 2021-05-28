@@ -6,11 +6,20 @@ GET http://localhost:3001/api/orders/60b0b177c88b6937676fe957
 
 ###
 
+GET http://localhost:3001/api/user-orders
+
+###
+
 POST http://localhost:3001/api/orders
 Content-Type: application/json
 
 {
-    "cartProducts": [
+    "cartProducts": [{
+        "product": {
+            "_id": "60af8370a87bace25c67b696"
+        },
+        "quantity": 1
+    },
     {
         "product": {
             "_id": "60acadc7f067a07653c2a50c"
@@ -18,16 +27,16 @@ Content-Type: application/json
         "quantity": 1
     }],
     "deliveryMethod": {
-        "_id": "60acadc70cbf89eb9fbaf5b1"
+        "_id": "60af8370b3363f411db460f5"
     },
     //TODO: Validate?
     //"totalPrice": 299,
     "deliveryInformation": {
-        "name": "Moa",
-        "email": "moa@stonetwig.se",
-        "phone": "0000111111",
+        "name": "Malin",
+        "email": "malin@stonetwig.se",
+        "phone": "0707909054",
         "street": "Street name 2",
-        "zipcode": "11111",
+        "zipcode": "33333",
         "city": "Gothenburg"
     }
     //TODO: Validate in backend – not changed?

@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 var utc = require('dayjs/plugin/utc')
 dayjs.extend(utc);
 
-interface DeliveryInformation {
+export interface DeliveryInformation {
   _id: string;
   name: string;
   email: string;
@@ -85,7 +85,7 @@ class OrdersList extends Component<Props, State> {
           )
         } else {
           return (
-            <CheckCircleFilled style={{ fontSize: '2rem', color: '#8FBC94' }}/>
+            <CheckCircleFilled style={{ fontSize: '2rem', color: '#8FBC94',display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}/>
           )
         }
       }

@@ -11,6 +11,7 @@ ordersRouter
     .get('/api/orders/:id', 
         auth.secureWithAdmin,
         controller.getOneOrder)
+    .get('/api/user-orders', controller.getUserOrders)
     .post('/api/orders', 
         body('deliveryMethod').not().isEmpty(),
         body('cartProducts').not().isEmpty(),
