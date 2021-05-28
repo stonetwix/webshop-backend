@@ -20,7 +20,7 @@ class UserPage extends Component<Props, State> {
       dataIndex: '_id',
       key: '_id',
       render: (text: string, record: Order) => (
-        <Link to={'/admin-orders/' + record._id}>{text}</Link>
+        <Link to={'/profile/' + record._id}>{text}</Link>
       ),
     },
     {
@@ -61,7 +61,7 @@ class UserPage extends Component<Props, State> {
   ];
     
   async componentDidMount() {
-    const orders = await getUserOrders();
+    const orders = await getOrders();
     this.setState({ orders: orders });
     console.log(this.state.orders);
   }
@@ -92,9 +92,9 @@ const orderListStyle: CSSProperties = {
   margin: '1rem'
 }
 
-const getUserOrders = async () => {
+const getOrders = async () => {
   try {
-      let response = await fetch('/api/user-orders');
+      let response = await fetch('/api/orders');
       if (response.ok) {
           const data = await response.json();
           return data;

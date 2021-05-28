@@ -6,12 +6,11 @@ const auth = require('../auth');
 
 ordersRouter
     .get('/api/orders', 
-        auth.secureWithAdmin,
+        auth.secure,
         controller.getAllOrders)
     .get('/api/orders/:id', 
-        auth.secureWithAdmin,
+        auth.secure,
         controller.getOneOrder)
-    .get('/api/user-orders', controller.getUserOrders)
     .post('/api/orders', 
         body('deliveryMethod').not().isEmpty(),
         body('cartProducts').not().isEmpty(),

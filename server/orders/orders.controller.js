@@ -6,24 +6,22 @@ const DeliveryModel = require('../deliveryMethods/delivery.model');
 const UserModel = require('../users/users.model');
 
 exports.getAllOrders = async (req, res) => {
-    const orders = await OrderModel
-        .find({})
-        .populate('orderProducts')
-        .populate('deliveryMethod')
-        .populate('user')
-        .sort({'createdAt': 'desc'});;
-    res.status(200).json(orders);
-}
-
-exports.getUserOrders = async (req, res) => {
-    if (req.session.role === 'customer') {
+    if (req.session.role === 'admin') {
         const orders = await OrderModel
             .find({})
             .populate('orderProducts')
             .populate('deliveryMethod')
             .populate('user')
             .sort({'createdAt': 'desc'});
-        const userOrders = orders.filter(order => order.user.email === req.session.email)
+        res.status(200).json(orders);
+    } else if (req.session.role === 'customer') {
+        console.log(req.session.user_id)
+        const userOrders = await OrderModel
+            .find({ user: {_id: req.session.user_id} })
+            .populate('orderProducts')
+            .populate('deliveryMethod')
+            .populate('user')
+            .sort({'createdAt': 'desc'});
         res.status(200).json(userOrders);
     }
 }

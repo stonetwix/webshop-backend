@@ -2,11 +2,12 @@ GET http://localhost:3001/api/orders
 
 ###
 
-GET http://localhost:3001/api/orders/60b0b177c88b6937676fe957
+GET http://localhost:3001/api/orders/60ae37859d015b12e47abc92
+
 
 ###
 
-GET http://localhost:3001/api/user-orders
+GET http://localhost:3001/api/user-orders/id
 
 ###
 
