@@ -107,7 +107,7 @@ class ProductCardGrid extends Component<State> {
                                                 />
                                             ]}
                                         >
-                                        <Meta title={item.title} description={item.price + ' kr'} />
+                                        <Meta title={item.title} description={[item.price + ' kr ', item.inventory === 1 ? ' - Only 1 left!' : '']} />
                                         </Card>
                                     </Link>
                                 </List.Item>
