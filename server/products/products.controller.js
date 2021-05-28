@@ -45,7 +45,7 @@ exports.editProduct = async (req, res) => {
     let queryRes;
     const product = req.body;
     try {
-        queryRes = await ProductModel.findById(req.params.id).updateOne(product);
+        queryRes = await ProductModel.findById(req.params.id).updateOne(product); 
     } catch (error) {
         res.status(404).json({ error: 'Product not available' });
     }
@@ -57,10 +57,16 @@ exports.editProduct = async (req, res) => {
 }
 
 exports.deleteProduct = async (req, res) => {
+    let queryRes;
     try {
-        await ProductModel.findById(req.params.id).deleteOne();
+        queryRes = await ProductModel.findById(req.params.id).deleteOne();
         res.status(204).json({});
     } catch (error) {
         res.status(404).json({ error: 'Product not available' });
+    }
+    if (!queryRes.deletedCount) {
+        res.status(404).json({ error: 'Product not available' });
+    } else {
+        res.status(204).json({});
     }
 }

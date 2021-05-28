@@ -6,11 +6,11 @@ GET http://localhost:3001/api/products?category=60a8b9b6c4649b239bf4900a&categor
 
 ###
 
-GET http://localhost:3001/api/products/60a8b79f7aa5db1d8d014d01
+GET http://localhost:3001/api/products/60acadc7f067a07653c2a507
 
 ###
 
-GET http://localhost:3001/api/products/category/60a79b0a4bf15893b3aaa098
+GET http://localhost:3001/api/products/category/60acadc7f067a07653c2a507
 
 ###
 
@@ -18,7 +18,7 @@ POST http://localhost:3001/api/products
 Content-Type: application/json
 
 {
-    "title": "NEW PRODUCT 2",
+    "title": "A NEW PRODUCT 3",
     "description": "Lorem ipsum dolor sit amet.",
     "price": 222,
     "imageUrl": "https://github.com/msmalinosterberg/miniprojekt/blob/master/src/assets/prod1.png?raw=true",
@@ -28,18 +28,17 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3001/api/products/60a8b9b64a964c6c9d5b8dd6
+PUT http://localhost:3001/api/products/60acadc7f067a07653c2a507
 Content-Type: application/json
 
 {
-    "title": "EDITED PRODUCT2",
+    "title": "AN EDITED PRODUCT",
     "description": "Lorem ipsum dolor sit amet.",
     "price": 222,
     "imageUrl": "https://github.com/msmalinosterberg/miniprojekt/blob/master/src/assets/prod1.png?raw=true",
     "inventory": 15
-
 }
 
 ###
 
-DELETE http://localhost:3001/api/products/60a75f989ddc266e97361c84
+DELETE http://localhost:3001/api/products/60acadc7f067a07653c2a507

@@ -2,7 +2,7 @@ GET http://localhost:3001/api/orders
 
 ###
 
-GET http://localhost:3001/api/orders/60ae3d3dca5378130c4fd3ca
+GET http://localhost:3001/api/orders/60b0b177c88b6937676fe957
 
 ###
 
@@ -13,7 +13,7 @@ Content-Type: application/json
     "cartProducts": [
     {
         "product": {
-            "_id": "60acadc7f067a07653c2a507"
+            "_id": "60acadc7f067a07653c2a506"
         },
         "quantity": 1
     }],
@@ -35,9 +35,9 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3001/api/orders/60ae3d3dca5378130c4fd3ca/isShipped
+PUT http://localhost:3001/api/orders/60b0b177c88b6937676fe957/isShipped
 Content-Type: application/json
 
 {
-    "isShipped": true
+    "isShipped": false
 }
