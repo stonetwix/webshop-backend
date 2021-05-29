@@ -1,5 +1,7 @@
 const ProductModel = require('./products.model');
 const { body, validationResult } = require('express-validator');
+const multer  = require('multer');
+const upload = multer({ dest: 'static/img/' });
 
 exports.getAllProducts = async (req, res) => {
     console.log(req.query);
@@ -29,6 +31,10 @@ exports.addProduct = async (req, res) => {
     }
     const newProduct = await ProductModel.create(req.body);
     res.status(201).json(newProduct);
+}
+
+exports.uploadImg = async (req, res) => {
+    res.status(201).json({ path: req.file.path });
 }
 
 exports.editProduct = async (req, res) => {

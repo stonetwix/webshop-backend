@@ -25,6 +25,7 @@ app.use(usersRouter);
 app.use(deliveryRouter);
 app.use(categoriesRouter);
 app.use(ordersRouter);
+app.use('/static', express.static('static'));
 
 //Start server
 async function run() {
