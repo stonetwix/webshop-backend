@@ -93,7 +93,8 @@ class Navbar extends Component {
 const layoutStyle: CSSProperties = {
   width: '100%', 
   background: 'black',
-  height: window.innerWidth > 768 ? '6rem' : '5rem',
+  height: '5.3rem',
+  //height: window.innerWidth > 768 ? '6rem' : '5rem',
   display: 'flex', 
   alignItems:'center',
   justifyItems:'center',
@@ -101,6 +102,7 @@ const layoutStyle: CSSProperties = {
   zIndex: 100,
   borderBottom: 'none',
   position: 'fixed',
+  padding: '0rem'
 }
 
 const logoStyle: CSSProperties = {
