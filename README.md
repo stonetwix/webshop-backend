@@ -25,7 +25,7 @@ Kör appen i utvecklingsläge.\
 [Moa Stenqvist](https://github.com/stonetwix)
 
 ## Länkar
-[GitHub-repot](https://github.com/stonetwix/webshop-backend)
+[GitHub-repot](https://github.com/stonetwix/webshop-backend)\
 [Ant Design](https://ant.design/)
 
 
