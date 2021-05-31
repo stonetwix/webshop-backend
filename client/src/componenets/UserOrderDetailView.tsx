@@ -2,9 +2,7 @@ import { Component, CSSProperties } from 'react'
 import { Row, Col, Card } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import ErrorPage from "./ErrorPage";
-import { Order } from './UserPage';
-
-
+import { Order } from './Admin/OrdersList';
 interface State {
     order: Order | undefined;
 }
@@ -71,13 +69,11 @@ class UserOrderDetails extends Component<Props, State> {
                         <p><strong>Total price:</strong> SEK {order.totalPrice}</p>
                         <p><strong>Order created:</strong> {order.createdAt.split('T')[0]}</p>
                         <p><strong>Shipping status:</strong> {order.isShipped ? 'Sent' : 'Pending'}</p>
-                        
                     </Card>
                 </Col>
             </Row>
         )
     }
-
 }
 
 export default withRouter(UserOrderDetails);

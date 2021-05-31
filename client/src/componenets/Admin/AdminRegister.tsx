@@ -19,7 +19,7 @@ const tailLayout = {
 };
 
 const error = () => {
-  message.error('E-mail already exists.', 3);
+  message.error('E-mail already exists, or not a valid e-mail', 3);
 };
 class Register extends Component {
 

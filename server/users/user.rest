@@ -7,7 +7,7 @@ POST http://localhost:3001/api/users
 Content-Type: application/json 
 
 {
-    "email": "test55@email.com", 
+    "email": "test@email.com", 
     "password": "123",
     "role": "customer"
 }
@@ -18,9 +18,8 @@ POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
-    "email": "test55@email.com", 
+    "email": "test2@email.com", 
     "password": "123"
-
 }
 
 ###

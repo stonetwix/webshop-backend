@@ -1,5 +1,7 @@
 const ProductModel = require('./products.model');
 const { body, validationResult } = require('express-validator');
+const multer  = require('multer');
+const upload = multer({ dest: 'static/img/' });
 
 exports.getAllProducts = async (req, res) => {
     console.log(req.query);
@@ -10,12 +12,6 @@ exports.getAllProducts = async (req, res) => {
         }
     }
     const products = await ProductModel.find(filter).populate('categories').sort({ title: 1 });
-    res.status(200).json(products);
-}
-
-exports.getProductsByCategory = async (req, res) => {
-    const products = await ProductModel.find({'categories': req.params.id}).populate('categories').sort({ title: 1 });
-    console.log(products);
     res.status(200).json(products);
 }
 
@@ -37,6 +33,10 @@ exports.addProduct = async (req, res) => {
     res.status(201).json(newProduct);
 }
 
+exports.uploadImg = async (req, res) => {
+    res.status(201).json({ path: '/' + req.file.path });
+}
+
 exports.editProduct = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -45,7 +45,7 @@ exports.editProduct = async (req, res) => {
     let queryRes;
     const product = req.body;
     try {
-        queryRes = await ProductModel.findById(req.params.id).updateOne(product);
+        queryRes = await ProductModel.findById(req.params.id).updateOne(product); 
     } catch (error) {
         res.status(404).json({ error: 'Product not available' });
     }
@@ -57,10 +57,16 @@ exports.editProduct = async (req, res) => {
 }
 
 exports.deleteProduct = async (req, res) => {
+    let queryRes;
     try {
-        await ProductModel.findById(req.params.id).deleteOne();
+        queryRes = await ProductModel.findById(req.params.id).deleteOne();
         res.status(204).json({});
     } catch (error) {
         res.status(404).json({ error: 'Product not available' });
+    }
+    if (!queryRes.deletedCount) {
+        res.status(404).json({ error: 'Product not available' });
+    } else {
+        res.status(204).json({});
     }
 }

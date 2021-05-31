@@ -36,7 +36,7 @@ class AdminList extends Component < {}, State>{
                     <div style={{ display: 'flex', justifyContent: 'space-between',
                         alignItems:'center', marginTop: '4rem', marginBottom: '3rem' }}>
                         <h1 style={{fontWeight: 'bold'}}>ADMIN PRODUCTS</h1>                  
-                        <Link to ={'/add-product'}> 
+                        <Link to ={'/admin-add-product'}> 
                             <Button type="primary" icon={<PlusCircleOutlined />}>
                                 Add product
                             </Button>
