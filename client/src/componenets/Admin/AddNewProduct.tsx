@@ -1,9 +1,8 @@
-import { Component, CSSProperties, Ref } from "react";
+import React, { Component, CSSProperties, Ref } from "react";
 import { Form, Input, Button, Col, Row, message, Select, InputNumber, Upload, FormInstance } from "antd";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Category, Product } from "../StartPage/ProductCardGrid";
 import { UploadOutlined } from '@ant-design/icons';
-import React from "react";
 
 const layout = {
   labelCol: {
@@ -58,8 +57,6 @@ class AddNewProduct extends Component<Props, State> {
       }
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file uploaded successfully`);
-        console.log(this.formRef);
-        console.log(info.file.response);
         (this.formRef as any).current.setFieldsValue({
           // eslint-disable-next-line no-sequences
           ['imageUrl']: info.file.response.path,
@@ -130,7 +127,7 @@ class AddNewProduct extends Component<Props, State> {
                 <InputNumber />
               </Form.Item>
 
-              <Form.Item name={["imageUpload"]} label="Image Upload" rules={[{ required: true }]}>
+              <Form.Item name={["imageUpload"]} label="Image Upload">
                 <Upload {...this.uploadProps} >
                     <Button icon={<UploadOutlined />}>Click to Upload</Button>
                 </Upload>
@@ -215,17 +212,3 @@ const getCategories = async () => {
       console.error(error);
   }
 }
-
-// const uploadFile = async () => {
-//   try {
-//     await fetch('/api/upload', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(product)
-//     });
-// } catch (error) {
-//     console.error(error);
-// }
-// }
