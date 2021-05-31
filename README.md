@@ -26,7 +26,7 @@ Kör appen i utvecklingsläge.\
 
 ## Länkar
 [GitHub-repot](https://github.com/stonetwix/webshop-backend)
-[Ant Design] (https://ant.design/)
+[Ant Design](https://ant.design/)
 
 
 ## Kravspecifikation på projektet: 
