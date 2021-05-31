@@ -34,7 +34,7 @@ exports.addProduct = async (req, res) => {
 }
 
 exports.uploadImg = async (req, res) => {
-    res.status(201).json({ path: req.file.path });
+    res.status(201).json({ path: '/' + req.file.path });
 }
 
 exports.editProduct = async (req, res) => {

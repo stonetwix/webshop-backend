@@ -129,15 +129,15 @@ class AddNewProduct extends Component<Props, State> {
               <Form.Item name={["price"]} label="Price" rules={[{ required: true }]}>
                 <InputNumber />
               </Form.Item>
-              
-              <Form.Item name={["imageUrl"]} label="ImageUrl" rules={[{ required: true }]}>
-                <Input />
-              </Form.Item>
+
               <Form.Item name={["imageUpload"]} label="Image Upload" rules={[{ required: true }]}>
                 <Upload {...this.uploadProps} >
                     <Button icon={<UploadOutlined />}>Click to Upload</Button>
                 </Upload>
-
+              </Form.Item>
+              
+              <Form.Item name={["imageUrl"]} label="ImageUrl" rules={[{ required: true }]}>
+                <Input />
               </Form.Item>
 
               <Form.Item name={["categories"]} label="Categories" rules={[{ required: true }]}>
