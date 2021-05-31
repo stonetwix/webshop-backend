@@ -93,13 +93,14 @@ class ProductCardGrid extends Component<State> {
                                 xl: 4,
                                 xxl: 4,
                             }}
-                            dataSource={this.state.products}
+                            dataSource={this.state.products?.filter(p => p.inventory > 0)}
                             renderItem={item => (
                                 <List.Item>
                                     <Link to={'/product/' + item._id}>
                                         <Card
                                             hoverable
                                             cover={<img src={item.imageUrl} alt='product' />}
+                                            style={{ minWidth: '250px' }}
                                             actions={[
                                                 <ShoppingCartOutlined 
                                                     style={{ fontSize: '2rem' }}
@@ -107,7 +108,7 @@ class ProductCardGrid extends Component<State> {
                                                 />
                                             ]}
                                         >
-                                        <Meta title={item.title} description={item.price + ' kr'} />
+                                        <Meta title={item.title} description={[item.price + ' kr ', item.inventory === 1 ? ' - Only 1 left!' : '']} />
                                         </Card>
                                     </Link>
                                 </List.Item>
@@ -173,16 +174,4 @@ const getCategories = async () => {
     } catch (error) {
         console.error(error);
     }
-} 
-
-const getProductsByCategory = async (_id: string) => {
-    try {
-        let response = await fetch('/api/products/category/' + _id);
-        if (response.ok) {
-            const data = await response.json();
-            return data;
-        }
-    } catch (error) {
-        console.error(error);
-    }
-} 
+}

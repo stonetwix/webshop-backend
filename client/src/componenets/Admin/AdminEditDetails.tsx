@@ -1,8 +1,9 @@
-import { Form, Input, Button, Col, Row, message, Select, InputNumber } from "antd";
-import { Component, CSSProperties } from "react";
+import { Form, Input, Button, Col, Row, message, Select, InputNumber, FormInstance, Upload } from "antd";
+import React, { Component, CSSProperties, Ref } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import ErrorPage from "../ErrorPage";
 import { Category, Product } from "../StartPage/ProductCardGrid";
+import { UploadOutlined } from '@ant-design/icons';
 
 const layout = {
   labelCol: {
@@ -33,6 +34,7 @@ interface State {
   categories?: Category[];
   buttonSaveLoading: boolean;
   buttonDeleteLoading: boolean;
+  imgUrl: string;
 }
 
 const successSave = () => {
@@ -40,17 +42,41 @@ const successSave = () => {
 };
 
 class AdminEditDetails extends Component<Props, State> {
+  formRef = React.createRef();
+  
   state: State = {
     product: undefined,
     categories: [],
     buttonSaveLoading: false,
     buttonDeleteLoading: false,
+    imgUrl: '',
+  };
+
+  uploadProps = {
+    name: 'photo',
+    action: '/api/upload',
+    onChange: (info: any) => {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully`);
+        (this.formRef as any).current.setFieldsValue({
+          // eslint-disable-next-line no-sequences
+          ['imageUrl']: info.file.response.path,
+        })
+        this.setState({ imgUrl: 'test' })
+        
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
   };
 
   onFinish = async (values: any) => {
     console.log(values)
     this.setState({ buttonSaveLoading: true });
-    await putProduct(values.product, (this.props.match.params as any)._id);
+    await putProduct(values, (this.props.match.params as any)._id);
     this.props.history.push('/admin-list');
     this.setState({ buttonSaveLoading: false });
   }
@@ -89,16 +115,15 @@ class AdminEditDetails extends Component<Props, State> {
               name="nest-messages"
               onFinish={this.onFinish}
               validateMessages={validateMessages}
-              initialValues={{
-                product: {
+              initialValues={{            
                   title: this.state.product?.title,
                   description: this.state.product?.description,
                   price: this.state.product?.price,
                   imageUrl: this.state.product?.imageUrl,
                   categories: this.state.product?.categories,
                   inventory: this.state.product?.inventory,
-                }
               }}
+              ref={(this.formRef as Ref<FormInstance<any>>)}
             >
               <h1
                 style={{
@@ -109,22 +134,28 @@ class AdminEditDetails extends Component<Props, State> {
               >
                 EDIT PRODUCT
               </h1>
-              <Form.Item name={["product", "title"]} label="Title" rules={[{ required: true }]}>
+              <Form.Item name={["title"]} label="Title" rules={[{ required: true }]}>
                 <Input />
               </Form.Item>
 
-              <Form.Item name={["product", "description"]} label="Description" rules={[{ required: true }]}>
+              <Form.Item name={["description"]} label="Description" rules={[{ required: true }]}>
                 <Input.TextArea/>
               </Form.Item>
 
-              <Form.Item name={["product", "price"]} label="Price" rules={[{ required: true }]}>
+              <Form.Item name={["price"]} label="Price" rules={[{ required: true }]}>
                 <Input />
+              </Form.Item>
+
+              <Form.Item name={["imageUpload"]} label="Image Upload">
+                <Upload {...this.uploadProps} >
+                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                </Upload>
               </Form.Item>
               
-              <Form.Item name={["product", "imageUrl"]} label="ImageUrl" rules={[{ required: true }]}>
+              <Form.Item name={["imageUrl"]} label="ImageUrl" rules={[{ required: true }]}>
                 <Input />
               </Form.Item>
-              <Form.Item name={["product", "categories"]} label="Categories" rules={[{ required: true }]}>
+              <Form.Item name={["categories"]} label="Categories" rules={[{ required: true }]}>
                 <Select
                   mode="multiple"
                   allowClear
@@ -133,7 +164,7 @@ class AdminEditDetails extends Component<Props, State> {
                   {this.categoryOptions()}
                 </Select>
               </Form.Item>
-              <Form.Item name={["product", "inventory"]} label="Inventory" rules={[{ required: true }]}>
+              <Form.Item name={["inventory"]} label="Inventory" rules={[{ required: true }]}>
                 <InputNumber />
               </Form.Item>
 

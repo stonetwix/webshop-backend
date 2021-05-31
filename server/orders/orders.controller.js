@@ -4,25 +4,35 @@ const ProductModel = require('../products/products.model');
 const { body, validationResult } = require('express-validator');
 const DeliveryModel = require('../deliveryMethods/delivery.model');
 const UserModel = require('../users/users.model');
-const { ObjectId } = require('bson');
 
 exports.getAllOrders = async (req, res) => {
-    const orders = await OrderModel.find({}).populate('orderProducts').populate('deliveryMethod').populate('user');
-    res.status(200).json(orders);
-}
-
-exports.getUserOrders = async (req, res) => {
-    if (req.session.role === 'customer') {
-        const orders = await OrderModel.find({}).populate('orderProducts').populate('deliveryMethod').populate('user').sort({'createdAt': 'desc'});
-        const userOrders = orders.filter(order => order.user.email === req.session.email)
+    if (req.session.role === 'admin') {
+        const orders = await OrderModel
+            .find({})
+            .populate('orderProducts')
+            .populate('deliveryMethod')
+            .populate('user')
+            .sort({'createdAt': 'desc'});
+        res.status(200).json(orders);
+    } else if (req.session.role === 'customer') {
+        console.log(req.session.user_id)
+        const userOrders = await OrderModel
+            .find({ user: {_id: req.session.user_id} })
+            .populate('orderProducts')
+            .populate('deliveryMethod')
+            .populate('user')
+            .sort({'createdAt': 'desc'});
         res.status(200).json(userOrders);
-    }}
-
-
+    }
+}
 
 exports.getOneOrder = async (req, res) => {
     try {
-        const order = await OrderModel.findById(req.params.id).populate('orderProducts').populate('deliveryMethod').populate('user');
+        const order = await OrderModel
+            .findById(req.params.id)
+            .populate('orderProducts')
+            .populate('deliveryMethod')
+            .populate('user');
         res.status(200).json(order);
     } catch (error) {
         res.status(404).json({ error: 'Order not available' });

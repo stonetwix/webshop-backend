@@ -2,11 +2,12 @@ GET http://localhost:3001/api/orders
 
 ###
 
-GET http://localhost:3001/api/user-orders
+GET http://localhost:3001/api/orders/60ae37859d015b12e47abc92
+
 
 ###
 
-GET http://localhost:3001/api/orders/60afa83a7e3b59e2787553bf
+GET http://localhost:3001/api/user-orders/id
 
 ###
 
@@ -22,14 +23,15 @@ Content-Type: application/json
     },
     {
         "product": {
-            "_id": "60af8370a87bace25c67b69b"
+            "_id": "60acadc7f067a07653c2a50c"
         },
         "quantity": 1
     }],
     "deliveryMethod": {
         "_id": "60af8370b3363f411db460f5"
     },
-    "totalPrice": 699,
+    //TODO: Validate?
+    //"totalPrice": 299,
     "deliveryInformation": {
         "name": "Malin",
         "email": "malin@stonetwig.se",
@@ -37,16 +39,16 @@ Content-Type: application/json
         "street": "Street name 2",
         "zipcode": "33333",
         "city": "Gothenburg"
-    },
-    "deliveryDay": "2021-05-30",
-    "isShipped": false
+    }
+    //TODO: Validate in backend – not changed?
+    //"deliveryDay": "2021-05-30",
 }
 
 ###
 
-PUT http://localhost:3001/api/orders/60afa9667e3b59e2787553c2/isShipped
+PUT http://localhost:3001/api/orders/60b0b177c88b6937676fe957/isShipped
 Content-Type: application/json
 
 {
-    "isShipped": true
+    "isShipped": false
 }

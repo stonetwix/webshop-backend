@@ -37,11 +37,11 @@ function App() {
           <Route path="/admin-list" component={AdminList} />
           <Route exact path="/admin-orders" component={OrdersList} />
           <Route path="/admin-orders/:_id" component={OrderDetails} />
-          <Route path="/add-product" component={AddNewProduct} />
+          <Route path="/admin-add-product" component={AddNewProduct} />
           <Route path="/edit-product/:_id" component={AdminEditDetails} />
           <Route path="/registersuccess" component={SuccessMessage} />
-          <Route path="/profile" component={UserPage} />
-          <Route path="/user-orders/:_id" component={UserOrderDetailView} />
+          <Route exact path="/profile" component={UserPage} />
+          <Route path="/profile/:_id" component={UserOrderDetailView} />
 
         </Switch>
         <Footer2 />

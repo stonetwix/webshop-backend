@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 var utc = require('dayjs/plugin/utc')
 dayjs.extend(utc);
 
-interface DeliveryInformation {
+export interface DeliveryInformation {
   _id: string;
   name: string;
   email: string;
@@ -60,8 +60,10 @@ class OrdersList extends Component<Props, State> {
     },
     {
       title: 'Total price',
-      dataIndex: 'totalPrice',
       key: 'totalPrice',
+      render: (record: Order) => {
+        return 'SEK ' + record.totalPrice
+      }
     },
     {
       title: 'Created',
@@ -110,7 +112,7 @@ class OrdersList extends Component<Props, State> {
       <Row style={orderListStyle}>
         <Col span={20}>
          <h1 style={{fontWeight: 'bold'}}>ADMIN ORDERS</h1>
-         <Table columns={this.columns} dataSource={this.state.orders} pagination={false} />
+         <Table columns={this.columns} dataSource={this.state.orders} pagination={false} style={{ overflowX: 'auto', marginBottom: '8rem' }}/>
         </Col>
       </Row>
     )

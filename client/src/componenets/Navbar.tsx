@@ -1,6 +1,6 @@
 import { Row, Col, Menu, Button, message } from "antd";
 import { Header } from "antd/lib/layout/layout";
-import React, { Component, ContextType, CSSProperties } from "react";
+import { Component, ContextType, CSSProperties } from "react";
 import logo from '../assets/logga-fs.png'; 
 import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, Route } from 'react-router-dom';
@@ -33,7 +33,7 @@ class Navbar extends Component {
           const userMenuItem = !isLoggedIn ?
           <Menu.Item key="2">
             <Link to='/login'>
-                <h3 style={{ color: 'white', marginTop: '1.5rem', marginLeft: '2rem' }}>Log in</h3>
+                <h3 style={{ color: 'white', marginTop: '1.5rem' }}>Log in</h3>
             </Link>
             </Menu.Item> :
             <Route render={({ history }) => (
@@ -62,7 +62,6 @@ class Navbar extends Component {
               </>
            )}/> 
            
-          
           return (
             <Header style={layoutStyle}>
               <Row style={{ width: '100%' }}>
