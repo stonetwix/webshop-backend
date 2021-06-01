@@ -10,10 +10,6 @@ import { Product } from '../componenets/StartPage/ProductCardGrid';
 import { Order } from '../componenets/Admin/OrdersList';
 import { message } from 'antd';
 
-const error = () => {
-    message.error('Inventory of product might be too low. Please change quantity and try again', 5);
-  };
-
 const emptyUser: UserInfo = {
     name: '',
     email: '',
@@ -185,18 +181,17 @@ class CartProvider extends Component<{}, State> {
 
     handlePlaceOrder = async (history: any) => {
         this.setState({ disablePlaceOrderButton: true });
-        let order: Order | undefined;
-        try {
-            order = await addOrder(this.state.cart, this.state.deliveryMethod, this.state.userInfo);
-        } catch (error) {
-            console.log(error); 
-            return;
-        }
-        if (!order) {
-            error();
+        let order: Order;
+        const response: any = await addOrder(this.state.cart, this.state.deliveryMethod, this.state.userInfo);
+        
+        if (!response.ok) {
+            const error = await response.json();
+            message.error(error.message, 5);
             this.setState({ disablePlaceOrderButton: false });
             return;
         }
+        order = await response.json();
+        
         this.setState({
             receipt: this.createReceipt(),
         });
@@ -247,11 +242,8 @@ const addOrder = async (cartProducts: CartItem[], deliveryMethod: DeliveryMethod
                 deliveryInformation: deliveryInformation,
             })
         });
-        if (response.ok) {
-            const data = await response.json();
-            return data;
-        }
-        
+        return response;
+        //TODO: Fix console.error
     } catch (error) {
         console.error(error);
     }

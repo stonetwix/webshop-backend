@@ -67,7 +67,10 @@ exports.addOrder = async (req, res) => {
     //Checks if products inventory is more than quantity. 
     const allProductsAvailable = orderProductsData.map(p => productMap[p.originalProductID]['inventory'] >= p.quantity).every(x => x === true);
     if (!allProductsAvailable) {
-        res.status(400).json({ error: 'Product inventory too low' });
+        res.status(400).json({
+            code: 'LOW_INVENTORY',
+            message: 'Product inventory too low'
+        });
         return;
     }
 
