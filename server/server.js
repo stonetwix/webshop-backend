@@ -43,7 +43,7 @@ app.use((req, res) => {
 async function run() {
     try {
         await mongoose.connect(
-            'mongodb://localhost:27017/fashionstore', 
+            'mongodb+srv://moa:parasoll55@fashionstore.5bkyr.mongodb.net/fashionstore?retryWrites=true&w=majority', 
             { useNewUrlParser: true, useUnifiedTopology: true }
         );
         console.log('Database is connected');
