@@ -4,6 +4,7 @@ import { Link, RouteComponentProps } from "react-router-dom";
 import { Product } from '../StartPage/ProductCardGrid';
 import { CheckCircleFilled } from '@ant-design/icons';
 import dayjs from 'dayjs';
+import Spinner from '../../Spinner';
 var utc = require('dayjs/plugin/utc')
 dayjs.extend(utc);
 
@@ -29,6 +30,7 @@ export interface Order {
 }
 interface State {
   orders: Order[];
+  loading: boolean;
 }
 
 interface Props extends RouteComponentProps<{ id: string }> {}
@@ -37,6 +39,7 @@ class OrdersList extends Component<Props, State> {
 
   state: State = {
     orders: [],
+    loading: true,
   }
 
   columns = [
@@ -96,7 +99,7 @@ class OrdersList extends Component<Props, State> {
 
   async componentDidMount() {
     const orders = await getAllOrders();
-    this.setState({ orders: orders });
+    this.setState({ orders: orders, loading: false });
     console.log(this.state.orders);
   }
 
@@ -107,6 +110,13 @@ class OrdersList extends Component<Props, State> {
   }
   
   render () {
+    if (this.state.loading) {
+      return (
+          <div style={{textAlign: 'center', width: '100%', height: '100%'}}>
+              <Spinner />
+          </div>
+      )
+    }
     if (!this.state.orders) {
       return <div></div>
     }
