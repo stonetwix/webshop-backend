@@ -8,7 +8,11 @@ import { DeliveryMethod } from '../componenets/Cart/DeliverySelection';
 import { IReceipt } from '../componenets/OrderSuccess/Reciept';
 import { Product } from '../componenets/StartPage/ProductCardGrid';
 import { Order } from '../componenets/Admin/OrdersList';
+import { message } from 'antd';
 
+const error = () => {
+    message.error('Inventory of product might be too low. Please change quantity and try again', 5);
+  };
 
 const emptyUser: UserInfo = {
     name: '',
@@ -28,7 +32,6 @@ const defaultPayment: PaymentMethod = {
     cvc: '',
 }
 
-//TODO: remove??
 const defaultDeliveryMethod: DeliveryMethod = {
     _id: '',
     company: 'PostNord',
@@ -190,7 +193,8 @@ class CartProvider extends Component<{}, State> {
             return;
         }
         if (!order) {
-            //TODO: Handle error!
+            error();
+            this.setState({ disablePlaceOrderButton: false });
             return;
         }
         this.setState({

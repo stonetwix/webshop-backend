@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import AdminLogIn from './AdminLogIn';
 import AdminRegister from './AdminRegister';
-
-
 
 class LoginView extends Component {
     render() {

@@ -145,33 +145,32 @@ const containerStyle: CSSProperties = {
     display: "flex",
     width: "60%",
     margin: "auto",
-    
-  };
+};
   
-  const buttonStyle: CSSProperties = {
-    marginBottom: "10rem",
-    float: "right",
-    fontWeight: "bold",
-  };
+const buttonStyle: CSSProperties = {
+  marginBottom: "10rem",
+  float: "right",
+  fontWeight: "bold",
+};
   
 const register = async (email: string, password: string, role: string) => {
-    try {
-        const response = await fetch('/api/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-            role: role,
-          })
-        });
-        if (response.ok) {
-          const data = await response.json();
-          return data;
-        }
-    } catch (error) {
-        console.error(error);
+  try {
+    const response = await fetch('/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        role: role,
+      })
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
     }
+  } catch (error) {
+      console.error(error);
   }
+}
