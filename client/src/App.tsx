@@ -19,6 +19,7 @@ import OrdersList from "./componenets/Admin/OrdersList";
 import OrderDetails from "./componenets/Admin/OrderDetailView";
 import UserPage from "./componenets/UserPage";
 import UserOrderDetailView from "./componenets/UserOrderDetailView";
+import AdminRequestsList from "./componenets/Admin/AdminRequests";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/registersuccess" component={SuccessMessage} />
           <Route exact path="/profile" component={UserPage} />
           <Route path="/profile/:_id" component={UserOrderDetailView} />
+          <Route path="/users-adminrequests" component={AdminRequestsList} />
 
         </Switch>
         <Footer2 />

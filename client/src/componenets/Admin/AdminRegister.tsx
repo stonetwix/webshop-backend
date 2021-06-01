@@ -76,7 +76,7 @@ class Register extends Component {
               <Form.Item name="role" label="Role: " rules={[{ required: true }]}>
                 <Select onChange={this.onSelectChange}>
                   <Select.Option value="customer">Customer</Select.Option>
-                  <Select.Option value="admin">Admin</Select.Option>
+                  <Select.Option value="admin">Admin Request</Select.Option>
                 </Select>
               </Form.Item>
 

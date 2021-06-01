@@ -1,15 +1,20 @@
 
 GET http://localhost:3001/api/users
 
-### 
+###
+
+GET http://localhost:3001/api/users/adminrequests
+
+###
 
 POST http://localhost:3001/api/users
 Content-Type: application/json 
 
 {
-    "email": "test@email.com", 
+    "email": "test4@email.com", 
     "password": "123",
-    "role": "customer"
+    "role": "admin",
+    "isVerified": false
 }
 
 ### 
@@ -18,10 +23,19 @@ POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
-    "email": "test2@email.com", 
+    "email": "test@email.com", 
     "password": "123"
 }
 
 ###
 
 DELETE http://localhost:3001/api/logout
+
+###
+
+PUT http://localhost:3001/api/users/60ae05987ded1c838aab30fc/isVerified
+Content-Type: application/json
+
+{
+    "isVerified": true
+}
