@@ -12,6 +12,7 @@ ordersRouter
         auth.secure,
         controller.getOneOrder)
     .post('/api/orders', 
+        auth.secure,
         body('deliveryMethod').not().isEmpty(),
         body('cartProducts').not().isEmpty(),
         body('deliveryInformation').not().isEmpty(),

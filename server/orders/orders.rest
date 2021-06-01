@@ -2,12 +2,8 @@ GET http://localhost:3001/api/orders
 
 ###
 
-GET http://localhost:3001/api/orders/60ae37859d015b12e47abc92
+GET http://localhost:3001/api/orders/60b4e3a9d0752be39431b3c9
 
-
-###
-
-GET http://localhost:3001/api/user-orders/id
 
 ###
 
@@ -17,38 +13,28 @@ Content-Type: application/json
 {
     "cartProducts": [{
         "product": {
-            "_id": "60af8370a87bace25c67b696"
-        },
-        "quantity": 1
-    },
-    {
-        "product": {
-            "_id": "60acadc7f067a07653c2a50c"
+            "_id": "60acadc7f067a07653c2a506"
         },
         "quantity": 1
     }],
     "deliveryMethod": {
-        "_id": "60af8370b3363f411db460f5"
+        "_id": "60acadc70cbf89eb9fbaf5b0"
     },
-    //TODO: Validate?
-    //"totalPrice": 299,
     "deliveryInformation": {
-        "name": "Malin",
-        "email": "malin@stonetwig.se",
+        "name": "Moa",
+        "email": "moa@stonetwig.se",
         "phone": "0707909054",
         "street": "Street name 2",
         "zipcode": "33333",
         "city": "Gothenburg"
     }
-    //TODO: Validate in backend – not changed?
-    //"deliveryDay": "2021-05-30",
 }
 
 ###
 
-PUT http://localhost:3001/api/orders/60b0b177c88b6937676fe957/isShipped
+PUT http://localhost:3001/api/orders/60b5f1eadb750af4e1274c32/isShipped
 Content-Type: application/json
 
 {
-    "isShipped": false
+    "isShipped": true
 }
