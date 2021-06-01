@@ -32,6 +32,9 @@ exports.addUser = async (req, res) => {
 exports.userLogin = async (req, res) => {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ 'email': email }).select('+password');
+    if (user.role === 'admin' && !user.isVerified) {
+        res.status(401).json('You are not yet a verified admin user');
+    }
     if (!user || !await bcrypt.compare(password, user.password)) {
         res.status(401).json('Incorrect e-mail or password');
         return;

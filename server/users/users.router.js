@@ -8,7 +8,9 @@ usersRouter
     .get('/api/users', 
         auth.secureWithAdmin,
         controller.getOneUser)
-    .get('/api/users/adminrequests', controller.getAdminRequests)
+    .get('/api/users/adminrequests', 
+        auth.secureWithAdmin,
+        controller.getAdminRequests)
     .post('/api/users', 
         body('email').isEmail().normalizeEmail(),
         body('password').not().isEmpty(),
