@@ -2,9 +2,15 @@ const express = require('express');
 const usersRouter = express.Router(); 
 const controller = require('./users.controller'); 
 const { body, validationResult } = require('express-validator'); 
+const auth = require('../auth');
 
 usersRouter
-    .get('/api/users', controller.getOneUser)
+    .get('/api/users', 
+        auth.secureWithAdmin,
+        controller.getOneUser)
+    .get('/api/users/adminrequests', 
+        auth.secureWithAdmin,
+        controller.getAdminRequests)
     .post('/api/users', 
         body('email').isEmail().normalizeEmail(),
         body('password').not().isEmpty(),
@@ -16,6 +22,9 @@ usersRouter
         controller.userLogin)
     .delete('/api/logout', controller.userLogout)
     .get('/api/whoami', controller.whoami)
+    .put('/api/users/:id/isVerified', 
+        auth.secureWithAdmin,
+        controller.editUser);
 
 module.exports = usersRouter;
 

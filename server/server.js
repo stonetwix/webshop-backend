@@ -27,6 +27,18 @@ app.use(categoriesRouter);
 app.use(ordersRouter);
 app.use('/static', express.static('static'));
 
+//error handler
+app.use((err, req, res, next) => {
+    const message = err.message || 'Something went wrong...';
+    const statusCode = err.status || 500;
+    res.status(statusCode).json({ message });
+})
+
+//404 handler
+app.use((req, res) => {
+    res.status(404).json({ message: 'This resource could not be found.' });
+})
+
 //Start server
 async function run() {
     try {

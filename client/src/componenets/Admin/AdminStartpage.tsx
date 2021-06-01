@@ -30,7 +30,7 @@ import { ShoppingFilled, TagFilled, SettingFilled } from "@ant-design/icons";
           </Col>
           <Col lg={8} style={colStyle}>
             <Button style={{ padding: '2rem', height: '8rem', width: '18rem' }}>
-              <Link to='/'>
+              <Link to='/users-adminrequests'>
                 <SettingFilled style={{ fontSize: '2rem' }}/>
                 <h2>Admin requests</h2>
               </Link>

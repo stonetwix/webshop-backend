@@ -19,7 +19,7 @@ const tailLayout = {
   },
 };
 const error = () => {
-  message.error('Not valid e-mail or password', 3);
+  message.error('Not a valid e-mail / password or you are not yet a verified admin user', 5);
 };
 class AdminLogIn extends Component {
   context!: ContextType<typeof UserContext>
