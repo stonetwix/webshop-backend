@@ -36,7 +36,7 @@ app.use((err, req, res, next) => {
 
 //404 handler
 app.use((req, res) => {
-    res.status(404).json({ message: 'Resource could not be found.' });
+    res.status(404).json({ message: 'This resource could not be found.' });
 })
 
 //Start server

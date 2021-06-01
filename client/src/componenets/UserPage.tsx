@@ -30,8 +30,10 @@ class UserPage extends Component<Props, State> {
     },
     {
       title: 'Total price',
-      dataIndex: 'totalPrice',
       key: 'totalPrice',
+      render: (record: Order) => {
+        return 'SEK ' + record.totalPrice
+      }
     },
     {
       title: 'Created',

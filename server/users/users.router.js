@@ -23,7 +23,7 @@ usersRouter
     .delete('/api/logout', controller.userLogout)
     .get('/api/whoami', controller.whoami)
     .put('/api/users/:id/isVerified', 
-        auth.secureWithAdmin,    
+        auth.secureWithAdmin,
         controller.editUser);
 
 module.exports = usersRouter;

@@ -30,12 +30,11 @@ class UserProvider extends Component <{}, State> {
   
     componentDidMount = async () => {
         const user = await whoami();
-        console.log('User from Context: ', user)
         if (user && !user.error) {
             this.setUser(user.username, user.role === 'admin');
         }
     }
- // Vad blir rollen? 
+
     setUser = (email: string, isAdmin: boolean) => {
         this.setState({ email: email, isLoggedIn: true, isAdmin: isAdmin });
         console.log('IsLoggedIn? ', this.state.isLoggedIn);
