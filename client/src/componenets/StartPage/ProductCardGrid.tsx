@@ -3,7 +3,7 @@ import { Card, Col, List, Row, message, Select } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
-import Spinner from '../../Spinner'; 
+import Spinner from "../../Spinner"; 
 
 const { Meta } = Card;
 const { Option } = Select;

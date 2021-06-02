@@ -86,7 +86,7 @@ class UserPage extends Component<Props, State> {
       <Row style={orderListStyle}>
         <Col span={20}>
           <h1 style={{fontWeight: 'bold'}}>My orders</h1>
-          <Table columns={this.columns} dataSource={this.state.orders} pagination={false} />
+          <Table columns={this.columns} dataSource={this.state.orders} pagination={false} style={{ overflowX: 'auto', marginBottom: '8rem' }} />
         </Col>
       </Row>
     )
