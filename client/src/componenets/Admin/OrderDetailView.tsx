@@ -112,5 +112,6 @@ const colStyle: CSSProperties = {
 }
 
 const cardStyle: CSSProperties = {
-    width: '50rem'
+    width: '50rem',
+    marginBottom: '8rem',
 }

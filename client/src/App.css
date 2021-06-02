@@ -51,6 +51,9 @@ ul .ant-menu-horizontal {
   margin-top: 24px;
 }
 
+.ant-menu-horizontal > .ant-menu-submenu > .ant-menu-submenu-title {
+  visibility: hidden;
+}
 
 
 
