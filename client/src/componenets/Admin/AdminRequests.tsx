@@ -3,10 +3,10 @@ import { Table, Space, Row, Col, Button } from 'antd';
 import { CheckCircleFilled } from '@ant-design/icons';
 
 interface User {
-    _id: string;
-    email: string;
-    role: string;
-    isVerified: boolean;
+  _id: string;
+  email: string;
+  role: string;
+  isVerified: boolean;
 }
 
 interface State {
@@ -49,7 +49,6 @@ class AdminRequestsList extends Component<{}, State> {
   async componentDidMount() {
     const users = await getAdminRequests();
     this.setState({ users: users });
-    console.log(this.state.users);
   }
 
   handleVerifyAdmin = async (_id: string) => {
@@ -85,26 +84,26 @@ const userListStyle: CSSProperties = {
 
 const getAdminRequests = async () => {
   try {
-      let response = await fetch('/api/users/adminrequests');
-      if (response.ok) {
-          const data = await response.json();
-          return data;
-      }
+    let response = await fetch('/api/users/adminrequests');
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
   } catch (error) {
-      console.error(error);
+    console.error(error);
   }
 }
 
 const udateAdminVerification = async (_id: string) => {
   try {
-      await fetch('/api/users/' + _id + '/isVerified', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ isVerified: true })
-      });
+    await fetch('/api/users/' + _id + '/isVerified', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ isVerified: true })
+    });
   } catch (error) {
-      console.error(error);
+    console.error(error);
   }
 }

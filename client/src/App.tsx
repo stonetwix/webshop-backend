@@ -44,7 +44,6 @@ function App() {
           <Route exact path="/profile" component={UserPage} />
           <Route path="/profile/:_id" component={UserOrderDetailView} />
           <Route path="/users-adminrequests" component={AdminRequestsList} />
-
         </Switch>
         <Footer2 />
       </Router>

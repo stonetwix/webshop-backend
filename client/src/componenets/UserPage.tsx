@@ -65,7 +65,6 @@ class UserPage extends Component<Props, State> {
   async componentDidMount() {
     const orders = await getOrders();
     this.setState({ orders: orders });
-    console.log(this.state.orders);
   }
 
   render () {
@@ -96,11 +95,11 @@ const orderListStyle: CSSProperties = {
 
 const getOrders = async () => {
   try {
-      let response = await fetch('/api/orders');
-      if (response.ok) {
-          const data = await response.json();
-          return data;
-      }
+    let response = await fetch('/api/orders');
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
   } catch (error) {
       console.error(error);
   }

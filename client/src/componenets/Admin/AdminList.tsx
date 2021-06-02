@@ -22,7 +22,6 @@ class AdminList extends Component < {}, State>{
         this.setState({ products: products });
     }
 
-
     handleDelete = async (_id: string) => {
         await deleteProduct(_id);
         const products = await getProducts();
@@ -134,4 +133,4 @@ const deleteProduct = async (_id: string) => {
     } catch (error) {
         console.error(error);
     }
-  }
+}

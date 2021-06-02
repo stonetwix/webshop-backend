@@ -15,7 +15,6 @@ exports.getAllOrders = async (req, res) => {
             .sort({'createdAt': 'desc'});
         res.status(200).json(orders);
     } else if (req.session.role === 'customer') {
-        console.log(req.session.user_id)
         const userOrders = await OrderModel
             .find({ user: {_id: req.session.user_id} })
             .populate('orderProducts')
@@ -33,6 +32,10 @@ exports.getOneOrder = async (req, res) => {
             .populate('orderProducts')
             .populate('deliveryMethod')
             .populate('user');
+        if (req.session.role !== 'admin' && order.user.email !== req.session.email) {
+            res.status(404).json({ error: 'Order not available' });
+            return;
+        }
         res.status(200).json(order);
     } catch (error) {
         res.status(404).json({ error: 'Order not available' });
@@ -63,9 +66,11 @@ exports.addOrder = async (req, res) => {
 
     //Checks if products inventory is more than quantity. 
     const allProductsAvailable = orderProductsData.map(p => productMap[p.originalProductID]['inventory'] >= p.quantity).every(x => x === true);
-    console.log('allProductsAvailable: ', allProductsAvailable);
     if (!allProductsAvailable) {
-        res.status(400).json({ error: 'Product inventory too low' });
+        res.status(400).json({
+            code: 'LOW_INVENTORY',
+            message: 'Product inventory too low'
+        });
         return;
     }
 
@@ -86,7 +91,6 @@ exports.addOrder = async (req, res) => {
     const deliveryMethod = await DeliveryModel.findById(req.body.deliveryMethod._id);
     const deliveryDay = calculateDeliveryDay(deliveryMethod.deliverytime);
     const user = await UserModel.findOne({ email: req.session.email });
-    console.log(user)
     const orderData = {
         orderProducts: orderProducts,
         deliveryMethod: deliveryMethod,

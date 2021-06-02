@@ -4,7 +4,6 @@ import { Order } from './OrdersList';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import ErrorPage from "../ErrorPage";
 
-
 interface State {
     order: Order | undefined;
 }
@@ -45,9 +44,6 @@ class OrderDetails extends Component<Props, State> {
         if (!order) {
           return <ErrorPage />
         }
-        console.log('Orders in render', order)
-
-        //TODO: New lines on products
     
         return (
             <Row>
@@ -93,7 +89,7 @@ const getOneOrder = async (_id: string) => {
     } catch (error) {
         console.error(error);
     }
-  }
+}
 
 const colStyle: CSSProperties = {
     display: 'flex',

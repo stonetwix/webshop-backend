@@ -4,7 +4,6 @@ const multer  = require('multer');
 const upload = multer({ dest: 'static/img/' });
 
 exports.getAllProducts = async (req, res) => {
-    console.log(req.query);
     let filter = {};
     if (req.query.category) {
         filter = {

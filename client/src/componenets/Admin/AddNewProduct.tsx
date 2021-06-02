@@ -83,9 +83,9 @@ class AddNewProduct extends Component<Props, State> {
 
   categoryOptions = () => {
     return this.state.categories?.map((c: Category) => {
-        return <Option value={c._id} key={c.name}>
-            {c.name}
-        </Option>
+      return <Option value={c._id} key={c.name}>
+          {c.name}
+      </Option>
     })
   }
 
