@@ -2,10 +2,12 @@ import { PlusCircleOutlined, FormOutlined, DeleteOutlined } from "@ant-design/ic
 import { Avatar, Button, Col, List, Row, message } from "antd";
 import { Component, CSSProperties } from "react";
 import { Link } from "react-router-dom";
+import Spinner from "../../Spinner";
 import { Product } from "../StartPage/ProductCardGrid";
 
 interface State {
     products?: Product[]; 
+    loading: boolean;
 }
 
 const successDelete = () => {
@@ -14,12 +16,13 @@ const successDelete = () => {
 class AdminList extends Component < {}, State>{
 
     state: State = {
-        products: []
+        products: [],
+        loading: true,
     }
 
     async componentDidMount() {
         const products = await getProducts();
-        this.setState({ products: products });
+        this.setState({ products: products, loading: false });
     }
 
     handleDelete = async (_id: string) => {
@@ -29,6 +32,13 @@ class AdminList extends Component < {}, State>{
     }
 
     render() {
+        if (this.state.loading) {
+            return (
+                <div style={{textAlign: 'center', width: '100%', height: '100%'}}>
+                    <Spinner />
+                </div>
+            )
+        }
         return (
             <Row style={containerStyle}>
                 <Col style={columnStyle}>

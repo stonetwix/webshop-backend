@@ -1,6 +1,7 @@
 import { Component, CSSProperties } from 'react'
 import { Table, Space, Row, Col, Button } from 'antd';
 import { CheckCircleFilled } from '@ant-design/icons';
+import Spinner from '../../Spinner';
 
 interface User {
   _id: string;
@@ -11,12 +12,14 @@ interface User {
 
 interface State {
   users: User[];
+  loading: boolean;
 }
 
 class AdminRequestsList extends Component<{}, State> {
 
   state: State = {
     users: [],
+    loading: true,
   }
 
   columns = [
@@ -48,7 +51,7 @@ class AdminRequestsList extends Component<{}, State> {
 
   async componentDidMount() {
     const users = await getAdminRequests();
-    this.setState({ users: users });
+    this.setState({ users: users, loading: false });
   }
 
   handleVerifyAdmin = async (_id: string) => {
@@ -58,6 +61,13 @@ class AdminRequestsList extends Component<{}, State> {
   }
   
   render () {
+    if (this.state.loading) {
+      return (
+          <div style={{textAlign: 'center', width: '100%', height: '100%'}}>
+              <Spinner />
+          </div>
+      )
+    }
     if (!this.state.users) {
       return <div></div>
     }

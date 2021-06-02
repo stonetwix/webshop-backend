@@ -3,8 +3,11 @@ import { Table, Row, Col } from 'antd';
 import { CheckCircleFilled, ClockCircleOutlined } from '@ant-design/icons';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Order } from './Admin/OrdersList';
+import Spinner from '../Spinner';
+
 interface State {
   orders: Order[];
+  loading: boolean;
 }
 
 interface Props extends RouteComponentProps<{ id: string }> {}
@@ -12,6 +15,7 @@ class UserPage extends Component<Props, State> {
 
   state: State = {
       orders: [],
+      loading: true,
   }
     
   columns = [
@@ -64,10 +68,17 @@ class UserPage extends Component<Props, State> {
     
   async componentDidMount() {
     const orders = await getOrders();
-    this.setState({ orders: orders });
+    this.setState({ orders: orders, loading: false });
   }
 
   render () {
+    if (this.state.loading) {
+      return (
+          <div style={{textAlign: 'center', width: '100%', height: '100%'}}>
+              <Spinner />
+          </div>
+      )
+    }
     if (!this.state.orders) {
       return <div></div>
     }
@@ -75,7 +86,7 @@ class UserPage extends Component<Props, State> {
       <Row style={orderListStyle}>
         <Col span={20}>
           <h1 style={{fontWeight: 'bold'}}>My orders</h1>
-          <Table columns={this.columns} dataSource={this.state.orders} pagination={false} />
+          <Table columns={this.columns} dataSource={this.state.orders} pagination={false} style={{ overflowX: 'auto', marginBottom: '8rem' }} />
         </Col>
       </Row>
     )

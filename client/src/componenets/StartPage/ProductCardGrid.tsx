@@ -3,6 +3,7 @@ import { Card, Col, List, Row, message, Select } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
+import Spinner from "../../Spinner"; 
 
 const { Meta } = Card;
 const { Option } = Select;
@@ -25,22 +26,24 @@ export interface Category {
     _id: string;
 }
 interface State {
-    products?: Product[],
-    categories?: Category[],
+    products?: Product[];
+    categories?: Category[];
+    loading: boolean;
 }
-class ProductCardGrid extends Component<State> {
+class ProductCardGrid extends Component<{}, State> {
     context!: ContextType<typeof CartContext>
     static contextType = CartContext;
     
     state: State = {
         products: [],
         categories: [],
+        loading: true,
     }
     
     async componentDidMount() {
         const products = await getProducts([]);
         const categories = await getCategories();
-        this.setState({ products: products, categories: categories });
+        this.setState({ products: products, categories: categories, loading: false });
     }
 
     categoryOptions = () => {
@@ -63,6 +66,13 @@ class ProductCardGrid extends Component<State> {
         
     render() {
         const { addProductToCart } = this.context;
+        if (this.state.loading) {
+            return (
+                <div style={{textAlign: 'center', width: '100%', height: '100%'}}>
+                    <Spinner />
+                </div>
+            )
+        }
         return(
             <>
                 <Row style={selectContainer}>
