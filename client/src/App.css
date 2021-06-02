@@ -52,15 +52,9 @@ ul .ant-menu-horizontal {
 }
 
 
-
-
 @media screen and (max-width: 481px) {
-   /* a .ant-menu-item {
-    font-size: 1rem;
-    color: black;
+  .ant-steps-item-title {
+    display: none;
   }
   
-  li .ant-menu-submenu {
-    color: green;
-  } */
 }
