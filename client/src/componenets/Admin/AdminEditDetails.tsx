@@ -4,6 +4,7 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import ErrorPage from "../ErrorPage";
 import { Category, Product } from "../StartPage/ProductCardGrid";
 import { UploadOutlined } from '@ant-design/icons';
+import Spinner from "../../Spinner";
 
 const layout = {
   labelCol: {
@@ -35,6 +36,7 @@ interface State {
   buttonSaveLoading: boolean;
   buttonDeleteLoading: boolean;
   imgUrl: string;
+  loading: boolean;
 }
 
 const successSave = () => {
@@ -50,6 +52,7 @@ class AdminEditDetails extends Component<Props, State> {
     buttonSaveLoading: false,
     buttonDeleteLoading: false,
     imgUrl: '',
+    loading: true,
   };
 
   uploadProps = {
@@ -84,7 +87,7 @@ class AdminEditDetails extends Component<Props, State> {
   async componentDidMount() {
     const product = await getProduct((this.props.match.params as any)._id);
     const categories = await getCategories();
-    this.setState({ product: product, categories: categories });
+    this.setState({ product: product, categories: categories, loading: false });
   }
 
   categoryOptions = () => {
@@ -101,7 +104,13 @@ class AdminEditDetails extends Component<Props, State> {
 
   render() {
     const { product } = this.state;
-
+    if (this.state.loading) {
+      return (
+          <div style={{textAlign: 'center', width: '100%', height: '100%'}}>
+              <Spinner />
+          </div>
+      )
+    }
     if (!product) {
       return <ErrorPage />
     }
