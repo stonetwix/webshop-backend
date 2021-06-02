@@ -22,7 +22,6 @@ class UserOrderDetails extends Component<Props, State> {
         const orderId = (this.props.match.params as any)._id;
         const result = await getOneOrder(orderId);
         console.log('Result: ', result)
-        this.setState({ loading: false });
         if (result?.Response === 'False') {
             return;
         }
@@ -38,7 +37,7 @@ class UserOrderDetails extends Component<Props, State> {
             isShipped: result.isShipped,
             createdAt: result.createdAt
         }
-        this.setState({ order: orderDetails });
+        this.setState({ order: orderDetails, loading: false });
     }
 
     render() {
