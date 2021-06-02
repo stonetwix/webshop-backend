@@ -109,7 +109,6 @@ class ProductCardGrid extends Component<{}, State> {
                                         <Card
                                             hoverable
                                             cover={<img src={item.imageUrl} alt='product' />}
-                                            style={{ minWidth: '250px' }}
                                             actions={[
                                                 <ShoppingCartOutlined 
                                                     style={{ fontSize: '2rem' }}

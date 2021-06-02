@@ -2,7 +2,8 @@ import { Row, Col, Menu, Button, message } from "antd";
 import { Header } from "antd/lib/layout/layout";
 import { Component, ContextType, CSSProperties } from "react";
 import logo from '../assets/logga-fs.png'; 
-import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import home from '../assets/home-solid.png'; 
+import { ShoppingCartOutlined, UserOutlined, HomeFilled } from '@ant-design/icons';
 import { Link, Route } from 'react-router-dom';
 import AddToBadge from "./Badge";
 import { UserContext } from "../contexts/UserContext";
@@ -65,12 +66,12 @@ class Navbar extends Component {
           return (
             <Header style={layoutStyle}>
               <Row style={{ width: '100%' }}>
-                <Col span={8}>
+                <Col span={4}>
                   <Link to='/'>
-                    <img src={logo} alt="logo" style={logoStyle} />
+                    <img src={window.innerWidth > 768 ? logo : home} alt="logo" style={logoStyle} />
                   </Link>
                 </Col>
-                <Col span={10} offset={6}>
+                <Col span={window.innerWidth > 768 ? 12 : 17} offset={window.innerWidth > 768 ? 8 : 0}>
                   <Menu mode="horizontal" style={menuStyle}>
                     <Menu.Item key="1">
                       <Link to='/cart' style={{ color: 'white' }} >
@@ -104,9 +105,10 @@ const layoutStyle: CSSProperties = {
 }
 
 const logoStyle: CSSProperties = {
-  marginLeft: window.innerWidth > 768 ? '-1rem' : '-3rem',
+  marginLeft: window.innerWidth > 768 ? '-1rem' : '-4rem',
+  marginTop: window.innerWidth > 768 ? '0' : '-0.5rem',
   padding: '2rem',
-  width: window.innerWidth > 768 ? '11.5rem' : '8rem',
+  width: window.innerWidth > 768 ? '11.5rem' : '5.8rem',
 }
 
 const menuStyle: CSSProperties = {
@@ -115,32 +117,31 @@ const menuStyle: CSSProperties = {
   display: 'flex', 
   justifyContent: 'space-evenly',
   alignItems: 'center',
-  marginTop: window.innerWidth > 768 ? '1.2rem' : '-0.3rem',
-  marginRight: window.innerWidth > 768 ? '0' : '-2rem',
+  marginTop: window.innerWidth > 768 ? '1.2rem' : '-1rem',
 }
 
 const iconStyle: CSSProperties = {
   color: 'white', 
-  fontSize: '2.3rem',
+  fontSize: window.innerWidth > 768 ? '2.3rem' : '1.8rem',
   float: 'right',
   position: 'absolute',
   alignItems: 'center',
-  margin: window.innerWidth > 768 ? '2rem -1.6rem' : '2.3rem -1.5rem', 
+  marginTop: window.innerWidth > 768 ? '2rem' : '2.3rem',
+  marginLeft: window.innerWidth > 768 ? '-1.6rem' : '-1.2rem',
   boxSizing: 'border-box',
 }
 
 const buttonStyle: CSSProperties = {
   borderRadius: '10rem',
   float: 'right',
-  margin: window.innerWidth > 768 ? '2rem -1.6rem' : '2.3rem -1.5rem', 
+  marginLeft: window.innerWidth > 768 ? '-1.6rem' : '1rem',
 }
 
 const iconStyleUser: CSSProperties = {
   color: 'white', 
   fontSize: '1.8rem',
   borderRadius: '10rem',
-  marginLeft: '3rem',
-  margin: window.innerWidth > 768 ? '2rem -1.6rem' : '2.3rem -1.5rem', 
+  marginTop: '1.5rem',
 }
 
 
