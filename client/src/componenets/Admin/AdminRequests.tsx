@@ -29,6 +29,11 @@ class AdminRequestsList extends Component<{}, State> {
       key: 'user',
     },
     {
+      title: 'Role',
+      dataIndex: "role",
+      key: 'role',
+    },
+    {
       title: 'Admin verification',
       key: 'action',
       render: (record: User) => {
@@ -73,7 +78,7 @@ class AdminRequestsList extends Component<{}, State> {
     }
     return (
       <Row style={userListStyle}>
-        <Col span={10}>
+        <Col span={20}>
          <h1 style={{fontWeight: 'bold'}}>ADMIN REQUESTS</h1>
          <Table columns={this.columns} dataSource={this.state.users} pagination={false} style={{ overflowX: 'auto', marginBottom: '8rem' }}/>
         </Col>
@@ -89,7 +94,7 @@ const userListStyle: CSSProperties = {
   justifyContent: 'center',
   alignItems: 'center',
   paddingTop: '10rem',
-  margin: '1rem'
+  margin: '1rem',
 }
 
 const getAdminRequests = async () => {
