@@ -5,8 +5,10 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
 import ErrorPage from '../ErrorPage';
 import { Product } from '../StartPage/ProductCardGrid';
+import Spinner from "../../Spinner";
 interface State {
     product?: Product;
+    loading: boolean;
 }
 interface Props extends RouteComponentProps {
     _id: string
@@ -20,11 +22,12 @@ class ProductDetails extends Component <Props, State> {
    
     state: State = {
         product: undefined,
+        loading: true,
     }
 
     async componentDidMount() {   
         const product = await getProduct((this.props.match.params as any)._id);
-        this.setState({ product: product })
+        this.setState({ product: product, loading: false })
     }
 
     handleAddClick = () => {
@@ -34,6 +37,13 @@ class ProductDetails extends Component <Props, State> {
     }
 
     render () {
+        if (this.state.loading) {
+            return (
+                <div style={{textAlign: 'center', width: '100%', height: '100%'}}>
+                    <Spinner />
+                </div>
+            )
+        }
         if (!this.state.product) {
             return <ErrorPage />
         }
