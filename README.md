@@ -18,6 +18,16 @@ I client-projektet kör du:
 Kör appen i utvecklingsläge.\
 Öppna [http://localhost:3000](http://localhost:3000) för att se den i din browser.
 
+I gränssnittet kan du sedan logga in med några av de fördefinierade användarna, enligt följande (eller registrera en egen):
+
+email: test@email.com \
+lösenord: 123 \
+(admin) 
+
+email: test2@email.com \
+lösenord: 123 \
+(customer)
+
 
 ## Skapat av
 [Malin Österberg](https://github.com/msmalinosterberg)\
