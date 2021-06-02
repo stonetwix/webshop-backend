@@ -3,23 +3,28 @@ import { Row, Col, Card } from 'antd';
 import { Order } from './OrdersList';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import ErrorPage from "../ErrorPage";
+import Spinner from "../../Spinner";
+
 
 
 interface State {
     order: Order | undefined;
+    loading: boolean;
 }
 
 interface Props extends RouteComponentProps<{ _id: string }> {}
 
 class OrderDetails extends Component<Props, State> {
     state: State = {
-      order: undefined
+      order: undefined,
+      loading: false,
     };
 
     async componentDidMount() {
         const orderId = (this.props.match.params as any)._id;
         const result = await getOneOrder(orderId);
         console.log('Result: ', result)
+        this.setState({ loading: false });
         if (result?.Response === 'False') {
             return;
         }
@@ -41,7 +46,13 @@ class OrderDetails extends Component<Props, State> {
 
     render() {
         const { order } = this.state;
-    
+        if (this.state.loading) {
+            return (
+                <div style={{textAlign: 'center', width: '100%', height: '100%'}}>
+                    <Spinner />
+                </div>
+            )
+        }
         if (!order) {
           return <ErrorPage />
         }
