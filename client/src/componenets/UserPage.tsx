@@ -3,7 +3,7 @@ import { Table, Row, Col } from 'antd';
 import { CheckCircleFilled, ClockCircleOutlined } from '@ant-design/icons';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Order } from './Admin/OrdersList';
-import Spinner from "../Spinner";
+import Spinner from '../Spinner';
 
 interface State {
   orders: Order[];
@@ -69,7 +69,6 @@ class UserPage extends Component<Props, State> {
   async componentDidMount() {
     const orders = await getOrders();
     this.setState({ orders: orders, loading: false });
-    console.log(this.state.orders);
   }
 
   render () {
@@ -107,11 +106,11 @@ const orderListStyle: CSSProperties = {
 
 const getOrders = async () => {
   try {
-      let response = await fetch('/api/orders');
-      if (response.ok) {
-          const data = await response.json();
-          return data;
-      }
+    let response = await fetch('/api/orders');
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
   } catch (error) {
       console.error(error);
   }

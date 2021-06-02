@@ -37,7 +37,6 @@ class UserOrderDetails extends Component<Props, State> {
             totalPrice: result.totalPrice,
             isShipped: result.isShipped,
             createdAt: result.createdAt
-
         }
         this.setState({ order: orderDetails });
     }
@@ -54,9 +53,6 @@ class UserOrderDetails extends Component<Props, State> {
         if (!order) {
           return <ErrorPage />
         }
-        console.log('Orders in render', order)
-
-        //TODO: New lines on products
     
         return (
             <Row>
@@ -100,7 +96,7 @@ const getOneOrder = async (_id: string) => {
     } catch (error) {
         console.error(error);
     }
-  }
+}
 
 const colStyle: CSSProperties = {
     display: 'flex',

@@ -61,7 +61,6 @@ class ProductCardGrid extends Component<{}, State> {
         } else {
             products = await getProducts(values);
         }
-        // TODO: Add categoryFilter state update to context
         this.setState({ products: products });
     }
         

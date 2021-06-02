@@ -8,7 +8,7 @@ import { DeliveryMethod } from '../componenets/Cart/DeliverySelection';
 import { IReceipt } from '../componenets/OrderSuccess/Reciept';
 import { Product } from '../componenets/StartPage/ProductCardGrid';
 import { Order } from '../componenets/Admin/OrdersList';
-
+import { message } from 'antd';
 
 const emptyUser: UserInfo = {
     name: '',
@@ -28,7 +28,6 @@ const defaultPayment: PaymentMethod = {
     cvc: '',
 }
 
-//TODO: remove??
 const defaultDeliveryMethod: DeliveryMethod = {
     _id: '',
     company: 'PostNord',
@@ -182,17 +181,17 @@ class CartProvider extends Component<{}, State> {
 
     handlePlaceOrder = async (history: any) => {
         this.setState({ disablePlaceOrderButton: true });
-        let order: Order | undefined;
-        try {
-            order = await addOrder(this.state.cart, this.state.deliveryMethod, this.state.userInfo);
-        } catch (error) {
-            console.log(error); 
+        let order: Order;
+        const response: any = await addOrder(this.state.cart, this.state.deliveryMethod, this.state.userInfo);
+        
+        if (!response.ok) {
+            const error = await response.json();
+            message.error(error.message, 5);
+            this.setState({ disablePlaceOrderButton: false });
             return;
         }
-        if (!order) {
-            //TODO: Handle error!
-            return;
-        }
+        order = await response.json();
+        
         this.setState({
             receipt: this.createReceipt(),
         });
@@ -243,11 +242,8 @@ const addOrder = async (cartProducts: CartItem[], deliveryMethod: DeliveryMethod
                 deliveryInformation: deliveryInformation,
             })
         });
-        if (response.ok) {
-            const data = await response.json();
-            return data;
-        }
-        
+        return response;
+        //TODO: Fix console.error
     } catch (error) {
         console.error(error);
     }

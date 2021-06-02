@@ -6,7 +6,6 @@ import ErrorPage from "../ErrorPage";
 import Spinner from "../../Spinner";
 
 
-
 interface State {
     order: Order | undefined;
     loading: boolean;
@@ -56,9 +55,6 @@ class OrderDetails extends Component<Props, State> {
         if (!order) {
           return <ErrorPage />
         }
-        console.log('Orders in render', order)
-
-        //TODO: New lines on products
     
         return (
             <Row>
@@ -104,7 +100,7 @@ const getOneOrder = async (_id: string) => {
     } catch (error) {
         console.error(error);
     }
-  }
+}
 
 const colStyle: CSSProperties = {
     display: 'flex',

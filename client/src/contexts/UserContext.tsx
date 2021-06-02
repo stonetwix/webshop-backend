@@ -1,12 +1,10 @@
 import { Component, createContext } from 'react';
 
-
 interface State {
     email: string;
     isLoggedIn: boolean;
     isAdmin: boolean; 
 }
-
 interface ContextValue extends State {
     setUser: (email: string, isAdmin: boolean) => void; 
     logoutUser: () => void; 
@@ -19,7 +17,6 @@ export const UserContext = createContext<ContextValue>({
     setUser: () => {},
     logoutUser: () => {},
 }); 
-
 class UserProvider extends Component <{}, State> {
 
   state: State = {

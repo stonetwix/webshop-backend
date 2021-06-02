@@ -3,10 +3,7 @@ import { Table, Space, Row, Col, Button } from 'antd';
 import { Link, RouteComponentProps } from "react-router-dom";
 import { Product } from '../StartPage/ProductCardGrid';
 import { CheckCircleFilled } from '@ant-design/icons';
-import dayjs from 'dayjs';
 import Spinner from '../../Spinner';
-var utc = require('dayjs/plugin/utc')
-dayjs.extend(utc);
 
 export interface DeliveryInformation {
   _id: string;
@@ -72,7 +69,6 @@ class OrdersList extends Component<Props, State> {
       title: 'Created',
       key: 'created',
       render: (record: Order) => {
-        //return dayjs(record.createdAt).locale();
         return record.createdAt.split('.')[0].split('T').join(' ');
       }
     },
@@ -143,11 +139,11 @@ const orderListStyle: CSSProperties = {
 
 const getAllOrders = async () => {
   try {
-      let response = await fetch('/api/orders');
-      if (response.ok) {
-          const data = await response.json();
-          return data;
-      }
+    let response = await fetch('/api/orders');
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
   } catch (error) {
       console.error(error);
   }
@@ -155,13 +151,13 @@ const getAllOrders = async () => {
 
 const udateShippingStatus = async (_id: string) => {
   try {
-      await fetch('/api/orders/' + _id + '/isShipped', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ isShipped: true })
-      });
+    await fetch('/api/orders/' + _id + '/isShipped', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ isShipped: true })
+    });
   } catch (error) {
       console.error(error);
   }

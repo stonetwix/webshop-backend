@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('express-async-errors');
 const cookieSession = require('cookie-session');
+require('dotenv').config({ path: './db.env' })
 const productsRouter = require('./products/products.router');
 const usersRouter = require('./users/users.router'); 
 const deliveryRouter = require('./deliveryMethods/delivery.router');
@@ -43,7 +44,7 @@ app.use((req, res) => {
 async function run() {
     try {
         await mongoose.connect(
-            'mongodb://localhost:27017/fashionstore', 
+            `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@fashionstore.5bkyr.mongodb.net/fashionstore?retryWrites=true&w=majority`, 
             { useNewUrlParser: true, useUnifiedTopology: true }
         );
         console.log('Database is connected');
