@@ -152,7 +152,7 @@ class AdminEditDetails extends Component<Props, State> {
               </Form.Item>
 
               <Form.Item name={["price"]} label="Price" rules={[{ required: true }]}>
-                <Input />
+                <InputNumber min={1} />
               </Form.Item>
 
               <Form.Item name={["imageUpload"]} label="Image Upload">
@@ -174,7 +174,7 @@ class AdminEditDetails extends Component<Props, State> {
                 </Select>
               </Form.Item>
               <Form.Item name={["inventory"]} label="Inventory" rules={[{ required: true }]}>
-                <InputNumber />
+                <InputNumber min={0}/>
               </Form.Item>
 
               <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

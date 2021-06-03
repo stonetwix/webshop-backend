@@ -23,7 +23,7 @@ productsRouter
         auth.secureWithAdmin,
         body('title').not().isEmpty(),
         body('description').not().isEmpty(),
-        body('price').not().isEmpty(),
+        body('price').not().isEmpty().isFloat({ gt: 0 }),
         body('imageUrl').not().isEmpty(),
         body('inventory').not().isEmpty(),
         controller.addProduct)
@@ -35,7 +35,7 @@ productsRouter
         auth.secureWithAdmin,
         body('title').not().isEmpty(),
         body('description').not().isEmpty(),
-        body('price').not().isEmpty(),
+        body('price').not().isEmpty().isFloat({ gt: 0 }),
         body('imageUrl').not().isEmpty(),
         body('inventory').not().isEmpty(),
         controller.editProduct)
