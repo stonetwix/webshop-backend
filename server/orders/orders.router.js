@@ -18,7 +18,8 @@ ordersRouter
         body('deliveryInformation').not().isEmpty(),
         controller.addOrder)
     .put('/api/orders/:id/isShipped', 
-        auth.secureWithAdmin,    
+        auth.secureWithAdmin,
+        body('isShipped').isBoolean(),
         controller.editOrder);
 
 module.exports = ordersRouter;

@@ -24,17 +24,17 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3001/api/products/60b4d3732bf6d7d470f8cf47
+PUT http://localhost:3001/api/products/60b9e05571e3c5c70cbf8c40
 Content-Type: application/json
 
 {
     "title": "AN EDITED PRODUCT",
     "description": "Lorem ipsum dolor sit amet.",
-    "price": -1,
+    "price": 222,
     "imageUrl": "https://github.com/msmalinosterberg/miniprojekt/blob/master/src/assets/prod1.png?raw=true",
     "inventory": 15
 }
 
 ###
 
-DELETE http://localhost:3001/api/products/60b5f300a16330f5e0ce2956
+DELETE http://localhost:3001/api/products/60b9e05571e3c5c70cbf8c40

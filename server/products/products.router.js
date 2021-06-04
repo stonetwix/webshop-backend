@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
       cb(null, 'static/img')
     },
     filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + '.png') // TODO: Fix
+      cb(null, file.fieldname + '-' + Date.now() + '.png')
     }
 })
    

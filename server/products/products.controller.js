@@ -47,6 +47,7 @@ exports.editProduct = async (req, res) => {
         queryRes = await ProductModel.findById(req.params.id).updateOne(product); 
     } catch (error) {
         res.status(404).json({ error: 'Product not available' });
+        return;
     }
     if (!queryRes.nModified) {
         res.status(404).json({ error: 'Product not available' });
@@ -59,9 +60,9 @@ exports.deleteProduct = async (req, res) => {
     let queryRes;
     try {
         queryRes = await ProductModel.findById(req.params.id).deleteOne();
-        res.status(204).json({});
     } catch (error) {
         res.status(404).json({ error: 'Product not available' });
+        return;
     }
     if (!queryRes.deletedCount) {
         res.status(404).json({ error: 'Product not available' });

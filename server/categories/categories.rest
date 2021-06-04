@@ -11,13 +11,13 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3001/api/categories/60a79b0a4bf15893b3aaa098
+PUT http://localhost:3001/api/categories/60b9dba913600ec35407a893
 Content-Type: application/json
 
 {
-    "name": "Skirts"
+    "name": "Test"
 }
 
 ###
 
-DELETE http://localhost:3001/api/categories/60a6260f5db1046e2e5b5578
+DELETE http://localhost:3001/api/categories/60acadc77735f4166e42b157

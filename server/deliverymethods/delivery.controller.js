@@ -1,5 +1,4 @@
 const DeliveryModel = require('./delivery.model');
-const { validationResult } = require('express-validator');
 
 exports.getAllDeliveryMethods = async (req, res) => {
     const deliveryMethods = await DeliveryModel.find({}).sort({'deliverytime': 'asc'});
@@ -15,5 +14,5 @@ function calculateDeliveryDay(timeInHours) {
     const deliveryDay = new Date(today);
     deliveryDay.setDate(deliveryDay.getDate() + timeInHours / 24);
     return deliveryDay.toISOString().split('T')[0];
-  }
+}
 

@@ -74,13 +74,6 @@ exports.addOrder = async (req, res) => {
         return;
     }
 
-    //Checks if product prices has changed?? – NOT TESTED!!!
-    const productsPrice = orderProductsData.map(p => productMap[p.originalProductID]['price'] === p.price).every(x => x === true);
-    if (!productsPrice) {
-        res.status(400).json({ error: 'Product price has changed, check your updated cart' });
-        return;
-    }
-
     const orderProducts = await OrderProductModel.create(orderProductsData);
 
     for (const cartProduct of cartProducts) {
@@ -112,7 +105,6 @@ function calculateDeliveryDay (timeInHours) {
     return deliveryDay.toISOString().split('T')[0];
 }
 
-//TODO: Add validation for isShipped
 exports.editOrder = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -124,6 +116,7 @@ exports.editOrder = async (req, res) => {
         queryRes = await OrderModel.findById(req.params.id).updateOne(isShipped);
     } catch (error) {
         res.status(404).json({ error: 'Order not available' });
+        return;
     }
     if (!queryRes.nModified) {
         res.status(404).json({ error: 'Order not available' });
