@@ -1,4 +1,4 @@
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, InputNumber, Button, Row, Col } from 'antd';
 import { Component, ContextType, CSSProperties } from 'react';
 import { CartContext } from '../../contexts/CartContext';
 
@@ -64,7 +64,7 @@ class InformationForm extends Component<Props> {
                     <Input />
                 </Form.Item>
                 <Form.Item name={['user', 'phone']} label="Phone" 
-                    rules={[{ min: 10, max: 10, required: true }]}>
+                    rules={[{ min: 10, required: true }]}>
                     <Input />
                 </Form.Item>
                 <Form.Item name={['user', 'street']} label="Street" 
@@ -73,7 +73,7 @@ class InformationForm extends Component<Props> {
                 </Form.Item>
                 <Form.Item name={['user', 'zipcode']} label="Zipcode" 
                     rules={[{ required: true }]}>
-                    <Input />
+                    <InputNumber style={{width: '100%'}}/>
                 </Form.Item>
                 <Form.Item name={['user', 'city']} label="City" 
                     rules={[{ required: true }]}>

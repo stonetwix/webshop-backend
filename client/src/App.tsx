@@ -20,6 +20,7 @@ import OrderDetails from "./componenets/Admin/OrderDetailView";
 import UserPage from "./componenets/UserPage";
 import UserOrderDetailView from "./componenets/UserOrderDetailView";
 import AdminRequestsList from "./componenets/Admin/AdminRequests";
+import AddCategory from "./componenets/Admin/AddCategory";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route exact path="/admin-orders" component={OrdersList} />
           <Route path="/admin-orders/:_id" component={OrderDetails} />
           <Route path="/admin-add-product" component={AddNewProduct} />
+          <Route path="/admin-add-category" component={AddCategory} />
           <Route path="/edit-product/:_id" component={AdminEditDetails} />
           <Route path="/registersuccess" component={SuccessMessage} />
           <Route exact path="/profile" component={UserPage} />

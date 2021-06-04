@@ -49,6 +49,12 @@ class AdminList extends Component < {}, State>{
                                 Add product
                             </Button>
                         </Link> 
+                        <Link to ={'/admin-add-category'}> 
+                            <Button type="primary" icon={<PlusCircleOutlined />} style={{ marginTop: '1rem' }}>
+                                Add category
+                            </Button>
+                        </Link>
+                        
                     </div>    
 
                     <List

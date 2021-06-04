@@ -28,7 +28,7 @@ productsRouter
         body('inventory').not().isEmpty(),
         controller.addProduct)
     .post('/api/upload',
-        auth.secureWithAdmin, //TODO: Make sure it works!!
+        auth.secureWithAdmin,
         upload.single('photo'),
         controller.uploadImg)
     .put('/api/products/:id',
