@@ -3,7 +3,7 @@ import { Header } from "antd/lib/layout/layout";
 import { Component, ContextType, CSSProperties } from "react";
 import logo from '../assets/logga-fs.png'; 
 import home from '../assets/home-solid.png'; 
-import { ShoppingCartOutlined, UserOutlined, HomeFilled } from '@ant-design/icons';
+import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, Route } from 'react-router-dom';
 import AddToBadge from "./Badge";
 import { UserContext } from "../contexts/UserContext";
@@ -149,10 +149,10 @@ export default Navbar;
 
 const logout = async () => {
   try {
-      const response = await fetch('/api/logout/', {
-        method: 'DELETE',
-      });
-      return response.ok;
+    const response = await fetch('/api/logout/', {
+      method: 'DELETE',
+    });
+    return response.ok;
   } catch (error) {
       console.error(error);
   }

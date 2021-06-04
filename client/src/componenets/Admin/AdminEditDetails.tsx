@@ -65,7 +65,7 @@ class AdminEditDetails extends Component<Props, State> {
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file uploaded successfully`);
         (this.formRef as any).current.setFieldsValue({
-          // eslint-disable-next-line no-sequences
+          // eslint-disable-next-line no-useless-computed-key
           ['imageUrl']: info.file.response.path,
         })
         this.setState({ imgUrl: 'test' })

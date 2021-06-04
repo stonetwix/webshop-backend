@@ -27,7 +27,6 @@ const badgeStyle: CSSProperties = {
     borderColor: 'red',
     fontSize: '0.8rem',
     marginTop: '1.1rem',
-    //marginRight: '-1rem',
 }
 
 export default AddToBadge;

@@ -243,8 +243,8 @@ const addOrder = async (cartProducts: CartItem[], deliveryMethod: DeliveryMethod
             })
         });
         return response;
-        //TODO: Fix console.error
     } catch (error) {
         console.error(error);
+        message.error('Something went wrong...');
     }
 }
