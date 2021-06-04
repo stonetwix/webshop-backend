@@ -2,8 +2,7 @@ const UserModel = require('./users.model');
 const { body, validationResult } = require('express-validator'); 
 const bcrypt = require('bcrypt');
 
-//Används denna???
-exports.getOneUser = async (req, res) => {
+exports.getUsers = async (req, res) => {
     const user = await UserModel.find({})
     res.status(200).json(user); 
 }
@@ -16,7 +15,7 @@ exports.getAdminRequests = async (req, res) => {
 exports.addUser = async (req, res) => {
     const errors = validationResult(req); 
     if(!errors.isEmpty()) {
-        return res.status(400).json({errors: errors.array() }); 
+        return res.status(400).json({ errors: errors.array() }); 
     }
     const user = req.body;
     const userExists = await UserModel.exists({ 'email': user.email });
@@ -50,7 +49,7 @@ exports.userLogout = (req, res) => {
         return res.status(400).json('You are already logged out');
     }
     req.session = null;
-    res.status(200).json('Logged out')
+    res.status(200).json('Logged out');
 };
 
 exports.whoami = async (req, res) => {
@@ -72,6 +71,7 @@ exports.editUser = async (req, res) => {
         queryRes = await UserModel.findById(req.params.id).updateOne(isVerified);
     } catch (error) {
         res.status(404).json({ error: 'User not available' });
+        return;
     }
     if (!queryRes.nModified) {
         res.status(404).json({ error: 'User not available' });

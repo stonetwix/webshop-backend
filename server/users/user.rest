@@ -23,7 +23,7 @@ POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
-    "email": "test@email.com", 
+    "email": "test2@email.com", 
     "password": "123"
 }
 
@@ -33,7 +33,7 @@ DELETE http://localhost:3001/api/logout
 
 ###
 
-PUT http://localhost:3001/api/users/60ae05987ded1c838aab30fc/isVerified
+PUT http://localhost:3001/api/users/60b9e289829315c90d919b39/isVerified
 Content-Type: application/json
 
 {

@@ -7,7 +7,7 @@ const auth = require('../auth');
 usersRouter
     .get('/api/users', 
         auth.secureWithAdmin,
-        controller.getOneUser)
+        controller.getUsers)
     .get('/api/users/adminrequests', 
         auth.secureWithAdmin,
         controller.getAdminRequests)

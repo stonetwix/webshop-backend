@@ -35,6 +35,7 @@ exports.editCategory = async (req, res) => {
         queryRes = await CategoryModel.findById(req.params.id).updateOne(category);
     } catch (error) {
         res.status(404).json({ error: 'Category not available' });
+        return;
     }
     if (!queryRes.nModified) {
         res.status(404).json({ error: 'Category not available' });

@@ -65,7 +65,7 @@ class AdminEditDetails extends Component<Props, State> {
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file uploaded successfully`);
         (this.formRef as any).current.setFieldsValue({
-          // eslint-disable-next-line no-sequences
+          // eslint-disable-next-line no-useless-computed-key
           ['imageUrl']: info.file.response.path,
         })
         this.setState({ imgUrl: 'test' })
@@ -152,7 +152,7 @@ class AdminEditDetails extends Component<Props, State> {
               </Form.Item>
 
               <Form.Item name={["price"]} label="Price" rules={[{ required: true }]}>
-                <Input />
+                <InputNumber min={1} />
               </Form.Item>
 
               <Form.Item name={["imageUpload"]} label="Image Upload">
@@ -174,7 +174,7 @@ class AdminEditDetails extends Component<Props, State> {
                 </Select>
               </Form.Item>
               <Form.Item name={["inventory"]} label="Inventory" rules={[{ required: true }]}>
-                <InputNumber />
+                <InputNumber min={0}/>
               </Form.Item>
 
               <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

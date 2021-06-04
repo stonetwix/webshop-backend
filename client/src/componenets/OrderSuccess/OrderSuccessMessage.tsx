@@ -26,8 +26,6 @@ class OrderSuccessMessage extends Component<Props> {
     }
 }
 
-//Math.floor(Math.random() * 1000000000000)
-
 export default OrderSuccessMessage; 
 
 const containerStyle: CSSProperties = {

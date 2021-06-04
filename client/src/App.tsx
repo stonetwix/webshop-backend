@@ -20,33 +20,35 @@ import OrderDetails from "./componenets/Admin/OrderDetailView";
 import UserPage from "./componenets/UserPage";
 import UserOrderDetailView from "./componenets/UserOrderDetailView";
 import AdminRequestsList from "./componenets/Admin/AdminRequests";
+import AddCategory from "./componenets/Admin/AddCategory";
 
 function App() {
   return (
     <CartProvider>
       <UserProvider>
-      <Router>
-        <ScrollToTop />
-        <Navbar />
-        <Switch>
-          <Route path="/product/:_id" component={ProductDetails} />
-          <Route path="/ordersuccess/:_id" component={OrderSuccessMessage} />
-          <Route exact path="/" component={StartPageView} />
-          <Route path="/cart" component={CartView} />
-          <Route path="/login" component={LoginView} />
-          <Route path="/admin-start" component={AdminStartpage} />
-          <Route path="/admin-list" component={AdminList} />
-          <Route exact path="/admin-orders" component={OrdersList} />
-          <Route path="/admin-orders/:_id" component={OrderDetails} />
-          <Route path="/admin-add-product" component={AddNewProduct} />
-          <Route path="/edit-product/:_id" component={AdminEditDetails} />
-          <Route path="/registersuccess" component={SuccessMessage} />
-          <Route exact path="/profile" component={UserPage} />
-          <Route path="/profile/:_id" component={UserOrderDetailView} />
-          <Route path="/users-adminrequests" component={AdminRequestsList} />
-        </Switch>
-        <Footer2 />
-      </Router>
+        <Router>
+          <ScrollToTop />
+          <Navbar />
+          <Switch>
+            <Route path="/product/:_id" component={ProductDetails} />
+            <Route path="/ordersuccess/:_id" component={OrderSuccessMessage} />
+            <Route exact path="/" component={StartPageView} />
+            <Route path="/cart" component={CartView} />
+            <Route path="/login" component={LoginView} />
+            <Route path="/admin-start" component={AdminStartpage} />
+            <Route path="/admin-list" component={AdminList} />
+            <Route exact path="/admin-orders" component={OrdersList} />
+            <Route path="/admin-orders/:_id" component={OrderDetails} />
+            <Route path="/admin-add-product" component={AddNewProduct} />
+            <Route path="/admin-add-category" component={AddCategory} />
+            <Route path="/edit-product/:_id" component={AdminEditDetails} />
+            <Route path="/registersuccess" component={SuccessMessage} />
+            <Route exact path="/profile" component={UserPage} />
+            <Route path="/profile/:_id" component={UserOrderDetailView} />
+            <Route path="/users-adminrequests" component={AdminRequestsList} />
+          </Switch>
+          <Footer2 />
+        </Router>
       </UserProvider>
     </CartProvider>
   );

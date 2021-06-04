@@ -120,11 +120,11 @@ const deliveryCompanyStyle: CSSProperties = {
 
 const getAllDeliveryMethods = async () => {
   try {
-      let response = await fetch('/api/delivery');
-      if (response.ok) {
-          const data = await response.json();
-          return data;
-      }
+    let response = await fetch('/api/delivery');
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    }
   } catch (error) {
       console.error(error);
   }

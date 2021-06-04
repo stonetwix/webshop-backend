@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
       cb(null, 'static/img')
     },
     filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + '.png') // TODO: Fix
+      cb(null, file.fieldname + '-' + Date.now() + '.png')
     }
 })
    
@@ -23,19 +23,19 @@ productsRouter
         auth.secureWithAdmin,
         body('title').not().isEmpty(),
         body('description').not().isEmpty(),
-        body('price').not().isEmpty(),
+        body('price').not().isEmpty().isFloat({ gt: 0 }),
         body('imageUrl').not().isEmpty(),
         body('inventory').not().isEmpty(),
         controller.addProduct)
     .post('/api/upload',
-        auth.secureWithAdmin, //TODO: Make sure it works!!
+        auth.secureWithAdmin,
         upload.single('photo'),
         controller.uploadImg)
     .put('/api/products/:id',
         auth.secureWithAdmin,
         body('title').not().isEmpty(),
         body('description').not().isEmpty(),
-        body('price').not().isEmpty(),
+        body('price').not().isEmpty().isFloat({ gt: 0 }),
         body('imageUrl').not().isEmpty(),
         body('inventory').not().isEmpty(),
         controller.editProduct)

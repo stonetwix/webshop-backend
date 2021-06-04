@@ -57,7 +57,7 @@ class PayCard extends Component<Props> {
                 <Input placeholder="XXXX XXXX XXXX XXXX"/>
             </Form.Item>
             <Form.Item name={['card', 'expdate']} label="Expiry date" 
-                rules={[{ required: true }]}>
+                rules={[{ min: 4, max: 5, required: true }]}>
                 <Input placeholder="MM/YY"/>
             </Form.Item>
             <Form.Item name={['card', 'name']} label="Name on card" 
@@ -65,7 +65,7 @@ class PayCard extends Component<Props> {
                 <Input />
             </Form.Item>
             <Form.Item name={['card', 'cvc']} label="CVC/CCV" 
-                rules={[{ required: true }]}>
+                rules={[{ min: 3, max: 3, required: true }]}>
                 <Input placeholder="e.g. 123"/>
             </Form.Item>
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 7 }}>
@@ -84,10 +84,7 @@ export default PayCard;
 
 const formContainerStyle: CSSProperties = {
     display: 'flex',
-    // justifyContent: 'space-around',
-    // alignItems: 'space-around',
     width: '100%',
-    //margin: 'auto'
 }
 
 const columnStyle: CSSProperties = {
